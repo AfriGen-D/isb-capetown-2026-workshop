@@ -5,20 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AfriGen-D Tutorial -- ISB Cape Town 2026</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css">
+    <meta name="color-scheme" content="light dark">
     <style>
+        html, body {
+            background-color: var(--color-canvas-subtle, #f6f8fa);
+        }
         body {
             box-sizing: border-box;
             min-width: 200px;
             max-width: 1400px;
             margin: 0 auto;
             padding: 45px;
-            background-color: #f6f8fa;
+            color: var(--color-fg-default, #1f2328);
         }
         .markdown-body {
-            background-color: white;
+            background-color: var(--color-canvas-default, #ffffff);
             padding: 45px;
             border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            border: 1px solid var(--color-border-default, #d0d7de);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
         }
         @media (max-width: 767px) {
             body {
