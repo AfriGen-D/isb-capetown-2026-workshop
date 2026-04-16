@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISB Cape Town 2026 -- Workshops</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css">
+    <style>
+        body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 45px;
+            background-color: #f6f8fa;
+        }
+        .markdown-body {
+            background-color: white;
+            padding: 45px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+        @media (max-width: 767px) {
+            body {
+                padding: 15px;
+            }
+            .markdown-body {
+                padding: 15px;
+            }
+        }
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article class="markdown-body" id="content">
+        <p>Loading workshops...</p>
+    </article>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        fetch('index.md')
+            .then(response => response.text())
+            .then(markdown => {
+                document.getElementById('content').innerHTML = marked.parse(markdown);
+            })
+            .catch(error => {
+                const content = document.getElementById('content');
+                content.textContent = '';
+                const p = document.createElement('p');
+                p.textContent = 'Error loading page. ';
+                const a = document.createElement('a');
+                a.href = 'index.md';
+                a.textContent = 'View raw markdown';
+                p.appendChild(a);
+                content.appendChild(p);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# Ignore everything
+*
+
+# Credentials (never track)
+.credentials
+.env
+
+# Except these files
+!.gitignore
+!README.md
+!index.html
+!index.md
+!workshops/
+!workshops/**/*.md
+!workshops/**/*.png
+!workshops/**/*.jpg
+!workshops/**/*.pdf
+!data/
+!data/**
+!images/
+!images/*.png
+!images/*.jpg
+!.github/
+!.github/workflows/
+!.github/workflows/*.yml
