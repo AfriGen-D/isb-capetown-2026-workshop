@@ -8,8 +8,8 @@ African Genomics Variation Database (AGVD).
 **Event:** 19th Annual International Biocuration
 Conference (ISB Cape Town 2026)  
 **Date:** Monday, 20 April 2026, 14:00--18:00 SAST  
-**Venue:** Atlantic I -- African Bioinformatics
-Institute (ABI), University of Cape Town, South Africa  
+**Venue:** Atlantic I, Lagoon Beach Hotel Conference
+Centre and Spa, Milnerton, Cape Town, South Africa  
 **Duration:** 4 hours  
 **Organiser:** Mr Mamana Mbiyavanga (UCT / AfriGen-D)  
 

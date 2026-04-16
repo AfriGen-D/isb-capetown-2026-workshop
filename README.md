@@ -10,7 +10,7 @@ International Biocuration Conference** in Cape Town.
 | --- | --- |
 | Organiser | Mr Mamana Mbiyavanga (UCT / AfriGen-D) |
 | Date | Monday, 20 April 2026, 14:00--18:00 SAST |
-| Venue | Atlantic I, University of Cape Town |
+| Venue | Atlantic I, Lagoon Beach Hotel Conference Centre and Spa, Milnerton |
 | Duration | 4 hours |
 | Event | 19th Annual International Biocuration Conference |
 
@@ -39,6 +39,20 @@ improvements** over generic reference panels.
   2000+ curated pharmacogenomic variants
 - **African Genomics Variation Database (AGVD)** --
   population-specific allele frequency analysis
+
+## Venue
+
+The conference is hosted at the **Lagoon Beach Hotel
+Conference Centre and Spa**, a beachfront venue in
+Milnerton offering panoramic views of the Atlantic
+Ocean, Table Mountain, and the Cape Town skyline.
+Located ~20 minutes from Cape Town International
+Airport, with easy access to the city centre, the
+hotel combines professional conference facilities
+with modern accommodation, restaurants, a spa, and
+recreational activities.
+
+This workshop takes place in the **Atlantic I** room.
 
 ## Contents
 
