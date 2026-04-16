@@ -1,21 +1,50 @@
-# Genotype Imputation Tutorial Using the AfriGen-D Imputation Service
+# Genotype Imputation and Data Analysis for African Populations
 
-A step-by-step tutorial for performing genotype imputation using the web-based AfriGen-D Imputation Service at [impute.afrigen-d.org](https://impute.afrigen-d.org).
+A hands-on tutorial using AfriGen-D's curated African
+genomic resources -- the Imputation Service, the
+African Genomics Medicine Portal (AGMP), and the
+African Genomics Variation Database (AGVD).
 
-**Workshop:** Genotype Imputation and Data Analysis for
-African Populations -- A Hands-on Tutorial Using
-AfriGen-D's Curated African Genomic Resources  
 **Event:** 19th Annual International Biocuration
 Conference (ISB Cape Town 2026)  
-**Date:** Monday, April 20, 2026, 14:00--18:00 SAST  
-**Location:** African Bioinformatics Institute (ABI),
-University of Cape Town, South Africa  
+**Date:** Monday, 20 April 2026, 14:00--18:00 SAST  
+**Venue:** Atlantic I -- African Bioinformatics
+Institute (ABI), University of Cape Town, South Africa  
 **Duration:** 4 hours  
-**Organiser:** Mamana Mbiyavanga (UCT / AfriGen-D)  
+**Organiser:** Mr Mamana Mbiyavanga (UCT / AfriGen-D)  
 
 ---
 
 ## Overview
+
+The African Genomics Data Hub (AfriGen-D) provides
+essential curated resources and tools specifically
+designed for analyzing African genetic data, addressing
+unique challenges in variant discovery, imputation
+accuracy, and knowledge integration. Participants will
+engage with real African genomic datasets through
+practical exercises, learning to navigate the complete
+biocuration pipeline from quality control through
+variant annotation.
+
+The workshop emphasizes how curated population-specific
+reference panels and specialized databases dramatically
+improve analytical outcomes, with African-specific
+panels demonstrating **15--40% accuracy improvements**
+over generic reference panels. Through interactive
+sessions combining theoretical foundations with
+hands-on practice, participants will:
+
+- Master the **AfriGen-D Imputation Service**
+- Explore the **African Genomics Medicine Portal
+  (AGMP)** -- 2000+ curated pharmacogenomic variants
+- Utilize the **African Genomics Variation Database
+  (AGVD)** for population-specific frequency analysis
+
+This workshop directly contributes to addressing the
+severe underrepresentation of African populations in
+global genomic databases while building local capacity
+for genomic data curation.
 
 **Teaching:** ~2 hours  
 **Hands-on exercises:** ~2 hours  
@@ -25,11 +54,18 @@ University of Cape Town, South Africa
 After completing this tutorial, you will be able to:
 
 1. Navigate the AfriGen-D Imputation Service interface
-2. Prepare genotype data for imputation (quality control)
-3. Submit imputation jobs using African-specific reference panels
+2. Prepare genotype data for imputation (quality
+   control)
+3. Submit imputation jobs using African-specific
+   reference panels
 4. Monitor job progress and download results
 5. Assess imputation quality using R² metrics
-6. Perform basic GWAS visualization (Manhattan and QQ plots)
+6. Perform basic GWAS visualisation (Manhattan and QQ
+   plots)
+7. *(TODO)* Query AGMP for curated pharmacogenomic
+   variants
+8. *(TODO)* Use AGVD for population-specific allele
+   frequency analysis
 
 ### Prerequisites
 
@@ -1681,21 +1717,22 @@ You have successfully completed this exercise if:
 
 ## Appendix: Workshop Schedule (4 hours, 14:00--18:00)
 
-<!-- TODO(mamana): validate this 4-hour schedule against
-     your ISB Cape Town agenda. Adjust timings/breaks
-     to match your actual delivery plan. -->
+<!-- TODO(mamana): validate this 4-hour schedule
+     against your ISB Cape Town agenda. Adjust
+     timings/breaks and the AGMP + AGVD slots based
+     on how deep you plan to go into each tool. -->
 
 | Time | Topic | Duration |
 | --- | --- | --- |
-| 14:00--14:20 | Welcome, intros, imputation overview | 20 min |
-| 14:20--14:50 | Theory: LD, reference panels, African diversity | 30 min |
-| 14:50--15:30 | Hands-on: account setup + data preparation | 40 min |
+| 14:00--14:15 | Welcome, introductions, workshop overview | 15 min |
+| 14:15--14:45 | Theory: African genetic diversity, reference panels, biocuration context | 30 min |
+| 14:45--15:30 | Hands-on: AfriGen-D Imputation Service -- account setup, data preparation, job submission | 45 min |
 | 15:30--15:45 | Coffee break | 15 min |
-| 15:45--16:30 | Hands-on: submit imputation jobs (H3Africa V6HC-S) | 45 min |
-| 16:30--17:00 | Hands-on: monitor and download results | 30 min |
-| 17:00--17:30 | Quality assessment (R² distributions) | 30 min |
-| 17:30--17:50 | GWAS visualisation (Manhattan, QQ plots) | 20 min |
-| 17:50--18:00 | Wrap-up, Q&A, feedback | 10 min |
+| 15:45--16:15 | Hands-on: monitor jobs, download results, R² quality assessment | 30 min |
+| 16:15--16:45 | Hands-on: GWAS visualisation (Manhattan, QQ) -- sparse vs imputed comparison | 30 min |
+| 16:45--17:15 | Hands-on: African Genomics Medicine Portal (AGMP) -- querying pharmacogenomic variants | 30 min |
+| 17:15--17:45 | Hands-on: African Genomics Variation Database (AGVD) -- population-specific frequencies | 30 min |
+| 17:45--18:00 | Integration, discussion, Q&A, feedback | 15 min |
 
 ---
 
