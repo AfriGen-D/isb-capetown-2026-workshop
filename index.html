@@ -36,11 +36,11 @@
 </head>
 <body>
     <article class="markdown-body" id="content">
-        <p>Loading workshops...</p>
+        <p>Loading tutorial...</p>
     </article>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        fetch('index.md')
+        fetch('Tutorial-AfriGenD-Imputation-Service.md')
             .then(response => response.text())
             .then(markdown => {
                 document.getElementById('content').innerHTML = marked.parse(markdown);
@@ -51,7 +51,7 @@
                 const p = document.createElement('p');
                 p.textContent = 'Error loading page. ';
                 const a = document.createElement('a');
-                a.href = 'index.md';
+                a.href = 'Tutorial-AfriGenD-Imputation-Service.md';
                 a.textContent = 'View raw markdown';
                 p.appendChild(a);
                 content.appendChild(p);
