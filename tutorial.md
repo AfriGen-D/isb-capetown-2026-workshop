@@ -75,13 +75,11 @@ After completing this tutorial, you will be able to:
 
 ### Tutorial Data
 
-Download the sample data files from GitHub:
+Download the sample data files served by this site:
 
-**[Download Tutorial Data](https://github.com/AfriGen-D/isb-capetown-2026-workshop/tree/main/data)**
-
-The data folder contains:
-- `1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz` - Sparse genotype data (661 samples, ~4,400 variants, chromosome 22, hg38)
-- `1k_afr_661_samples_phenotype.txt` - Phenotype file for GWAS analysis
+- [VCF -- chr22, hg38, 661 samples, ~4,400 variants](/data/1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz)
+- [Phenotype file for GWAS analysis](/data/1k_afr_661_samples_phenotype.txt)
+- [Browse on GitHub](https://github.com/AfriGen-D/isb-capetown-2026-workshop/tree/main/public/data)
 
 ---
 
@@ -228,7 +226,7 @@ The AfriGen-D Imputation Service provides:
 
 1. Open your web browser and navigate to **[impute.afrigen-d.org](https://impute.afrigen-d.org)**
 
-![Figure 1: AfriGen-D Imputation Service landing page](images/01-landing-page.png)
+![Figure 1: AfriGen-D Imputation Service landing page](/images/01-landing-page.png)
 
 *Figure 1: AfriGen-D Imputation Service landing page*
 
@@ -252,19 +250,19 @@ The AfriGen-D Imputation Service provides:
    - **Username**: Your registered username
    - **Password**: Your password
 
-![Figure 2: Login page](images/02-login-page.png)
+![Figure 2: Login page](/images/02-login-page.png)
 
 *Figure 2: Login page*
 
 3. Click **"Sign In"**
 
-![Figure 3: Login form with credentials](images/03-login-filled.png)
+![Figure 3: Login form with credentials](/images/03-login-filled.png)
 
 *Figure 3: Login form with credentials*
 
 4. You will be redirected to the **Home Page**
 
-![Figure 4: Home page after successful login](images/04-home-logged-in.png)
+![Figure 4: Home page after successful login](/images/04-home-logged-in.png)
 
 *Figure 4: Home page after successful login*
 
@@ -404,7 +402,7 @@ The AfriGen-D service offers several additional pipelines beyond imputation:
 
 A complete Genome-Wide Association Study (GWAS) workflow using PLINK2 for training purposes.
 
-![Figure 5: GWAS training workflow configuration](images/11-gwas-training-workflow.png)
+![Figure 5: GWAS training workflow configuration](/images/11-gwas-training-workflow.png)
 
 *Figure 5: GWAS training workflow configuration*
 
@@ -426,7 +424,7 @@ A complete Genome-Wide Association Study (GWAS) workflow using PLINK2 for traini
 
 A quality control tool for detecting and fixing allele switches between your target VCF and reference panels.
 
-![Figure 6: Allele switch checker (Checkref) tool](images/12-allele-switch-checker.png)
+![Figure 6: Allele switch checker (Checkref) tool](/images/12-allele-switch-checker.png)
 
 *Figure 6: Allele switch checker (Checkref) tool*
 
@@ -445,7 +443,7 @@ A quality control tool for detecting and fixing allele switches between your tar
 
 Convert genomic coordinates between genome builds (e.g., GRCh37/hg19 to GRCh38/hg38).
 
-![Figure 7: VCF liftover tool for genome build conversion](images/13-vcf-liftover.png)
+![Figure 7: VCF liftover tool for genome build conversion](/images/13-vcf-liftover.png)
 
 *Figure 7: VCF liftover tool for genome build conversion*
 
@@ -574,7 +572,7 @@ For the file `1k_afr_binary_1000k_chr22.vcf.gz`, answer these questions:
 
 1. Click **"Run"** in the navigation menu to see available pipelines
 
-![Figure 8: Run menu showing available pipelines](images/08-run-menu.png)
+![Figure 8: Run menu showing available pipelines](/images/08-run-menu.png)
 
 *Figure 8: Run menu showing available pipelines*
 
@@ -589,7 +587,7 @@ Available pipelines include:
 
 3. You will see the job submission form
 
-![Figure 9: Job submission form for imputation](images/09-job-submission-form.png)
+![Figure 9: Job submission form for imputation](/images/09-job-submission-form.png)
 
 *Figure 9: Job submission form for imputation*
 
@@ -612,7 +610,7 @@ Available pipelines include:
    - Click the dropdown to see available panels
    - Choose **"H3Africa V6HC-S (GRCh38/hg38)"** for African populations
 
-![Figure 10: Reference panel selection dropdown](images/10-reference-panel-dropdown.png)
+![Figure 10: Reference panel selection dropdown](/images/10-reference-panel-dropdown.png)
 
 *Figure 10: Reference panel selection dropdown*
 
@@ -731,7 +729,7 @@ If your upload fails:
 
 Navigate to **"Jobs"** to see all your submissions:
 
-![Figure 11: Jobs list showing submitted imputation jobs](images/05-jobs-list.png)
+![Figure 11: Jobs list showing submitted imputation jobs](/images/05-jobs-list.png)
 
 *Figure 11: Jobs list showing submitted imputation jobs*
 
@@ -753,7 +751,7 @@ Navigate to **"Jobs"** to see all your submissions:
    - **Phasing and Imputation** progress
    - **Error messages** (if failed)
 
-![Figure 12: Job details page with progress information](images/06-job-details.png)
+![Figure 12: Job details page with progress information](/images/06-job-details.png)
 
 *Figure 12: Job details page with progress information*
 
@@ -832,7 +830,7 @@ From the Jobs page, you can:
 
 3. Click on the **"Results"** tab to see downloadable files
 
-![Figure 13: Job results tab with downloadable files](images/07-job-results.png)
+![Figure 13: Job results tab with downloadable files](/images/07-job-results.png)
 
 *Figure 13: Job results tab with downloadable files*
 
@@ -1371,7 +1369,7 @@ Two GWAS analyses were performed using the GWAS Training Workflow:
 
 #### Manhattan Plot: Sparse Data (4,423 variants)
 
-![Manhattan plot from sparse data](images/gwas-sparse-manhattan.png)
+![Manhattan plot from sparse data](/images/gwas-sparse-manhattan.png)
 
 *Figure 15: Manhattan plot from sparse/original data showing limited variant coverage. Note the single genome-wide significant peak and large gaps between variants.*
 
@@ -1383,7 +1381,7 @@ Two GWAS analyses were performed using the GWAS Training Workflow:
 
 #### Manhattan Plot: Imputed Data (797,319 variants)
 
-![Manhattan plot from imputed data](images/gwas-imputed-manhattan.png)
+![Manhattan plot from imputed data](/images/gwas-imputed-manhattan.png)
 
 *Figure 16: Manhattan plot from imputed data showing dense variant coverage. Note the additional secondary signal and much better resolution across the chromosome.*
 
@@ -1396,7 +1394,7 @@ Two GWAS analyses were performed using the GWAS Training Workflow:
 
 #### Side-by-Side Comparison
 
-![Side-by-side Manhattan plot comparison](images/gwas-comparison-side-by-side.png)
+![Side-by-side Manhattan plot comparison](/images/gwas-comparison-side-by-side.png)
 
 *Figure 17: Side-by-side comparison of Manhattan plots from sparse (left) and imputed (right) data, highlighting the dramatic increase in variant density and the discovery of the secondary signal.*
 

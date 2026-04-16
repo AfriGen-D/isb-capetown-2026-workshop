@@ -1,0 +1,30 @@
+{
+  "name": "isb-capetown-2026-workshop",
+  "version": "1.0.0",
+  "description": "AfriGen-D tutorial site for ISB Cape Town 2026 (VitePress).",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.5.0"
+  },
+  "keywords": [
+    "afrigen-d",
+    "genomics",
+    "imputation",
+    "workshop",
+    "tutorial",
+    "isb-biocuration"
+  ],
+  "author": "Mamana Mbiyavanga (UCT / AfriGen-D)",
+  "license": "MIT",
+  "homepage": "https://afrigen-d.github.io/isb-capetown-2026-workshop/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AfriGen-D/isb-capetown-2026-workshop.git"
+  }
+}

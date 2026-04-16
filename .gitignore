@@ -1,20 +1,13 @@
-# Ignore everything
-*
+# Node / VitePress
+node_modules/
+.vitepress/cache/
+.vitepress/dist/
+*.log
 
-# Credentials (never track)
-.credentials
+# Env / credentials
 .env
+.env.*
+.credentials
 
-# Except these files
-!.gitignore
-!README.md
-!index.html
-!Tutorial-AfriGenD-Imputation-Service.md
-!data/
-!data/1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz
-!data/1k_afr_661_samples_phenotype.txt
-!images/
-!images/*.png
-!.github/
-!.github/workflows/
-!.github/workflows/*.yml
+# macOS
+.DS_Store

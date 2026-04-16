@@ -1,0 +1,86 @@
+import { defineConfig } from 'vitepress'
+
+export default defineConfig({
+  title: 'ISB Cape Town 2026 -- AfriGen-D Tutorial',
+  description:
+    'Hands-on tutorial for genotype imputation and data analysis using ' +
+    "AfriGen-D's curated African genomic resources. 19th Annual " +
+    'International Biocuration Conference, Cape Town, April 2026.',
+  base: '/isb-capetown-2026-workshop/',
+  lang: 'en-US',
+  cleanUrls: true,
+  lastUpdated: true,
+  srcExclude: ['README.md', 'CLAUDE.md'],
+
+  head: [
+    ['link', { rel: 'icon', href: '/isb-capetown-2026-workshop/afrigen-d-logo.png' }],
+    ['meta', { name: 'theme-color', content: '#C94234' }],
+  ],
+
+  themeConfig: {
+    logo: '/afrigen-d-logo.png',
+    siteTitle: 'ISB Cape Town 2026',
+
+    nav: [
+      { text: 'Home', link: '/' },
+      { text: 'Tutorial', link: '/tutorial' },
+      { text: 'AGMP', link: '/agmp' },
+      { text: 'AGVD', link: '/agvd' },
+      { text: 'Schedule', link: '/schedule' },
+      { text: 'Venue', link: '/venue' },
+    ],
+
+    sidebar: [
+      {
+        text: 'Workshop Info',
+        items: [
+          { text: 'Overview', link: '/' },
+          { text: 'Schedule', link: '/schedule' },
+          { text: 'Venue', link: '/venue' },
+        ],
+      },
+      {
+        text: 'Hands-on Tutorial',
+        items: [
+          { text: 'Genotype Imputation', link: '/tutorial' },
+          { text: 'AGMP (pharmacogenomic variants)', link: '/agmp' },
+          { text: 'AGVD (population frequencies)', link: '/agvd' },
+        ],
+      },
+    ],
+
+    socialLinks: [
+      {
+        icon: 'github',
+        link: 'https://github.com/AfriGen-D/isb-capetown-2026-workshop',
+      },
+    ],
+
+    footer: {
+      message:
+        'Hands-on tutorial delivered at the 19th Annual International ' +
+        'Biocuration Conference, Cape Town 2026. Part of the AfriGen-D ' +
+        'training programme.',
+      copyright: 'Copyright &copy; 2026 AfriGen-D Project',
+    },
+
+    search: {
+      provider: 'local',
+    },
+
+    editLink: {
+      pattern:
+        'https://github.com/AfriGen-D/isb-capetown-2026-workshop/edit/main/:path',
+      text: 'Edit this page on GitHub',
+    },
+
+    lastUpdated: {
+      text: 'Last updated',
+      formatOptions: { dateStyle: 'medium' },
+    },
+  },
+
+  markdown: {
+    theme: { light: 'github-light', dark: 'github-dark' },
+  },
+})
