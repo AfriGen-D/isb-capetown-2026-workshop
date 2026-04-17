@@ -1,45 +1,149 @@
-# African Genomics Variation Database (AGVD)
+# African Genome Variation Database (AGVD)
 
-::: warning Content under construction
-This section is being authored for ISB Cape Town 2026. The 2025 AfriGen-D
-short-course tutorial covered only the Imputation Service -- the AGMP and
-AGVD sections are new for the 2026 edition and will be filled in before
-the workshop.
+The **African Genome Variation Database** is
+AfriGen-D's open-access resource for African genomic
+diversity, allele frequencies, and variant
+interpretation.
+
+Explore: <https://agvd.afrigen-d.org>
+
+![AGVD landing page -- mission, objectives, and future releases](/images/platforms/agvd-01-landing.png)
+
+## Why AGVD?
+
+Despite having the **highest genomic diversity of any
+continent**, African populations are the least studied
+in the context of human genetic variation. When a
+clinical variant is observed in a patient of African
+ancestry, looking it up in a European-dominant
+frequency database often returns a misleading result
+-- a variant that is rare globally can be common in
+a specific African population, and vice versa.
+
+AGVD fixes this by curating allele frequencies from
+African cohorts (and cohorts of African ancestry) and
+surfacing them with the population structure intact.
+The initial release reports frequencies from a joint
+called set of **~4,000 samples**; future releases
+will add targeted sequencing, exomes, additional
+whole genomes, and array genotyping.
+
+## Search Interface
+
+AGVD's search accepts a **Gene**, **variant ID**, or
+**genomic region**, and returns allele frequencies
+broken down by population cluster.
+
+![AGVD search page with cluster filters and MAF threshold slider](/images/platforms/agvd-02-search.png)
+
+### Population Clusters
+
+Results are stratified across 11 clusters:
+
+- **African:** Western, Eastern, Southern, Central,
+  and Northern Africa
+- **Ex-Africa:** continental cohorts of African
+  ancestry
+- **Global comparators:** Europe, Asia, Oceania,
+  North America, South America
+
+This is what separates AGVD from gnomAD-African or
+1000 Genomes AFR: sub-continental resolution inside
+Africa, not one flat "AFR" bin.
+
+### Filters
+
+- **Minor Allele Frequency (MAF) threshold** --
+  slider with "less than or equal to" / "greater than
+  or equal to" modes
+- **Release selector** -- pin results to a specific
+  AGVD release (e.g. `AGVD_24A_Main`) for
+  reproducibility
+
+## Hands-on (30 min)
+
+::: warning Content being authored for 2026
+This hands-on walkthrough is new for the 2026 edition.
+The variant examples, screenshots, and expected
+outputs below are a scaffold -- the instructor will
+walk through each step live and update this page
+afterward.
 :::
 
-## What is AGVD?
+By the end of the session, participants will be able
+to:
 
-The **African Genomics Variation Database** provides population-specific
-**allele frequencies** across African cohorts, enabling accurate variant
-interpretation and ancestry-aware research. AGVD addresses the
-under-representation of African populations in global frequency databases.
+1. Query AGVD for allele frequencies across African
+   population clusters
+2. Compare AGVD frequencies against gnomAD and 1000
+   Genomes for the same variant
+3. Interpret cluster-level differences and their
+   implications for variant pathogenicity assessment
+4. Export frequency tables for downstream variant
+   prioritisation
 
-Explore: [agvd.afrigen-d.org](https://agvd.afrigen-d.org)
+### Exercise 1 -- Cluster-level frequency lookup
 
-## Learning Objectives (planned)
+Pick one variant from the imputed VCF you produced in
+the FedImpute session, search AGVD for its allele
+frequency across African clusters, and compare the
+cluster-specific MAFs.
 
-By the end of this 30-minute session, participants will be able to:
+<!-- TODO(mamana): pick 3-5 variants from the tutorial
+     VCF known to have cluster-varying frequencies
+     (ideally with published clinical relevance), so
+     the exercise produces an informative contrast. -->
 
-1. Query AGVD for variant frequencies across African populations
-2. Compare AGVD frequencies against gnomAD/1000G for the same variants
-3. Interpret population-specific frequency differences in a research
-   context
-4. Export frequency tables for downstream variant prioritisation
+### Exercise 2 -- AGVD vs gnomAD comparison
 
-## Hands-on Exercises (planned)
+Take the same variant and look it up in gnomAD
+(African / AFR bin) and in 1000 Genomes Phase 3
+(AFR). Discuss why the three sources might disagree
+and what that means for interpretation.
 
-- Exercise 1: Pull AGVD frequencies for a small variant set from the
-  imputed output of the morning session
-- Exercise 2: Compare AGVD vs gnomAD-African vs gnomAD-NFE for a
-  clinically relevant variant
-- Exercise 3: Discuss how population-specific frequencies change variant
-  interpretation (e.g. ACMG BA1/BS1 criteria)
+### Exercise 3 -- ACMG BA1/BS1 implications
 
-<!-- TODO(mamana): fill in concrete variant examples, expected query
-     results, and screenshots of the AGVD interface. -->
+For a candidate pathogenic variant, check whether its
+AGVD African-cluster frequency exceeds the ACMG
+**BA1** (>5%) or **BS1** (>1%) thresholds. Does the
+classification change once you use a population-
+appropriate frequency? (This is the clinical
+motivation for AGVD.)
+
+<!-- TODO(mamana): suggest one candidate variant with
+     divergent frequencies (e.g. HBB variants, or
+     PCSK9) where the ACMG call differs between
+     gnomAD-global and AGVD-African. -->
+
+## Releases
+
+- **AGVD_24A_Main** -- initial release, joint called
+  set of ~4,000 samples, autosomal + chrX
+- Future releases will incorporate targeted,
+  exome, and additional WGS data, plus array
+  genotyping
+
+Pin analyses to a specific release for
+reproducibility. Check the
+[releases page](https://agvd.afrigen-d.org/releases)
+for the current list.
+
+## Access
+
+- **Browsing and search:** open access, no account
+  required
+- **Downloads / controlled data:** log in at
+  <https://nyame.afrigen-d.org/accounts/login/>
+  using your AfriGen-D Identity
 
 ## Resources
 
-- [AGVD portal](https://agvd.afrigen-d.org)
-- [AGVD documentation repo](https://github.com/AfriGen-D/agvd-docs)
-- [AfriGen-D overview](https://afrigen-d.org)
+- Portal: <https://agvd.afrigen-d.org>
+- About AGVD: <https://agvd.afrigen-d.org/about>
+- Releases: <https://agvd.afrigen-d.org/releases>
+- Help: <https://agvd.afrigen-d.org/help>
+- Documentation repo:
+  <https://github.com/AfriGen-D/agvd-docs>
+- Back-end (nyame auth):
+  <https://github.com/AfriGen-D/nyame>
+- AfriGen-D: <https://afrigen-d.org>

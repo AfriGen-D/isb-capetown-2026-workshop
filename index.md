@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "ISB Cape Town 2026"
   text: "Genotype Imputation and Data Analysis for African Populations"
-  tagline: "A hands-on tutorial using AfriGen-D's curated African genomic resources -- delivered at the 19th Annual International Biocuration Conference."
+  tagline: "Hands-on with FedImpute, AGMP, and AGVD -- African-led, African-hosted infrastructure for genomic imputation, pharmacogenomics, and population-specific variant interpretation."
   image:
     src: /afrigen-d-logo.png
     alt: AfriGen-D
@@ -21,32 +21,34 @@ hero:
 
 features:
   - icon: 🧬
-    title: AfriGen-D Imputation Service
+    title: FedImpute -- Federated Imputation
     details: >-
-      Web-based genotype imputation with African-specific reference panels.
-      Quality control, allele-switch checking, VCF liftover, and GWAS
-      analysis -- all through a free, hosted platform at impute.afrigen-d.org.
+      A unified interface to multiple imputation backends (H3Africa,
+      Michigan Imputation Server) over GA4GH standards. African-hosted
+      on the ILIFU research cloud, data stays in South Africa under POPIA.
     link: /tutorial
     linkText: Hands-on tutorial
   - icon: 💊
-    title: African Genomics Medicine Portal
+    title: AGMP -- Pharmacogenomics for Africa
     details: >-
-      AGMP curates 2000+ pharmacogenomic variants relevant to African
-      populations. Query, filter, and integrate curated annotations into
-      your own analyses.
+      17,470 curated variants, 6,270 genes, 48 drugs, 1,579 phenotypes
+      across 1,194 studies. Search genotype-phenotype associations,
+      drug response, and disease information for African populations.
     link: /agmp
     linkText: AGMP session
   - icon: 🌍
-    title: African Genomics Variation Database
+    title: AGVD -- Population Allele Frequencies
     details: >-
-      AGVD provides population-specific allele frequencies across African
-      cohorts, enabling accurate variant interpretation and ancestry-aware
-      research.
+      Open-access allele frequencies across 11 population clusters
+      (Western / Eastern / Southern / Central / Northern Africa, plus
+      Ex-Africa cohorts). Filter by MAF, search by gene or region.
     link: /agvd
     linkText: AGVD session
 ---
 
 ## Workshop at a Glance
+
+<!-- markdownlint-disable MD013 MD060 -->
 
 | Field       | Detail |
 | ----------- | ------ |
@@ -57,35 +59,45 @@ features:
 | Organiser   | Mr Mamana Mbiyavanga (UCT / AfriGen-D) |
 | Format      | ~2 hours teaching + ~2 hours hands-on exercises |
 
+<!-- markdownlint-enable MD013 MD060 -->
+
 ## Why This Matters
 
 The African Genomics Data Hub (AfriGen-D) provides essential curated resources
 for analysing African genetic data, addressing unique challenges in variant
-discovery, imputation accuracy, and knowledge integration. Curated,
-population-specific reference panels deliver **15--40% accuracy improvements**
-over generic panels.
+discovery, imputation accuracy, and knowledge integration. Despite having the
+highest genomic diversity of any continent, African populations remain the
+least studied in human genetic variation. Population-specific reference
+panels deliver substantially better imputation accuracy than generic panels
+when applied to African cohorts ([Sengupta et al. 2023][sengupta]).
 
 This workshop contributes directly to addressing the severe underrepresentation
 of African populations in global genomic databases while building local
 capacity for genomic data curation.
 
+[sengupta]: https://doi.org/10.1016/j.xgen.2023.100332
+
 ## What You'll Learn
 
-- Navigate the AfriGen-D Imputation Service and submit end-to-end jobs
+- Submit end-to-end imputation jobs via **FedImpute** (the AfriGen-D
+  federated platform)
 - Apply quality control, monitor runs, and interpret R² metrics
 - Compare sparse vs imputed GWAS results (Manhattan, QQ plots)
-- Query AGMP for curated pharmacogenomic variants *(pending -- see `/agmp`)*
-- Use AGVD for population-specific frequency analysis *(pending -- see `/agvd`)*
+- Query **AGMP** for curated pharmacogenomic variants, genes, and drugs
+- Use **AGVD** for population-specific allele frequency analysis
+- Connect the three tools into a single biocuration pipeline
 
 ## Prerequisites
 
 - Laptop with a modern browser (Chrome, Firefox, Safari, or Edge)
-- Free account on [impute.afrigen-d.org](https://impute.afrigen-d.org)
-  (created live during the workshop)
+- AfriGen-D Identity account
+  ([register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/))
+  -- a single SSO account covers FedImpute and AGVD
 - Basic understanding of VCF format is helpful but not required
 
 ::: tip About AfriGen-D
 Part of the [African Genomics Data Hub](https://afrigen-d.org) -- an
 interconnected suite of resources supporting African genomics research,
-funded by NIH Grant U24HG012750 and the Wellcome Trust.
+funded by NIH Grant U24HG012750 and hosted on the ILIFU research cloud at
+the University of Cape Town.
 :::

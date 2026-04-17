@@ -1,46 +1,144 @@
-# African Genomics Medicine Portal (AGMP)
+# African Genomic Medicine Portal (AGMP)
 
-::: warning Content under construction
-This section is being authored for ISB Cape Town 2026. The 2025 AfriGen-D
-short-course tutorial covered only the Imputation Service -- the AGMP and
-AGVD sections are new for the 2026 edition and will be filled in before
-the workshop.
+The **African Genomic Medicine Portal** is AfriGen-D's
+curated resource for African-specific genomic medicine:
+the genetic underpinnings of disease and drug response
+in African populations and the African diaspora.
+
+Explore: <https://agmp.afrigen-d.org>
+
+![AGMP landing page with search by variant, gene, drug, phenotype](/images/platforms/agmp-01-landing.png)
+
+## Why AGMP?
+
+African individuals -- and individuals of recent
+African descent -- have the highest genomic diversity
+of any continent. That diversity is associated with
+susceptibility to communicable and non-communicable
+diseases, and with response to the drugs used to treat
+them. Yet African populations remain the most
+under-represented in global genomic medicine
+databases.
+
+AGMP addresses this by curating African-specific
+signals from **PharmGKB**, **DisGeNET**, and (since
+v1.2) the **GWAS Catalogue**, and surfacing them in a
+single portal organised around four entry points:
+**variant**, **gene**, **drug**, and **phenotype**.
+
+## Data at a Glance
+
+*(As of AGMP v1.2, 2025-04-30)*
+
+| Category | Count |
+| --- | --- |
+| Genes | 6,270 |
+| Drugs | 48 |
+| Phenotypes | 1,579 |
+| Variants | 17,470 |
+| Unique studies | 1,194 |
+
+![AGMP data overview and top-ten graphs](/images/platforms/agmp-03-summary.png)
+
+## Portal Objectives
+
+- Provide **genotype-phenotype associations** as they
+  pertain to African populations
+- Provide **pharmacogenomics** information as it
+  pertains to African populations
+- Provide **disease information** as it pertains to
+  African populations
+- Provide access to existing resources and materials
+  that enable the implementation, education, and
+  practice of genomics and precision medicine in
+  Africa
+
+![AGMP About page with objectives, contributors, and data sources](/images/platforms/agmp-02-about.png)
+
+## Hands-on (30 min)
+
+::: warning Content being authored for 2026
+This hands-on walkthrough is new for the 2026 edition.
+The queries, screenshots, and sample exports below
+are a scaffold -- the instructor will walk through
+each step live and update this page afterward.
 :::
 
-## What is AGMP?
+By the end of the session, participants will be able
+to:
 
-The **African Genomics Medicine Portal** curates **2000+ pharmacogenomic
-variants** with evidence relevant to African populations. AGMP connects
-variant-level annotations to drug-response and clinical-implementation
-evidence, supporting biocurators and clinicians working with African
-genomic data.
-
-Explore: [agmp.afrigen-d.org](https://agmp.afrigen-d.org)
-
-## Learning Objectives (planned)
-
-By the end of this 30-minute session, participants will be able to:
-
-1. Navigate AGMP and its query interface
-2. Search for pharmacogenomic variants by gene, drug, or clinical annotation
+1. Navigate AGMP and its four entry points (variant,
+   gene, drug, phenotype)
+2. Search for pharmacogenomic variants by gene, drug,
+   or clinical annotation
 3. Interpret evidence levels and curation status
-4. Export curated variant sets for integration with their own analyses
-5. Connect AGMP evidence with imputed genotypes from the earlier session
+4. Export curated variant sets for integration with
+   external analyses
+5. Connect AGMP evidence with imputed genotypes from
+   the earlier FedImpute session
 
-## Hands-on Exercises (planned)
+### Exercise 1 -- Drug-gene association
 
-- Exercise 1: Find pharmacogenomic variants in **CYP2D6** (or another
-  clinically relevant gene) relevant to an African cohort
-- Exercise 2: Export a curated variant list as TSV
-- Exercise 3: Cross-reference AGMP annotations with your imputed output
-  from the AfriGen-D Imputation Service session
+Search AGMP for a clinically relevant gene (for
+example **CYP2D6** or **DPYD**) and find the drugs for
+which African-relevant pharmacogenomic evidence
+exists.
 
-<!-- TODO(mamana): flesh out exercises with concrete queries, screenshots,
-     and expected outputs. Add sample exports / CSVs to /public/data/ as
-     needed. -->
+<!-- TODO(mamana): replace with the exact gene + drug
+     combo you plan to walk through live, include a
+     screenshot of the search result and the linked
+     PharmGKB entries. -->
+
+### Exercise 2 -- Export a variant set
+
+Using the Summary view and the "top ten variants"
+panel, pick a variant of interest and export its
+associated study list as TSV/CSV.
+
+<!-- TODO(mamana): verify the export flow and capture
+     a screenshot of the export file format so
+     participants know what to expect. -->
+
+### Exercise 3 -- Integrate with imputation output
+
+Take a variant you imputed earlier in the FedImpute
+session, look it up in AGMP, and discuss what its
+drug-response evidence (or lack thereof) means for
+downstream clinical interpretation in an African
+cohort.
+
+<!-- TODO(mamana): suggest 3-5 variants from the
+     tutorial VCF that have known AGMP entries so the
+     exercise is reliably productive rather than
+     speculative. -->
+
+## How AGMP Was Built
+
+AGMP v1.0 (2022-12-15) launched with African-specific
+data curated from PharmGKB and DisGeNET. v1.1
+(2024-01-15) updated the curation pipeline with
+additional fields. v1.2 (2025-04-30) added the
+GWAS Catalogue dataset and heat-map visualisations.
+
+Development was driven by **H3ABioNet's Databases and
+Resources Work Package** and the Precision Medicine
+project. Ongoing maintenance is led by AfriGen-D.
+
+## Cite AGMP
+
+> Othman H., Zass L., da Rocha J.E.B., Radouani F.,
+> Samtal C., Benamri I., Kumuthini J., Fakim Y.J.,
+> Hamdi Y., Mezzi N., et al. (2022).
+> *African Genomic Medicine Portal: A Web Portal for
+> Biomedical Applications.* Journal of Personalised
+> Medicine. <https://doi.org/10.3390/jpm12020265>
 
 ## Resources
 
-- [AGMP portal](https://agmp.afrigen-d.org)
-- [AGMP documentation repo](https://github.com/AfriGen-D/agmp-docs)
-- [AfriGen-D overview](https://afrigen-d.org)
+- Portal: <https://agmp.afrigen-d.org>
+- About AGMP: <https://agmp.afrigen-d.org/about>
+- Summary dashboard: <https://agmp.afrigen-d.org/summary/>
+- Documentation repo:
+  <https://github.com/AfriGen-D/agmp-docs>
+- AfriGen-D: <https://afrigen-d.org>
+- Helpdesk: <https://helpdesk.afrigen-d.org>

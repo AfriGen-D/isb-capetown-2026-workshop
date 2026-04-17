@@ -1,9 +1,10 @@
 # Genotype Imputation and Data Analysis for African Populations
 
 A hands-on tutorial using AfriGen-D's curated African
-genomic resources -- the Imputation Service, the
-African Genomics Medicine Portal (AGMP), and the
-African Genomics Variation Database (AGVD).
+genomic resources: the **FedImpute** federated
+imputation platform, the **African Genomic Medicine
+Portal (AGMP)**, and the **African Genome Variation
+Database (AGVD)**.
 
 **Event:** 19th Annual International Biocuration
 Conference (ISB Cape Town 2026)  
@@ -13,13 +14,99 @@ Centre and Spa, Milnerton, Cape Town, South Africa
 **Duration:** 4 hours  
 **Organiser:** Mr Mamana Mbiyavanga (UCT / AfriGen-D)  
 
+::: warning Platform transition -- read before you start
+The step-by-step walkthrough below (sections 2--11)
+targets the **legacy** imputation UI at
+<https://impute.afrigen-d.org>. For ISB Cape Town 2026
+the workshop uses the new
+**Federated Genotype Imputation Platform (FedImpute)**
+at <https://dev-fedimpute-ui.afrigen-d.dev>.
+
+The *concepts* (imputation theory, reference panel
+choice, R² interpretation, GWAS comparison) all carry
+over. The specific UI screens, button labels, and
+submission flow have changed -- see section 0 below
+for the FedImpute overview, and expect the downstream
+sections to be re-captured against FedImpute before
+the workshop day.
+:::
+
+---
+
+## 0. The FedImpute Platform
+
+**FedImpute** (Federated Genotype Imputation Platform)
+is AfriGen-D's new unified interface to multiple
+imputation backends. Instead of managing separate
+accounts with separate services, you sign in once and
+FedImpute routes your job to the right backend --
+H3Africa, Michigan Imputation Server, or a future
+federated node.
+
+![FedImpute landing page](/images/platforms/elwazi-01-landing.png)
+
+### Why Federated?
+
+- **African-led, African-hosted.** All infrastructure
+  runs on the ILIFU research cloud at the University
+  of Cape Town. Data stays in South Africa under
+  POPIA.
+- **One account, many panels.** Log in with your
+  AfriGen-D Identity (SSO). Discover reference panels
+  across all connected nodes; jobs are routed
+  transparently.
+- **Built on GA4GH standards.** The platform
+  implements Beacon v2, DRS v1.5.0, WES v1.1.0,
+  GA4GH Passport/Visa, Service Info, Data Connect
+  v1.0.0, TRS v2, and RO-Crate.
+- **Free for academic researchers.**
+
+### Three-step workflow
+
+1. **Discover** (Data Connect): query reference panels
+   by build, population, continent, across federated
+   nodes.
+2. **Access** (DRS + Passport): authenticate via SSO,
+   resolve DRS URIs, use visa-based access control
+   for controlled datasets.
+3. **Compute** (WES + RO-Crate): submit imputation
+   jobs to federated WES nodes, track progress live,
+   download results with full RO-Crate provenance.
+
+### Log in
+
+![FedImpute login screen](/images/platforms/elwazi-03-login.png)
+
+Log in with your **AfriGen-D Identity** account. If
+you don't have one,
+[register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/)
+-- the same SSO account also works for AGVD.
+
+<!-- TODO(mamana): re-capture detailed step-by-step
+     screens (upload VCF, select reference panel,
+     configure parameters, monitor progress, download
+     results) against FedImpute. Sections 2-11 below
+     still show the legacy impute.afrigen-d.org UI. -->
+
+### Architecture (for the curious)
+
+FedImpute has three layers:
+
+| Layer | Implementation | Role |
+| --- | --- | --- |
+| Frontend | Next.js (SSR React) | Job submission, monitoring, results |
+| Orchestration API | Django + FastAPI | Auth, job routing, status aggregation |
+| Backends | H3Africa, Michigan Imputation Server | Imputation via GA4GH-compliant adapters |
+
+![FedImpute architecture + participating institutions](/images/platforms/elwazi-02-about.png)
+
 ---
 
 ## Overview
 
 The African Genomics Data Hub (AfriGen-D) provides
 essential curated resources and tools specifically
-designed for analyzing African genetic data, addressing
+designed for analysing African genetic data, addressing
 unique challenges in variant discovery, imputation
 accuracy, and knowledge integration. Participants will
 engage with real African genomic datasets through
@@ -27,19 +114,33 @@ practical exercises, learning to navigate the complete
 biocuration pipeline from quality control through
 variant annotation.
 
-The workshop emphasizes how curated population-specific
-reference panels and specialized databases dramatically
-improve analytical outcomes, with African-specific
-panels demonstrating **15--40% accuracy improvements**
-over generic reference panels. Through interactive
-sessions combining theoretical foundations with
-hands-on practice, participants will:
+The workshop emphasises how curated population-specific
+reference panels and specialised databases dramatically
+improve analytical outcomes. Population-specific
+African panels deliver substantially better imputation
+accuracy than generic panels when applied to African
+cohorts -- for example, [Sengupta et al. 2023][sengupta]
+report the African Genome Resource (AGR) panel
+achieving a **non-reference discordance rate of
+~2.2%** on sub-Saharan African whole-genome samples,
+compared to **~7.6%** for the European-focused HRC
+panel (≈70% reduction in discordance).
 
-- Master the **AfriGen-D Imputation Service**
-- Explore the **African Genomics Medicine Portal
-  (AGMP)** -- 2000+ curated pharmacogenomic variants
-- Utilize the **African Genomics Variation Database
-  (AGVD)** for population-specific frequency analysis
+*TODO(mamana): the workshop abstract cites a "15--40%
+accuracy improvement" -- confirm the exact source.*
+
+[sengupta]: https://doi.org/10.1016/j.xgen.2023.100332
+
+Through interactive sessions combining theoretical
+foundations with hands-on practice, participants will:
+
+- Master **FedImpute** -- the federated imputation
+  platform
+- Explore **AGMP** -- 17,470 curated variants across
+  6,270 genes, 48 drugs, 1,579 phenotypes
+- Use **AGVD** -- allele frequencies across 11
+  population clusters (Western / Eastern / Southern /
+  Central / Northern Africa, plus Ex-Africa cohorts)
 
 This workshop directly contributes to addressing the
 severe underrepresentation of African populations in
@@ -53,7 +154,8 @@ for genomic data curation.
 
 After completing this tutorial, you will be able to:
 
-1. Navigate the AfriGen-D Imputation Service interface
+1. Navigate the FedImpute interface (or the legacy
+   AfriGen-D Imputation Service, covered below)
 2. Prepare genotype data for imputation (quality
    control)
 3. Submit imputation jobs using African-specific
@@ -62,16 +164,20 @@ After completing this tutorial, you will be able to:
 5. Assess imputation quality using R² metrics
 6. Perform basic GWAS visualisation (Manhattan and QQ
    plots)
-7. *(TODO)* Query AGMP for curated pharmacogenomic
-   variants
-8. *(TODO)* Use AGVD for population-specific allele
-   frequency analysis
+7. Query AGMP for curated pharmacogenomic variants
+   ([see the AGMP session](/agmp))
+8. Use AGVD for population-specific allele frequency
+   analysis ([see the AGVD session](/agvd))
 
 ### Prerequisites
 
-- Personal laptop with internet connection and modern web browser (Chrome, Firefox, Safari, or Edge)
-- Basic understanding of genetic data formats (VCF)
-- AfriGen-D account (will be created during the workshop)
+- Laptop with a modern browser (Chrome, Firefox,
+  Safari, or Edge)
+- AfriGen-D Identity account
+  ([register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/))
+  -- one SSO account covers FedImpute and AGVD
+- Basic understanding of VCF format is helpful but
+  not required
 
 ### Tutorial Data
 
