@@ -23,6 +23,7 @@ export default defineConfig({
 
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Theory', link: '/theory' },
       { text: 'Tutorial', link: '/tutorial' },
       { text: 'AGMP', link: '/agmp' },
       { text: 'AGVD', link: '/agvd' },
@@ -37,6 +38,12 @@ export default defineConfig({
           { text: 'Overview', link: '/' },
           { text: 'Schedule', link: '/schedule' },
           { text: 'Venue', link: '/venue' },
+        ],
+      },
+      {
+        text: 'Background (30 min theory)',
+        items: [
+          { text: 'African diversity, panels, biocuration', link: '/theory' },
         ],
       },
       {
