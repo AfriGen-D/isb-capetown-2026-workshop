@@ -31,6 +31,26 @@ sections to be re-captured against FedImpute before
 the workshop day.
 :::
 
+::: tip Tutorial narrative -- GWAS → impute → GWAS
+The live workshop walks participants through a
+**before-and-after loop**: run GWAS on the sparse input
+genotypes first, see the thin Manhattan plot, then
+submit an imputation job, download the imputed output,
+and re-run GWAS. The comparison (sparse vs imputed
+Manhattan + QQ) shows in pictures what panel-specific
+accuracy numbers tell in tables.
+
+The written tutorial below follows a more
+textbook-linear order (introduction → account →
+prepare → submit → download → QC → GWAS) but the
+**live session uses the narrative ordering in
+[`/schedule`](/schedule)**: GWAS first, then
+imputation, then GWAS again. When re-capturing the
+FedImpute step-by-step, fold the tutorial's existing
+GWAS section in *twice* -- once as a baseline before
+submission, once as the payoff after download.
+:::
+
 ---
 
 ## 0. The FedImpute Platform

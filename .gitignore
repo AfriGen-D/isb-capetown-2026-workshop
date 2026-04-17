@@ -4,6 +4,10 @@ node_modules/
 .vitepress/dist/
 *.log
 
+# Local Playwright + ad-hoc screenshot captures (not site content)
+.playwright-captures/
+.playwright-mcp/
+
 # Env / credentials
 .env
 .env.*
