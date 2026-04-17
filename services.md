@@ -18,13 +18,18 @@ benchmark below.
 [sengupta]: https://doi.org/10.1016/j.xgen.2023.100332
 
 ::: info TL;DR
-For African samples, use an **African-specific panel**
-(AGR, H3Africa) on either **FedImpute** (the AfriGen-D
-federated platform we use in this workshop) or the
-Sanger Imputation Server. TOPMed on TOPMed Imputation
-Server is a strong second choice because of sheer
-sample size. Michigan's KGP panel is a legacy option
-rather than a first choice for African imputation.
+For African samples, use the **H3Africa panel on
+FedImpute** (the AfriGen-D federated platform we use
+in this workshop) -- it is the best-matched
+African-specific panel and is the active service. The
+**Sanger Imputation Service** (historical host of the
+AGR panel) is **currently offline**, so AGR is not
+directly reachable via a public endpoint right now.
+**TOPMed on TOPMed Imputation Server** is the strong
+second choice thanks to sheer sample size, especially
+for rare-variant work. Michigan's KGP panel is a
+legacy option rather than a first choice for African
+imputation.
 :::
 
 ## The services landscape
@@ -36,14 +41,15 @@ rather than a first choice for African imputation.
 | **FedImpute** (AfriGen-D) | [fedimpute.afrigen-d.org](https://fedimpute.afrigen-d.org) | Federates Minimac4 / WES nodes | Eagle | AfriGen-D Identity SSO, free academic | H3Africa (primary), others via federation |
 | **Michigan Imputation Server 2** | [imputationserver.sph.umich.edu](https://imputationserver.sph.umich.edu) | Minimac4 | Eagle | Free academic, email signup | HRC r1.1, 1000G Phase 1/3, GAsP, CAAPA, HLA multi-ethnic, HapMap 2 |
 | **TOPMed Imputation Server** | [imputation.biodatacatalyst.nhlbi.nih.gov](https://imputation.biodatacatalyst.nhlbi.nih.gov) | Minimac4 | Eagle | Free with BioData Catalyst account | TOPMed r3 (133,597 samples, 445 M variants) |
-| **Sanger Imputation Service** (SIS) | <https://imputation.sanger.ac.uk> | PBWT | Eagle / ShapeIT | Free academic | HRC, AGR, 1000G Phase 3 |
+| *Sanger Imputation Service* (SIS) | <https://imputation.sanger.ac.uk> | PBWT | Eagle / ShapeIT | -- | HRC, AGR, 1000G Phase 3 -- **currently unavailable (site returns 410; down for maintenance since May 2025 with no ETA)** |
 | *Legacy AfriGen-D Service* | [impute.afrigen-d.org](https://impute.afrigen-d.org) | Minimac4 | Eagle | Free academic | H3Africa v6, 1000G Phase 3 -- **being retired in favour of FedImpute** |
 
 <!-- markdownlint-enable MD013 MD060 -->
 
-All four active services share **Minimac4/PBWT under
-the hood with Eagle phasing**. The differences live in
-two places: **which panels they host** (coverage
+The currently active services (FedImpute, Michigan,
+TOPMed) share **Minimac4 under the hood with Eagle
+phasing**. The differences live in two places:
+**which panels they host** (coverage
 across populations) and **how they handle access**
 (identity, data stewardship, export).
 
@@ -218,8 +224,10 @@ Direct from the paper:
   **H3Africa panel** (African-specific, local
   infrastructure, ILIFU-hosted)
 - Second choice if H3Africa access is unavailable:
-  **AGR on Sanger** or **TOPMed r3** (via the TOPMed
-  Imputation Server)
+  **TOPMed r3** (via the TOPMed Imputation Server).
+  AGR on Sanger used to be the other strong
+  African-specific option, but the Sanger Imputation
+  Service is currently unavailable.
 - Panels to deprioritise for African work: HRC and
   1000G-only -- their NDR on SSA samples exceeds
   acceptable thresholds for most downstream
@@ -240,7 +248,9 @@ using this short ladder:
 
 1. **African cohort (any sub-continental group)** →
    **H3Africa** on **FedImpute** (this workshop's
-   choice). AGR on Sanger is an equivalent backup.
+   choice). AGR on Sanger *used to be* an equivalent
+   backup; the Sanger service is currently offline
+   (see the services table above).
 2. **Admixed African-American cohort** → **TOPMed
    r3** on TOPMed Imputation Server, or CAAPA on
    Michigan.
