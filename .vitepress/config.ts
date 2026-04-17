@@ -25,6 +25,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Theory', link: '/theory' },
+      { text: 'Services & Panels', link: '/services' },
       { text: 'Workflow', link: '/workflow' },
       { text: 'Tutorial', link: '/tutorial' },
       { text: 'AGMP', link: '/agmp' },
@@ -46,6 +47,7 @@ export default defineConfig({
         text: 'Background (30 min theory)',
         items: [
           { text: 'African diversity, panels, biocuration', link: '/theory' },
+          { text: 'Imputation services & panels (in-depth)', link: '/services' },
         ],
       },
       {

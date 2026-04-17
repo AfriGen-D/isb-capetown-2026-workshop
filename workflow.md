@@ -164,7 +164,9 @@ using the H3Africa reference panel.
 - [ ] Choose **Imputation** pipeline
 - [ ] Reference panel: **H3Africa v6** (African-
   optimised; see [theory §2](/theory#_2-reference-panels-10-min)
-  for the rationale)
+  for the conceptual rationale and
+  [services & panels](/services) for the full
+  comparison and Sengupta 2023 benchmark)
 - [ ] Phasing: **Eagle** (default)
 - [ ] Population: African
 - [ ] Upload the sparse VCF

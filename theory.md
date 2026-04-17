@@ -130,31 +130,37 @@ rare in Europe but common in East Africa.
 
 ### The public panel landscape
 
-<!-- markdownlint-disable MD013 MD060 -->
+Several public reference panels are in routine use,
+each hosted by a different imputation service. The
+one-line summary:
 
-| Panel | Scope | Approx. samples | Notes |
-| --- | --- | --- | --- |
-| **1000 Genomes Phase 3** | Global reference | ~2,500 | Legacy baseline; limited for rare variants |
-| **HRC r1.1** | European-weighted | ~32,000 | Large but skewed; weak on African rare variants |
-| **TOPMed Freeze 8** | Multi-ancestry | ~97,000 | Currently the largest public panel; strong rare-variant coverage |
-| **H3Africa v6** | African-focused | 8,894 haplotypes / 48 populations | Purpose-built for sub-Saharan imputation |
-| **African Genome Resource (AGR)** | African | ~4,956 | African-specific, dense coverage |
+- **H3Africa v6** (AfriGen-D / H3ABioNet) and **AGR**
+  (Sanger) -- the two African-focused panels,
+  relatively small but population-matched
+- **TOPMed r3** (TOPMed Server) -- the largest public
+  panel at 133,597 samples, multi-ancestry
+- **HRC r1.1** and **1000 Genomes Phase 3** --
+  legacy / European-weighted
 
-<!-- markdownlint-enable MD013 MD060 -->
+For full specs, the hosting services, sample counts,
+access models, and a decision guide, see the
+**[Services & panels page](/services)**.
 
 ### What the benchmark actually says
 
-[Sengupta et al. 2023][sengupta] evaluated multiple
-panels on whole-genome sequenced sub-Saharan African
-samples. Lower **non-reference discordance rate
+[Sengupta et al. 2023][sengupta] -- co-led by
+AfriGen-D / H3Africa contributors including the
+workshop organiser -- evaluated five reference panels
+on ~11,000 sub-Saharan African participants from
+AWI-Gen. Lower **non-reference discordance rate
 (NDR)** is better:
 
 | Panel | NDR on SSA samples |
 | --- | --- |
-| **AGR** (African-specific) | **2.23% ± 0.58%** |
-| TOPMed | 3.57% ± 1.88% |
-| KGP 1000G | 6.74-7.01% |
-| HRC | 7.64% ± 2.28% |
+| **AGR** (African-specific) | **2.23 % ± 0.58 %** |
+| TOPMed | 3.57 % ± 1.88 % |
+| KGP 1000G (Michigan / Sanger) | 6.74 – 7.01 % |
+| HRC | 7.64 % ± 2.28 % |
 
 The African-specific AGR panel halved TOPMed's
 discordance and was ~70% more accurate than HRC --
