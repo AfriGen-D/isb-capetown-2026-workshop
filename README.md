@@ -20,7 +20,7 @@ AfriGen-D resources:
   imputation backends (H3Africa, Michigan Imputation
   Server) via GA4GH standards. African-led,
   African-hosted on the ILIFU research cloud.
-  <https://dev-fedimpute-ui.afrigen-d.dev>
+  <https://fedimpute.afrigen-d.org>
 - **AGMP** -- African Genomic Medicine Portal.
   17,470 curated variants across 6,270 genes, 48
   drugs, 1,579 phenotypes, 1,194 studies.
@@ -68,7 +68,7 @@ The site auto-deploys to GitHub Pages via
 ## Accounts
 
 - **AfriGen-D Identity** (SSO):
-  [register](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/)
+  [register](https://kibali.afrigen-d.org/if/flow/afrigend-enrollment/)
   -- this SSO account covers **FedImpute**. AGVD
   currently requires a separate signup at
   <https://nyame.afrigen-d.org/accounts/login/>.

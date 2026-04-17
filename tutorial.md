@@ -20,7 +20,7 @@ targets the **legacy** imputation UI at
 <https://impute.afrigen-d.org>. For ISB Cape Town 2026
 the workshop uses the new
 **Federated Genotype Imputation Platform (FedImpute)**
-at <https://dev-fedimpute-ui.afrigen-d.dev>.
+at <https://fedimpute.afrigen-d.org>.
 
 The *concepts* (imputation theory, reference panel
 choice, R² interpretation, GWAS comparison) all carry
@@ -108,7 +108,7 @@ federated node.
 
 Log in with your **AfriGen-D Identity** account. If
 you don't have one,
-[register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/)
+[register here](https://kibali.afrigen-d.org/if/flow/afrigend-enrollment/)
 -- this SSO account covers FedImpute. AGVD does
 **not yet** share the SSO and requires a separate
 signup at
@@ -206,7 +206,7 @@ After completing this tutorial, you will be able to:
 - Laptop with a modern browser (Chrome, Firefox,
   Safari, or Edge)
 - AfriGen-D Identity account
-  ([register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/))
+  ([register here](https://kibali.afrigen-d.org/if/flow/afrigend-enrollment/))
   -- this SSO account covers FedImpute. AGVD does
   not yet share SSO; register separately at
   <https://nyame.afrigen-d.org/accounts/login/>

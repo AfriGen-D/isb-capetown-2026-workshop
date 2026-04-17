@@ -51,7 +51,7 @@ on the day based on participant progress.
 
 - Laptop with power adapter and a modern browser
 - **AfriGen-D Identity** account ready ahead of time --
-  [register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/).
+  [register here](https://kibali.afrigen-d.org/if/flow/afrigend-enrollment/).
   This SSO account covers **FedImpute**.
 - **AGVD account** (separate for now) --
   [register on AGVD](https://nyame.afrigen-d.org/accounts/login/).

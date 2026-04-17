@@ -98,7 +98,7 @@ capacity for genomic data curation.
 
 - Laptop with a modern browser (Chrome, Firefox, Safari, or Edge)
 - AfriGen-D Identity account
-  ([register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/))
+  ([register here](https://kibali.afrigen-d.org/if/flow/afrigend-enrollment/))
   -- this SSO account covers **FedImpute**. AGVD
   currently requires a **separate** account
   ([register on AGVD](https://nyame.afrigen-d.org/accounts/login/))

@@ -33,7 +33,7 @@ rather than a first choice for African imputation.
 
 | Service | URL | Imputation engine | Phasing | Access | Panels hosted |
 | --- | --- | --- | --- | --- | --- |
-| **FedImpute** (AfriGen-D) | [dev-fedimpute-ui.afrigen-d.dev](https://dev-fedimpute-ui.afrigen-d.dev) | Federates Minimac4 / WES nodes | Eagle | AfriGen-D Identity SSO, free academic | H3Africa (primary), others via federation |
+| **FedImpute** (AfriGen-D) | [fedimpute.afrigen-d.org](https://fedimpute.afrigen-d.org) | Federates Minimac4 / WES nodes | Eagle | AfriGen-D Identity SSO, free academic | H3Africa (primary), others via federation |
 | **Michigan Imputation Server 2** | [imputationserver.sph.umich.edu](https://imputationserver.sph.umich.edu) | Minimac4 | Eagle | Free academic, email signup | HRC r1.1, 1000G Phase 1/3, GAsP, CAAPA, HLA multi-ethnic, HapMap 2 |
 | **TOPMed Imputation Server** | [imputation.biodatacatalyst.nhlbi.nih.gov](https://imputation.biodatacatalyst.nhlbi.nih.gov) | Minimac4 | Eagle | Free with BioData Catalyst account | TOPMed r3 (133,597 samples, 445 M variants) |
 | **Sanger Imputation Service** (SIS) | <https://imputation.sanger.ac.uk> | PBWT | Eagle / ShapeIT | Free academic | HRC, AGR, 1000G Phase 3 |

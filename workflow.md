@@ -162,7 +162,7 @@ using the H3Africa reference panel.
 
 - [ ] Log in to **FedImpute** via AfriGen-D Identity
   SSO:
-  [`dev-fedimpute-ui.afrigen-d.dev/login`](https://dev-fedimpute-ui.afrigen-d.dev/login)
+  [`fedimpute.afrigen-d.org/login`](https://fedimpute.afrigen-d.org/login)
 - [ ] Choose **Imputation** pipeline
 - [ ] Reference panel: **H3Africa v6** (African-
   optimised; see [theory §2](/theory#_2-reference-panels-10-min)
