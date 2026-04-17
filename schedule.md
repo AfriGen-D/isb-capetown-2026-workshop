@@ -1,6 +1,7 @@
 # Workshop Schedule
 
-**Monday, 20 April 2026 · 14:00--18:00 SAST · Atlantic I, Lagoon Beach Hotel**
+**Monday, 20 April 2026 · 14:45--17:45 SAST · Atlantic I, Lagoon Beach Hotel**
+*(3 hours total, including a 10-min coffee break.)*
 
 ::: tip Narrative-first structure
 The imputation hands-on follows a **GWAS → impute → GWAS**
@@ -29,17 +30,17 @@ on the day based on participant progress.
 
 | Time | Topic | Duration |
 | --- | --- | --- |
-| 14:00--14:15 | Welcome, introductions, workshop overview | 15 min |
-| 14:15--14:35 | **Introduction to AfriGen-D Resources and Data Discovery** (recording -- Sumir Panji / Lyndon Zass): overview of AfriGen-D resources, navigating the AfriGen-D catalogues | 20 min |
-| 14:35--15:00 | Theory: African genetic diversity, reference panels, biocuration context | 25 min |
-| 15:00--15:15 | Hands-on: **GWAS on SPARSE data** (baseline) -- thin Manhattan, motivate imputation | 15 min |
-| 15:15--15:45 | Hands-on: Submit imputation job on FedImpute (account, upload, configure) | 30 min |
-| 15:45--16:00 | Coffee break (imputation job runs in background) | 15 min |
-| 16:00--16:25 | Hands-on: Download imputed results + R² quality assessment | 25 min |
-| 16:25--16:55 | Hands-on: **GWAS on IMPUTED data** -- side-by-side Manhattan + QQ vs baseline | 30 min |
-| 16:55--17:20 | Hands-on: AGMP -- pharmacogenomic variants | 25 min |
-| 17:20--17:45 | Hands-on: AGVD -- population-specific frequencies | 25 min |
-| 17:45--18:00 | Integration, discussion, Q&A, feedback | 15 min |
+| 14:45--14:55 | Welcome, introductions, workshop overview | 10 min |
+| 14:55--15:15 | **Introduction to AfriGen-D Resources and Data Discovery** (recording -- Sumir Panji / Lyndon Zass): overview of AfriGen-D resources, navigating the AfriGen-D catalogues | 20 min |
+| 15:15--15:30 | Theory: African genetic diversity, reference panels, biocuration context | 15 min |
+| 15:30--15:45 | Hands-on: **GWAS on SPARSE data** (baseline) -- thin Manhattan, motivate imputation | 15 min |
+| 15:45--16:10 | Hands-on: Submit imputation job on FedImpute (account, upload, configure) | 25 min |
+| 16:10--16:20 | Coffee break (imputation job runs in background) | 10 min |
+| 16:20--16:40 | Hands-on: Download imputed results + R² quality assessment | 20 min |
+| 16:40--17:05 | Hands-on: **GWAS on IMPUTED data** -- side-by-side Manhattan + QQ vs baseline | 25 min |
+| 17:05--17:20 | Hands-on: AGMP -- pharmacogenomic variants | 15 min |
+| 17:20--17:35 | Hands-on: AGVD -- population-specific frequencies | 15 min |
+| 17:35--17:45 | Integration, discussion, Q&A, feedback | 10 min |
 
 <!-- markdownlint-enable MD013 -->
 
@@ -56,7 +57,7 @@ on the day based on participant progress.
 - Accounts can be created on the day, but doing both
   in advance saves time.
 
-## Pre-recorded Intro (14:15)
+## Pre-recorded Intro (14:55)
 
 The 20-minute **Introduction to AfriGen-D Resources
 and Data Discovery** (Sumir Panji / Lyndon Zass) is
@@ -67,11 +68,12 @@ this site.
 
 ## Break Logistics
 
-- **Coffee break (15:45):** in the main conference
-  foyer -- refreshments are provided by the conference.
-  The imputation job is submitted just before the break
-  and completes in the background, so you walk back to
-  a ready-to-download result.
+- **Coffee break (16:10, 10 min):** in the main
+  conference foyer -- refreshments are provided by
+  the conference. The imputation job is submitted
+  just before the break and completes in the
+  background, so you walk back to a ready-to-
+  download result.
 - The room is available continuously, so you can keep
   your laptop set up during breaks.
 

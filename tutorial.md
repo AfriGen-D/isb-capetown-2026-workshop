@@ -8,10 +8,10 @@ Database (AGVD)**.
 
 **Event:** 19th Annual International Biocuration
 Conference (ISB Cape Town 2026)  
-**Date:** Monday, 20 April 2026, 14:00--18:00 SAST  
+**Date:** Monday, 20 April 2026, 14:45--17:45 SAST  
 **Venue:** Atlantic I, Lagoon Beach Hotel Conference
 Centre and Spa, Milnerton, Cape Town, South Africa  
-**Duration:** 4 hours  
+**Duration:** 3 hours  
 **Organiser:** Mr Mamana Mbiyavanga (UCT / AfriGen-D)  
 
 ::: warning Platform transition -- read before you start
@@ -1853,7 +1853,7 @@ You have successfully completed this exercise if:
 
 ---
 
-## Appendix: Workshop Schedule (4 hours, 14:00--18:00)
+## Appendix: Workshop Schedule (3 hours, 14:45--17:45)
 
 The canonical live schedule is at
 [**`/schedule`**](/schedule), and per-step checklists

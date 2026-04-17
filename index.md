@@ -53,11 +53,11 @@ features:
 | Field       | Detail |
 | ----------- | ------ |
 | Event       | 19th Annual International Biocuration Conference |
-| Date        | Monday, 20 April 2026 -- 14:00 to 18:00 SAST |
+| Date        | Monday, 20 April 2026 -- 14:45 to 17:45 SAST |
 | Venue       | Atlantic I, Lagoon Beach Hotel Conference Centre and Spa, Milnerton |
-| Duration    | 4 hours |
+| Duration    | 3 hours (includes a 10-min coffee break) |
 | Organiser   | Mr Mamana Mbiyavanga (UCT / AfriGen-D) |
-| Format      | ~2 hours teaching + ~2 hours hands-on exercises |
+| Format      | ~1 hour teaching + ~2 hours hands-on exercises |
 
 <!-- markdownlint-enable MD013 MD060 -->
 

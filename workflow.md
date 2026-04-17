@@ -50,7 +50,7 @@ means a missed `QC` at step 2.
 ## Step 1 -- GWAS on SPARSE data (baseline)
 
 ::: info Schedule
-**15:00--15:15 (15 min)** -- runs immediately after
+**15:30--15:45 (15 min)** -- runs immediately after
 the theory slot. The *point* is to see a thin,
 under-powered Manhattan plot so imputation feels
 motivated.
@@ -123,7 +123,7 @@ having a baseline plot to compare against later.
 ## Step 2 -- Submit the imputation job
 
 ::: info Schedule
-**15:15--15:45 (30 min)** -- account, upload,
+**15:45--16:10 (25 min)** -- account, upload,
 configure, submit. Coffee break starts right after
 submission so the job runs in the background.
 :::
@@ -196,7 +196,7 @@ to the relevant QC checklist item.
 ## Step 3 -- Download imputed results + R² QC
 
 ::: info Schedule
-**16:00--16:25 (25 min)** -- job should be done;
+**16:20--16:40 (20 min)** -- job should be done;
 download results and assess imputation quality by R².
 :::
 
@@ -259,7 +259,7 @@ Likely causes: (1) panel-population mismatch (see
 ## Step 4 -- GWAS on IMPUTED data + comparison
 
 ::: info Schedule
-**16:25--16:55 (30 min)** -- the payoff. Re-run GWAS
+**16:40--17:05 (25 min)** -- the payoff. Re-run GWAS
 on the imputed VCF, compare plots side-by-side with
 the baseline from step 1.
 :::
@@ -318,7 +318,7 @@ correction was dropped -- include PCs if not already.
 ## Step 5 -- AGMP pharmacogenomic lookup
 
 ::: info Schedule
-**16:55--17:20 (25 min)** -- move from discovery
+**17:05--17:20 (15 min)** -- move from discovery
 (GWAS) to curation-backed interpretation.
 :::
 
@@ -379,7 +379,7 @@ biocuration payoff.)
 ## Step 6 -- AGVD population-frequency comparison
 
 ::: info Schedule
-**17:20--17:45 (25 min)** -- the "frequency
+**17:20--17:35 (15 min)** -- the "frequency
 interpretation in the right population" story.
 :::
 
@@ -462,9 +462,9 @@ day.
 
 ---
 
-## Integration: end-of-session recap (17:45--18:00, 15 min)
+## Integration: end-of-session recap (17:35--17:45, 10 min)
 
-By this point participants have, in 4 hours:
+By this point participants have, in 3 hours:
 
 1. Baseline GWAS on sparse data (step 1)
 2. Imputation submission with panel selection (step 2)
