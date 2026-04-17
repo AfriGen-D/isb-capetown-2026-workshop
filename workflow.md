@@ -50,7 +50,7 @@ means a missed `QC` at step 2.
 ## Step 1 -- GWAS on SPARSE data (baseline)
 
 ::: info Schedule
-**15:00--15:15 (15 min)** -- runs immediately after
+**14:55--15:10 (15 min)** -- runs immediately after
 the theory slot. The *point* is to see a thin,
 under-powered Manhattan plot so imputation feels
 motivated.
@@ -123,9 +123,11 @@ having a baseline plot to compare against later.
 ## Step 2 -- Submit the imputation job
 
 ::: info Schedule
-**15:15--15:40 (25 min)** -- account, upload,
-configure, submit. Coffee break starts right after
-submission so the job runs in the background.
+**15:10--15:35 (25 min)** -- account, upload,
+configure, submit. The job runs on the server while
+you continue to Step 3 (Download + QC) in the next
+slot; for a chr22-only input of this size, typical
+wall-clock is well under 25 min.
 :::
 
 **Goal:** submit a chr22 imputation job on FedImpute
@@ -171,8 +173,8 @@ using the H3Africa reference panel.
 - [ ] Population: African
 - [ ] Upload the sparse VCF
 - [ ] Submit the job
-- [ ] Note the **job ID** -- you'll need it after the
-  break
+- [ ] Note the **job ID** -- you'll need it for the
+  download step
 
 ### Verify
 
@@ -180,8 +182,10 @@ using the H3Africa reference panel.
 - [ ] No upload error, no QC failure on the service
   side -- if it fails, back up to the QC stage above
 - [ ] Job progress visible in the jobs list
-- [ ] **Leave for coffee** -- job completes while
-  you're away
+- [ ] **Proceed to Step 3** while the job runs in the
+  background -- for a chr22 / 661-sample input the
+  job typically finishes within the 25-min Step 3
+  slot
 
 ::: warning If submission fails
 Most submission failures are one of three things:
@@ -196,8 +200,10 @@ to the relevant QC checklist item.
 ## Step 3 -- Download imputed results + R² QC
 
 ::: info Schedule
-**15:55--16:20 (25 min)** -- job should be done;
-download results and assess imputation quality by R².
+**15:35--16:00 (25 min)** -- job should complete
+during this slot; download results and assess
+imputation quality by R². Finish before the break at
+16:00.
 :::
 
 **Goal:** pull down the imputed VCF + stats, filter
@@ -259,9 +265,10 @@ Likely causes: (1) panel-population mismatch (see
 ## Step 4 -- GWAS on IMPUTED data + comparison
 
 ::: info Schedule
-**16:20--16:50 (30 min)** -- the payoff. Re-run GWAS
-on the imputed VCF, compare plots side-by-side with
-the baseline from step 1.
+**16:30--17:00 (30 min, first slot after the break)**
+-- the payoff. Re-run GWAS on the imputed VCF,
+compare plots side-by-side with the baseline from
+step 1.
 :::
 
 **Goal:** see the Manhattan plot **fill in**, the QQ
@@ -318,7 +325,7 @@ correction was dropped -- include PCs if not already.
 ## Step 5 -- AGMP pharmacogenomic lookup
 
 ::: info Schedule
-**16:50--17:10 (20 min)** -- move from discovery
+**17:00--17:20 (20 min)** -- move from discovery
 (GWAS) to curation-backed interpretation.
 :::
 
@@ -379,7 +386,7 @@ biocuration payoff.)
 ## Step 6 -- AGVD population-frequency comparison
 
 ::: info Schedule
-**17:10--17:30 (20 min)** -- the "frequency
+**17:20--17:35 (15 min)** -- the "frequency
 interpretation in the right population" story.
 :::
 
@@ -462,7 +469,7 @@ day.
 
 ---
 
-## Integration: end-of-session recap (17:30--17:45, 15 min)
+## Integration: end-of-session recap (17:35--17:45, 10 min)
 
 By this point participants have, in 3 hours:
 

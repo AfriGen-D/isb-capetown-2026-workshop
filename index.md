@@ -57,7 +57,7 @@ features:
 | Venue       | Atlantic I, Lagoon Beach Hotel Conference Centre and Spa, Milnerton |
 | Duration    | 3 h 45 min content + 15-min buffer (workshop block: 14:00--18:00) |
 | Organiser   | Mr Mamana Mbiyavanga (UCT / AfriGen-D) |
-| Format      | ~1 hour teaching + ~2¾ hours hands-on; 15-min coffee break |
+| Format      | ~1 hour teaching + ~2½ hours hands-on; 30-min break at the 2-hour mark |
 
 <!-- markdownlint-enable MD013 MD060 -->
 
