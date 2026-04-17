@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 import taskLists from 'markdown-it-task-lists'
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: 'ISB Cape Town 2026 -- AfriGen-D Tutorial',
   description:
     'Hands-on tutorial for genotype imputation and data analysis using ' +
@@ -98,4 +99,4 @@ export default defineConfig({
       md.use(taskLists, { enabled: false, label: true })
     },
   },
-})
+}))

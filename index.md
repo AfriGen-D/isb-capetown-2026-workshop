@@ -67,9 +67,16 @@ The African Genomics Data Hub (AfriGen-D) provides essential curated resources
 for analysing African genetic data, addressing unique challenges in variant
 discovery, imputation accuracy, and knowledge integration. Despite having the
 highest genomic diversity of any continent, African populations remain the
-least studied in human genetic variation. Population-specific reference
-panels deliver substantially better imputation accuracy than generic panels
-when applied to African cohorts ([Sengupta et al. 2023][sengupta]).
+least studied in human genetic variation.
+
+Population-specific reference panels deliver **substantially better imputation
+accuracy** than generic panels when applied to African cohorts. In the
+[Sengupta et al. 2023][sengupta] benchmark on ~11,000 sub-Saharan African
+participants, the African Genome Resource panel achieved a non-reference
+discordance rate of **2.23%**, versus **7.64%** for the European-weighted HRC
+panel — a **~3.4× accuracy advantage** despite AGR being ~20× smaller than
+the next-best panel (TOPMed). Population match beats panel size. See the
+[Services & Panels page](/services) for the full comparison.
 
 This workshop contributes directly to addressing the severe underrepresentation
 of African populations in global genomic databases while building local

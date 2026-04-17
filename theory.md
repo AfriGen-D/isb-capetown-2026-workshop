@@ -72,6 +72,13 @@ Northern Africa separately, plus Ex-Africa cohorts
 (African-ancestry populations outside the continent)
 and global comparators.
 
+![AGVD search interface showing 11 population clusters as filter chips: Western_Africa, Eastern_Africa, Southern_Africa, Central_Africa, Northern_Africa, South_America, North_America, Asia, Oceania, Ex-Africa, Europe](/images/platforms/agvd-02-search.png)
+
+*AGVD's cluster filters aren't an arbitrary UI
+choice; they encode the sub-continental structure of
+the African genome and refuse to let the analyst
+collapse it into a single "AFR" bin.*
+
 ### H3Africa, AGVP, and the data that exists
 
 Two initiatives created the base layer of African
@@ -225,7 +232,34 @@ through deliberate curation work.
 ### The AfriGen-D curation stack
 
 Today's hands-on walks three resources, each of which
-is a different kind of curation:
+is a different kind of curation, composed into one
+pipeline:
+
+```mermaid
+flowchart LR
+    SNP[Sparse VCF<br/>SNP array]
+    Panel[H3Africa panel<br/>8,894 haplotypes<br/>48 populations]
+    Imp[FedImpute<br/>job + RO-Crate]
+    Imputed[Imputed VCF<br/>+ R² stats]
+    AGMP[AGMP<br/>pharmacogenomics<br/>17,470 variants]
+    AGVD[AGVD<br/>cluster MAFs<br/>11 clusters]
+    Out[Biocuration-grade<br/>variant report]
+
+    SNP --> Imp
+    Panel --> Imp
+    Imp --> Imputed
+    Imputed --> AGMP
+    Imputed --> AGVD
+    AGMP --> Out
+    AGVD --> Out
+
+    classDef curated fill:#F4A535,stroke:#A93629,color:#000
+    classDef compute fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef output fill:#C94234,stroke:#8A2B21,color:#fff
+    class Panel,AGMP,AGVD curated
+    class Imp compute
+    class Out output
+```
 
 <!-- markdownlint-disable MD013 -->
 
@@ -237,14 +271,17 @@ is a different kind of curation:
 
 <!-- markdownlint-enable MD013 -->
 
-The three are meant to compose: a well-imputed VCF
-from FedImpute feeds a lookup in AGMP (is this
-variant known to affect drug response?) and AGVD (is
-it common in the participant's population cluster?).
-**The provenance chain survives** because every step
-uses community standards -- GA4GH on the compute
-side, PharmGKB/DisGeNET on the curation side,
-RO-Crate to package them together.
+Each node in the pipeline is either *curated* (yellow)
+or *compute* (green). The sparse input you bring and
+the biocuration-grade output you leave with are
+separated by three curated layers and one compute
+layer -- drop any of them and the output is just
+annotation without provenance.
+
+**The provenance chain survives** because every edge
+uses a community standard: GA4GH WES / DRS for the
+compute, PharmGKB / DisGeNET / GWAS Catalogue on the
+curation side, RO-Crate to package them together.
 
 ### What a biocurator should leave with
 
