@@ -1850,22 +1850,13 @@ You have successfully completed this exercise if:
 
 ## Appendix: Workshop Schedule (4 hours, 14:00--18:00)
 
-<!-- TODO(mamana): validate this 4-hour schedule
-     against your ISB Cape Town agenda. Adjust
-     timings/breaks and the AGMP + AGVD slots based
-     on how deep you plan to go into each tool. -->
-
-| Time | Topic | Duration |
-| --- | --- | --- |
-| 14:00--14:15 | Welcome, introductions, workshop overview | 15 min |
-| 14:15--14:45 | Theory: African genetic diversity, reference panels, biocuration context | 30 min |
-| 14:45--15:30 | Hands-on: AfriGen-D Imputation Service -- account setup, data preparation, job submission | 45 min |
-| 15:30--15:45 | Coffee break | 15 min |
-| 15:45--16:15 | Hands-on: monitor jobs, download results, R² quality assessment | 30 min |
-| 16:15--16:45 | Hands-on: GWAS visualisation (Manhattan, QQ) -- sparse vs imputed comparison | 30 min |
-| 16:45--17:15 | Hands-on: African Genomics Medicine Portal (AGMP) -- querying pharmacogenomic variants | 30 min |
-| 17:15--17:45 | Hands-on: African Genomics Variation Database (AGVD) -- population-specific frequencies | 30 min |
-| 17:45--18:00 | Integration, discussion, Q&A, feedback | 15 min |
+The canonical live schedule is at
+[**`/schedule`**](/schedule), and per-step checklists
+(Data prep · QC · Run · Verify) live on
+[**`/workflow`**](/workflow). This tutorial only
+duplicates the schedule at the time of writing --
+if the two disagree, `/schedule` is the source of
+truth.
 
 ---
 
