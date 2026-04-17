@@ -25,8 +25,14 @@ export default withMermaid(defineConfig({
 
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Theory', link: '/theory' },
-      { text: 'Services & Panels', link: '/services' },
+      {
+        text: 'Background',
+        items: [
+          { text: 'Theory: diversity, panels, biocuration', link: '/theory' },
+          { text: 'Genotype imputation (how it works)', link: '/imputation' },
+          { text: 'Services & Panels (in-depth)', link: '/services' },
+        ],
+      },
       { text: 'Workflow', link: '/workflow' },
       { text: 'Tutorial', link: '/tutorial' },
       { text: 'AGMP', link: '/agmp' },
@@ -48,6 +54,7 @@ export default withMermaid(defineConfig({
         text: 'Background (30 min theory)',
         items: [
           { text: 'African diversity, panels, biocuration', link: '/theory' },
+          { text: 'Genotype imputation (how it works)', link: '/imputation' },
           { text: 'Imputation services & panels (in-depth)', link: '/services' },
         ],
       },
