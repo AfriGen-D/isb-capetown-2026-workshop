@@ -40,20 +40,6 @@
   --vp-c-brand-darker: #A93629;
 }
 
-/* Hero kicker: brand gradient. The main headline
-   (.text) stays the default solid colour so the
-   gradient reads as an accent, not a repeat. */
-.VPHero .name {
-  background: linear-gradient(
-    120deg,
-    var(--vp-c-brand-1) 30%,
-    var(--vp-c-brand-2)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 /* Feature cards get a subtle brand-coloured hover border */
 .VPFeature {
   border: 1px solid var(--vp-c-divider);
