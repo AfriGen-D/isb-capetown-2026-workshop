@@ -5,7 +5,7 @@ Data Analysis for African Populations: A Hands-on
 Tutorial Using AfriGen-D's Curated African Genomic
 Resources"**, held at the 19th Annual International
 Biocuration Conference, Atlantic I, Lagoon Beach
-Hotel, Cape Town -- Monday 20 April 2026, 14:45--17:45
+Hotel, Cape Town -- Monday 20 April 2026, 14:00--18:00 (content to 17:45)
 SAST.
 
 **View Tutorial Online:** <https://afrigen-d.github.io/isb-capetown-2026-workshop/>
@@ -42,7 +42,8 @@ AfriGen-D resources:
   hands-on scaffold)
 - `agvd.md` -- AGVD session (portal overview +
   hands-on scaffold)
-- `schedule.md` -- 3-hour agenda
+- `schedule.md` -- 14:00--17:45 agenda (15-min
+  buffer to 18:00)
 - `venue.md` -- Lagoon Beach Hotel Conference Centre
   + travel notes
 - `public/data/` -- sample VCF (chr22, hg38, 661

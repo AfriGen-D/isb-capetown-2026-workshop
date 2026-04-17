@@ -4,7 +4,7 @@
 **Room:** Atlantic I  
 **Hotel:** Lagoon Beach Hotel Conference Centre and Spa  
 **Area:** Milnerton, Cape Town, South Africa  
-**Date:** Monday, 20 April 2026, 14:45--17:45 SAST (3 hours)
+**Date:** Monday, 20 April 2026, 14:00--18:00 SAST (content targets 17:45 finish)
 :::
 
 ## About the Hotel
