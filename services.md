@@ -97,16 +97,30 @@ whole-genome data from the
 led by AfriGen-D / H3Africa contributors including
 Sengupta, Botha, Meintjes, and **Mbiyavanga**
 (workshop organiser), with senior authors Hazelhurst,
-Mulder, Ramsay, and Choudhury -- evaluated **5
-reference panels on ~11,000 sub-Saharan African
-participants** from the AWI-Gen study, imputed through
-three hosted services (Sanger, Michigan, TOPMed).
+Mulder, Ramsay, and Choudhury -- is the most complete
+empirical comparison of imputation panels and
+services for sub-Saharan African (SSA) data to date.
+The headline finding: **population match beats panel
+size**. The details matter.
+
+### Study design
+
+<!-- markdownlint-disable MD013 MD060 -->
+
+| Element | Detail |
+| --- | --- |
+| **Study population** | ~10,900 SSA participants from the **AWI-Gen** study (4 African countries, East / West / South regions) |
+| **Truth set** | 95 SSA high-coverage whole-genome sequences (held-out, used to score imputation accuracy) |
+| **Panels evaluated** | 5: **AGR**, **TOPMed r2**, **HRC**, **KGP_S** (1000G on Sanger), **KGP_M** (1000G on Michigan) |
+| **Services used** | **Sanger** (AGR, HRC, KGP_S), **TOPMed** (TOPMed), **Michigan** (KGP_M) |
+| **Accuracy metrics** | Non-reference discordance rate (NDR), average INFO / R² score per alternate allele frequency (AAF) bin |
+
+<!-- markdownlint-enable MD013 MD060 -->
 
 ### Headline results -- non-reference discordance rate
 
-Lower NDR = more accurate imputation. On 95 SSA
-whole-genome-sequence samples (the WGS "truth" set),
-with variants imputed from an array-based input:
+Lower NDR = more accurate imputation. Measured on the
+95 SSA WGS truth set:
 
 <!-- markdownlint-disable MD013 -->
 
@@ -120,16 +134,83 @@ with variants imputed from an array-based input:
 
 <!-- markdownlint-enable MD013 -->
 
-Two observations the paper drives home:
+::: tip The 20× size paradox
+AGR contains ~**20× fewer samples** than TOPMed --
+yet achieves **lower** SSA discordance and halves
+TOPMed's NDR. A panel 20× larger drawn from a
+Eurocentric distribution under-performs a small,
+well-matched African panel. Population match > panel
+size.
+:::
 
-1. **The African-specific AGR panel halved TOPMed's
-   discordance** and was **~70 % more accurate than
-   HRC**, despite being ~**20× smaller** than TOPMed.
-   Size is not destiny; **population match is**.
-2. **TOPMed is the runner-up** for African samples
-   because its multi-ancestry design captures more
-   African haplotypes than HRC / 1000G — even without
-   being African-specific.
+### Panels by allele-frequency stratum
+
+The top-line NDR number hides a more interesting
+story once you stratify by allele frequency.
+[Sengupta et al. 2023][sengupta] report the average
+INFO / R² distribution per panel across AAF bins; the
+picture differs for common vs rare variants:
+
+- **AAF > 0.001 (common + low-frequency variants):**
+  AGR is **competitive with TOPMed** despite the 20×
+  size gap. The curated African haplotype structure
+  matters more than raw sample count for variants
+  that are reasonably frequent in African genomes.
+- **AAF ≤ 0.001 (rare variants):** TOPMed's sheer
+  size begins to tell. For very rare variants, the
+  larger panel captures haplotype combinations AGR
+  has never seen, and the rank order flips in
+  TOPMed's favour.
+
+The practical reading: **choose AGR / H3Africa for
+common + low-frequency variants** (this is most
+GWAS / candidate-gene work), **add TOPMed when rare
+variants are the main event** (burden tests,
+Mendelian discovery).
+
+### Geographic variation inside Africa
+
+SNP imputation *yield* -- how many imputed positions
+you recover -- varied significantly between **East**,
+**West**, and **South** African populations,
+reinforcing the point from [theory §1](/theory#_1-african-genetic-diversity-10-min):
+sub-continental structure is real and it affects
+analytical outcomes, not just figure captions.
+
+### The Khoe-San ancestry gap
+
+The paper's most interesting finding, for curation
+purposes, is a **gradient**: across every imputed
+dataset, **NDR rose with the proportion of Khoe-San
+ancestry** in an individual. Even the best panel
+(AGR) fails progressively worse as Khoe-San ancestry
+increases -- because even AGR under-represents
+Khoe-San haplotypes.
+
+This is the **under-representation-within-
+under-representation** problem: African populations
+are under-represented in global panels, and inside
+African panels Khoe-San populations are further
+under-represented. It is the concrete empirical case
+for why H3Africa v7, AGenDA, and programmes that
+explicitly sample under-represented ancestrally
+distinct groups matter.
+
+### Author recommendations
+
+Direct from the paper:
+
+1. For SSA datasets, **use AGR or TOPMed**. The
+   other three panels (HRC, KGP_S, KGP_M) have NDR
+   too high for most downstream analyses.
+2. **Integrate not only geographically but also
+   ancestrally diverse WGS data** into next-
+   generation reference panels -- specifically
+   Khoe-San and other currently under-represented
+   ancestry groups.
+3. Always **report panel, service, and pipeline
+   version** in publications so imputation outputs
+   can be interpreted and reproduced.
 
 ### What this means for the workshop
 
@@ -139,13 +220,14 @@ Two observations the paper drives home:
 - Second choice if H3Africa access is unavailable:
   **AGR on Sanger** or **TOPMed r3** (via the TOPMed
   Imputation Server)
-- Panels to deprioritise for African work: HRC,
+- Panels to deprioritise for African work: HRC and
   1000G-only -- their NDR on SSA samples exceeds
   acceptable thresholds for most downstream
   analyses
-- Expect the v6 → v7 transition to push AGR / H3Africa
-  accuracy *further* ahead once the AGenDA-derived
-  cohorts are incorporated
+- Expect the v6 → v7 transition to push H3Africa
+  accuracy *further* ahead, especially if AGenDA-
+  derived cohorts add Khoe-San / under-represented
+  ancestry coverage where current panels struggle
 
 The workshop's hands-on in [`/workflow`](/workflow)
 uses H3Africa v6 via FedImpute as the default panel

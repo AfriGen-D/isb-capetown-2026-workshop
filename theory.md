@@ -110,6 +110,21 @@ its resources -- and the reason the workshop spends
 time on AGVD's cluster-level search rather than just
 gnomAD's "AFR" bin.
 
+::: warning The Khoe-San gap
+[Sengupta et al. 2023][sengupta-theory] -- the paper
+that underpins the reference-panel discussion in
+section 2 -- found that **imputation discordance
+rises with the proportion of Khoe-San ancestry** in
+an individual, across *every* panel they evaluated,
+including the African-specific AGR. Even the best
+current panel under-represents Khoe-San populations.
+This is the concrete empirical case for why
+"Africa" cannot be treated as one population in a
+reference panel, a GWAS, or an ACMG classification.
+:::
+
+[sengupta-theory]: https://doi.org/10.1016/j.xgen.2023.100332
+
 ---
 
 ## 2. Reference panels (≈10 min)
