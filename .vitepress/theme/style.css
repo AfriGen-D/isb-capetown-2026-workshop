@@ -40,8 +40,12 @@
   --vp-c-brand-darker: #A93629;
 }
 
-/* Hero title: brand gradient */
-.VPHero .name {
+/* Hero title: brand gradient across both the kicker
+   (.name) and the main headline (.text) so the full
+   "ISB Cape Town 2026 — Genotype Imputation ..." block
+   reads as one AfriGen-D-branded unit. */
+.VPHero .name,
+.VPHero .text {
   background: linear-gradient(
     120deg,
     var(--vp-c-brand-1) 30%,
