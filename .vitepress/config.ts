@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import taskLists from 'markdown-it-task-lists'
 
 export default defineConfig({
   title: 'ISB Cape Town 2026 -- AfriGen-D Tutorial',
@@ -91,5 +92,8 @@ export default defineConfig({
 
   markdown: {
     theme: { light: 'github-light', dark: 'github-dark' },
+    config: (md) => {
+      md.use(taskLists, { enabled: false, label: true })
+    },
   },
 })
