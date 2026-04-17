@@ -139,9 +139,12 @@ for the current list.
 
 - **Browsing and search:** open access, no account
   required
-- **Downloads / controlled data:** log in at
-  <https://nyame.afrigen-d.org/accounts/login/>
-  using your AfriGen-D Identity
+- **Downloads / controlled data:** register and log in
+  at <https://nyame.afrigen-d.org/accounts/login/>.
+  AGVD currently uses its **own account system
+  (nyame)** -- it does **not yet** share the AfriGen-D
+  Identity SSO used by FedImpute, so you need a
+  separate signup.
 
 ## Resources
 

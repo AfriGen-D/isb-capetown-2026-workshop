@@ -109,7 +109,10 @@ federated node.
 Log in with your **AfriGen-D Identity** account. If
 you don't have one,
 [register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/)
--- the same SSO account also works for AGVD.
+-- this SSO account covers FedImpute. AGVD does
+**not yet** share the SSO and requires a separate
+signup at
+<https://nyame.afrigen-d.org/accounts/login/>.
 
 <!-- TODO(mamana): re-capture detailed step-by-step
      screens (upload VCF, select reference panel,
@@ -204,7 +207,9 @@ After completing this tutorial, you will be able to:
   Safari, or Edge)
 - AfriGen-D Identity account
   ([register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/))
-  -- one SSO account covers FedImpute and AGVD
+  -- this SSO account covers FedImpute. AGVD does
+  not yet share SSO; register separately at
+  <https://nyame.afrigen-d.org/accounts/login/>
 - Basic understanding of VCF format is helpful but
   not required
 

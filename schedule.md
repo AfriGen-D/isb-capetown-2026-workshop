@@ -48,9 +48,13 @@ on the day based on participant progress.
 - Laptop with power adapter and a modern browser
 - **AfriGen-D Identity** account ready ahead of time --
   [register here](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/).
-  A single SSO account covers FedImpute and AGVD.
-  Accounts can be created on the day, but doing it in
-  advance saves time.
+  This SSO account covers **FedImpute**.
+- **AGVD account** (separate for now) --
+  [register on AGVD](https://nyame.afrigen-d.org/accounts/login/).
+  AGVD does **not yet** share the AfriGen-D Identity
+  SSO, so it needs its own signup.
+- Accounts can be created on the day, but doing both
+  in advance saves time.
 
 ## Pre-recorded Intro (14:15)
 

@@ -68,7 +68,9 @@ The site auto-deploys to GitHub Pages via
 
 - **AfriGen-D Identity** (SSO):
   [register](https://dev-auth.afrigen-d.dev/if/flow/afrigend-enrollment/)
-  -- a single SSO account covers FedImpute and AGVD.
+  -- this SSO account covers **FedImpute**. AGVD
+  currently requires a separate signup at
+  <https://nyame.afrigen-d.org/accounts/login/>.
 - **AGMP** currently requires no account for search.
 
 ## Support
