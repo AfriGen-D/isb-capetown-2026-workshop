@@ -1,8 +1,9 @@
 /**
  * AfriGen-D brand styling for ISB Cape Town 2026 workshop.
- * Colours match the production AfriGen-D docs system:
- *   red    #C94234  -- primary brand, links, buttons
- *   yellow #F4A535  -- accent, warnings, hero gradient end
+ * Solid colours only (no gradients). Colours match the
+ * production AfriGen-D docs system:
+ *   red    #C94234  -- primary brand, links, buttons, hero kicker
+ *   yellow #F4A535  -- accent, warnings
  *   green  #2E7D32  -- tips, successful-state highlights
  */
 
