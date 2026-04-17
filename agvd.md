@@ -7,6 +7,13 @@ interpretation.
 
 Explore: <https://agvd.afrigen-d.org>
 
+::: info Hands-on checklist
+This session is **Step 6** on the
+[`/workflow`](/workflow#step-6-agvd-population-frequency-comparison)
+page -- keep it open for the explicit Data prep · QC ·
+Run · Verify checklist.
+:::
+
 ![AGVD landing page -- mission, objectives, and future releases](/images/platforms/agvd-01-landing.png)
 
 ## Why AGVD?

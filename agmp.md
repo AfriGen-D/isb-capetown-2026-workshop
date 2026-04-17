@@ -7,6 +7,13 @@ in African populations and the African diaspora.
 
 Explore: <https://agmp.afrigen-d.org>
 
+::: info Hands-on checklist
+This session is **Step 5** on the
+[`/workflow`](/workflow#step-5-agmp-pharmacogenomic-lookup)
+page -- keep it open for the explicit Data prep · QC ·
+Run · Verify checklist.
+:::
+
 ![AGMP landing page with search by variant, gene, drug, phenotype](/images/platforms/agmp-01-landing.png)
 
 ## Why AGMP?

@@ -12,6 +12,14 @@ download the imputed output, and re-run GWAS -- and
 imputation viscerally rather than mechanically.
 :::
 
+::: info Keep [`/workflow`](/workflow) open during every hands-on slot
+The [Hands-on Workflow](/workflow) page lists every
+step for each slot below as an explicit **Data prep ·
+QC · Run · Verify** checklist. Work through those
+checklists as the session progresses -- if something
+breaks, back up one stage rather than pushing ahead.
+:::
+
 ::: tip Note from the organiser
 This schedule is a working draft. Pacing will be adjusted
 on the day based on participant progress.

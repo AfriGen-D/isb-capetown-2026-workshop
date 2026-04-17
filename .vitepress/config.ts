@@ -24,6 +24,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Theory', link: '/theory' },
+      { text: 'Workflow', link: '/workflow' },
       { text: 'Tutorial', link: '/tutorial' },
       { text: 'AGMP', link: '/agmp' },
       { text: 'AGVD', link: '/agvd' },
@@ -47,9 +48,10 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Hands-on Tutorial',
+        text: 'Hands-on Workflow',
         items: [
-          { text: 'Genotype Imputation', link: '/tutorial' },
+          { text: 'Per-step checklists (all 6 slots)', link: '/workflow' },
+          { text: 'Genotype Imputation (full tutorial)', link: '/tutorial' },
           { text: 'AGMP (pharmacogenomic variants)', link: '/agmp' },
           { text: 'AGVD (population frequencies)', link: '/agvd' },
         ],

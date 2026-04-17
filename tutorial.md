@@ -31,6 +31,15 @@ sections to be re-captured against FedImpute before
 the workshop day.
 :::
 
+::: info Checklist for each hands-on step
+Each slot in the [schedule](/schedule) has an explicit
+**Data prep · QC · Run · Verify** checklist on the
+[`/workflow`](/workflow) page. Keep it open in a second
+tab during the live session and tick each item as you
+go -- especially the QC steps, which are where
+imputation jobs typically fail silently.
+:::
+
 ::: tip Tutorial narrative -- GWAS → impute → GWAS
 The live workshop walks participants through a
 **before-and-after loop**: run GWAS on the sparse input
