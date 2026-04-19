@@ -23,6 +23,13 @@ export default withMermaid(defineConfig({
     logo: '/afrigen-d-logo.png',
     siteTitle: 'ISB Cape Town 2026',
 
+    // "On this page" right-hand outline: include H2 + H3
+    // so long pages (notably /tutorial) expose subsections
+    // like "2.1 Creating an Account", "Exercise 1", etc.
+    // rather than collapsing everything into top-level H2s.
+    outline: [2, 3],
+    outlineTitle: 'On this page',
+
     nav: [
       { text: 'Home', link: '/' },
       {
