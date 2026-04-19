@@ -19,23 +19,26 @@ The workshop now uses **FedImpute** at
 <https://fedimpute.afrigen-d.org> for every step, and
 all URLs and instructions below target it.
 
-**Sections 2 (Getting Started), 5 (Data Preparation),
-and 13 (Troubleshooting) have been rewritten against
-FedImpute** with fresh screenshots and cover the
-current platform accurately.
+**Rewritten against FedImpute (current):**
+sections 2 (Getting Started), 4.2 (Reference
+Panels, from the live FedImpute FAQ), 5 (Data
+Preparation), and 13 (Troubleshooting).
 
-**Sections 3 (Dashboard), 4 (Pipelines + Panels),
-and 6--11 (Submit / Monitor / Download / QC / GWAS)
-still carry legacy screenshots** from the retired
-`impute.afrigen-d.org` service. The *concepts* -- VCF
-QC, panel choice, R² interpretation, GWAS comparison
--- carry over unchanged. The specific UI screens,
-button labels, and submission flow have changed.
-Those sections will be re-captured against FedImpute
-as part of the ongoing content update; in the
-meantime, lean on [section 0](#_0-the-fedimpute-platform)
-and the [`/workflow`](/workflow) checklists for the
-current flow.
+**Softened to concept-level pending re-capture:**
+sections 3 (Dashboard) and 4.1 (Pipeline listing).
+The text no longer asserts specific UI details that
+may have changed; the FedImpute-specific layout will
+be documented after an authenticated walkthrough.
+
+**Still carry legacy screenshots and step-by-step
+from the retired `impute.afrigen-d.org` service:**
+sections 6--11 (Submit / Monitor / Download / QC /
+GWAS / Case Study). The *concepts* transfer directly,
+the *UI screens* have changed. Lean on
+[section 0](#_0-the-fedimpute-platform) and the
+[`/workflow`](/workflow) checklists for the current
+flow while those sections are re-captured in
+Phase 2.
 :::
 
 ::: info Checklist for each hands-on step
@@ -521,42 +524,47 @@ Confirm you can see, after signing in:
 
 ---
 
-## 3. Dashboard Overview
+## 3. Dashboard overview
 
-After logging in, the Dashboard provides an overview of your imputation activities:
+::: warning FedImpute UI capture pending
+This section describes the **legacy AfriGen-D
+Imputation Service** dashboard. The exact FedImpute
+dashboard layout (button names, menus, panel
+sections) will be documented after an authenticated
+re-capture pass. The concepts below -- jobs list,
+status categories, navigation -- map to any modern
+imputation service and are a good mental model to
+arrive with.
+:::
 
-### Dashboard Components
+Once signed in, a typical imputation-service
+dashboard lets you:
 
-| Section | Description |
-|---------|-------------|
-| **Total Jobs** | Number of all submitted jobs |
-| **Completed Jobs** | Successfully finished imputation jobs |
-| **Running Jobs** | Jobs currently being processed |
-| **Success Rate** | Percentage of successful jobs |
-| **Recent Jobs** | List of your most recent submissions |
-| **Service Health** | Status of connected imputation services |
+- **See your submitted jobs** with a status for each
+  (queued, running, completed, failed)
+- **Submit a new job** through a pipeline selector
+- **Download results** from completed jobs
+- **Manage your account** (profile, logout, Data
+  Access Agreements)
 
-### Navigation Menu
+On FedImpute specifically, the screens live under the
+authenticated routes at
+<https://fedimpute.afrigen-d.org> after you sign in
+via AfriGen-D Identity (§2).
 
-The top navigation bar provides access to:
+### Navigation on the live platform
 
-- **Home** - Dashboard with overview and statistics
-- **Run** - Access available pipelines (Imputation, GWAS, Liftover, etc.)
-- **Jobs** - View and manage your submitted jobs
-- **Help** - Access support and documentation
-- **Contact** - Contact the AfriGen-D team
-- **Profile** (username dropdown) - Account settings and logout
+FedImpute exposes Home and About as public routes;
+everything else becomes reachable once you are
+signed in. The exact menu structure will be
+documented alongside screenshots in the Phase-2
+re-capture pass.
 
----
-
-### 📝 Check Your Understanding: Dashboard
-
-<details>
-<summary><strong>Question:</strong> What information does the "Success Rate" metric show?</summary>
-
-**Answer:** The Success Rate shows the percentage of your submitted jobs that completed successfully without errors. A high success rate indicates good data quality and proper job configuration.
-
-</details>
+<!-- TODO(mamana): capture the FedImpute dashboard
+     once authenticated + list the actual nav items.
+     Replace the "typical imputation-service
+     dashboard" bullets with FedImpute-specific ones.
+  -->
 
 ---
 
@@ -564,58 +572,115 @@ The top navigation bar provides access to:
 
 ### 4.1 Accessing Pipelines
 
-FedImpute provides several genomics pipelines accessible via the **Run** menu in the navigation bar:
+::: warning FedImpute UI capture pending
+The pipeline list below inherits from the legacy
+AfriGen-D Imputation Service. The **Genotype
+Imputation** pipeline is definitely on FedImpute
+(it's the platform's main purpose). Whether the
+supporting tools (GWAS Training, Allele Switch
+Checker, VCF Liftover) are hosted on FedImpute
+itself or are separate services will be confirmed
+during the Phase-2 authenticated re-capture.
+:::
 
-1. Click **"Run"** in the navigation menu
+The pipelines this tutorial references:
 
-2. Browse the available pipelines:
-   - **Genotype Imputation** - Main imputation workflow with African-specific reference panels
-   - **GWAS Training Workflow** - Complete GWAS analysis using PLINK2
-   - **Allele Switch Checker** - QC tool for detecting strand/allele issues
-   - **VCF Liftover** - Convert between genome builds (hg19 ↔ hg38)
+- **Genotype Imputation** -- the main workflow,
+  using African-specific reference panels (see §4.2)
+- **GWAS Training Workflow** -- GWAS analysis using
+  PLINK2 on the imputed output
+- **Allele Switch Checker** (Checkref) -- QC tool
+  for detecting strand / allele issues before
+  imputation (§4.3.2)
+- **VCF Liftover** -- convert between genome builds
+  (hg19 ↔ hg38) before imputation when the input
+  build doesn't match the panel (§4.3.3)
 
-3. Select a pipeline to open its submission form
+<!-- TODO(mamana): confirm during Phase-2
+     authenticated walkthrough which of these
+     pipelines are actually on FedImpute's /run (or
+     equivalent) page vs separate tools. Update this
+     list accordingly. -->
 
 ### 4.2 Available Reference Panels
 
-FedImpute provides the following reference panels:
+Per the live FedImpute FAQ at
+<https://fedimpute.afrigen-d.org>:
 
-| Panel | Build | Description |
-|-------|-------|-------------|
-| **H3Africa V6HC-S** | GRCh38/hg38 | African-specific reference panel optimized for Pan-African populations |
-| **1000 Genomes** | GRCh37/hg19 | Global reference panel with worldwide population diversity |
+<!-- markdownlint-disable MD013 -->
 
-**Recommended Panel for African Populations:**
+| Panel | Build | Notes |
+| --- | --- | --- |
+| **H3Africa v6 (full)** | hg38 (hg19 via liftover) | African-specific, 48 populations, 8,894 haplotypes. The baseline panel used in [Sengupta et al. 2023][sengupta-panels]. |
+| **H3Africa v6 (African-only subset)** | hg38 | Sub-set of v6 restricted to African-ancestry haplotypes; useful when the admixed cohorts in v6 would dilute the population match. |
+| **H3Africa v7** | hg38 | Successor to v6, targets **African-ancestry imputation** specifically. Incorporates newer cohorts. This is the recommended default for African studies on FedImpute. |
+| **HapMap2 (CEU)** | hg19 / hg38 | European-ancestry panel, kept for **benchmarking** against African panels -- not for primary analysis of African cohorts. |
 
-The **H3Africa V6HC-S** panel is the primary recommended choice for African population studies:
-- **African-specific haplotypes**: Contains genetic variation patterns common in African populations
-- **High coverage**: Optimized for imputation accuracy in diverse African ancestries
-- **GRCh38/hg38 build**: Uses the latest human genome reference assembly
+<!-- markdownlint-enable MD013 -->
 
-> **Note**: If using H3Africa V6HC-S and your input data is in GRCh37/hg19 format, use the **VCF Liftover** pipeline first to convert coordinates to GRCh38/hg38 before imputation.
+[sengupta-panels]: https://doi.org/10.1016/j.xgen.2023.100332
+
+More panels are added as they are published by the
+H3Africa Consortium -- check the FAQ item "Which
+reference panels are available?" at
+<https://fedimpute.afrigen-d.org> for the current
+list.
+
+**Recommended panels for African cohorts**
+
+- **H3Africa v7** is the default choice for African
+  and African-ancestry studies on FedImpute.
+- **H3Africa v6** (full or African-only subset) is
+  the direct backward-compatible option -- useful if
+  you are reproducing an earlier analysis or want to
+  compare v6 → v7 accuracy on your cohort.
+- HapMap2 (CEU) is intentionally not recommended for
+  primary African-cohort analysis; use it for
+  benchmarking only (see
+  [`/services`](/services#sengupta-2023-the-african-populations-benchmark)
+  for why European-ancestry panels under-perform on
+  SSA samples).
+
+::: warning Genome build
+If your input data is in **hg19** and you want to
+use an hg38-only panel, run the **VCF Liftover**
+pipeline (§4.3) first to convert coordinates before
+imputation.
+:::
 
 ---
 
 ### 📝 Check Your Understanding: Pipelines
 
 <details>
-<summary><strong>Question 1:</strong> What reference panel is available on FedImpute?</summary>
+<summary><strong>Question 1:</strong> Which reference panels are available on FedImpute?</summary>
 
-**Answer:** The **H3Africa V6HC-S** reference panel is available, which is specifically optimized for African and Pan-African populations using the GRCh38/hg38 genome build.
+**Answer:** Per the FedImpute FAQ:
+**H3Africa v6** (full and African-only subsets) and
+**H3Africa v7** for African-ancestry imputation,
+plus **HapMap2 (CEU)** for benchmarking. More panels
+are added as they are published by the H3Africa
+Consortium.
 
 </details>
 
 <details>
-<summary><strong>Question 2:</strong> How do you access the available pipelines on the AfriGen-D service?</summary>
+<summary><strong>Question 2:</strong> Which panel is the recommended default for an African-ancestry cohort?</summary>
 
-**Answer:** Click on the **Run** menu in the navigation bar. This displays a dropdown with all available pipelines including Genotype Imputation, GWAS Training Workflow, Allele Switch Checker, and VCF Liftover.
+**Answer:** **H3Africa v7**. It is the successor to
+v6 and is specifically targeted at African-ancestry
+imputation. H3Africa v6 (full or African-only subset)
+is the main alternative, used for reproducing earlier
+analyses or for v6 → v7 comparison.
 
 </details>
 
 <details>
 <summary><strong>Question 3:</strong> If your data is in GRCh37/hg19 format, what should you do before imputation?</summary>
 
-**Answer:** Use the **VCF Liftover** pipeline to convert your data from GRCh37/hg19 to GRCh38/hg38 coordinates, since the H3Africa V6HC-S reference panel uses the hg38 build.
+**Answer:** Run the **VCF Liftover** pipeline first
+(§4.3) to convert coordinates to hg38 if the panel
+you want to use is hg38-only.
 
 </details>
 
@@ -844,6 +909,29 @@ For the file `1k_afr_binary_1000k_chr22.vcf.gz`, answer these questions:
 ---
 
 ## 6. Submitting an Imputation Job
+
+::: warning Legacy-UI walkthrough -- §§6--11
+Sections 6 through 11 below (Submit · Monitor ·
+Download · QC · GWAS · full Case Study) are the
+original 2025 short-course walkthrough against the
+retired `impute.afrigen-d.org` service. The
+**concepts** (upload a VCF, choose a panel,
+configure parameters, monitor the run, download
+results, interpret R², compare sparse vs imputed
+GWAS) transfer directly to FedImpute. The specific
+**UI screens, button labels, and URLs in the
+screenshots have changed.**
+
+- For the current FedImpute flow, use the
+  [`/workflow`](/workflow) page checklists as the
+  live source of truth during the workshop.
+- §§6--11 will be re-captured against the
+  authenticated FedImpute UI in Phase 2 of the
+  migration; until then, treat the figures below as
+  "reference to how a Michigan-style imputation
+  service looks" rather than as FedImpute
+  screenshots.
+:::
 
 ### 6.1 Starting a New Job
 
