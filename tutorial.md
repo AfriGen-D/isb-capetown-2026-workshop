@@ -15,19 +15,27 @@ Centre and Spa, Milnerton, Cape Town, South Africa
 **Organiser:** Mr Mamana Mbiyavanga (UCT / AfriGen-D)  
 
 ::: warning Screenshots note -- read before you start
-The step-by-step walkthrough below (sections 2--11)
-was originally authored against the legacy AfriGen-D
-imputation service and still shows some of those UI
-screenshots. The workshop now uses **FedImpute** at
-<https://fedimpute.afrigen-d.org> for every step.
+The workshop now uses **FedImpute** at
+<https://fedimpute.afrigen-d.org> for every step, and
+all URLs and instructions below target it.
 
-The *concepts* (imputation theory, reference panel
-choice, R² interpretation, GWAS comparison) all carry
-over. The specific UI screens, button labels, and
-submission flow have changed -- see section 0 below
-for the FedImpute overview, and expect the downstream
-screenshots to be re-captured against FedImpute as
-part of the ongoing content update.
+**Sections 2 (Getting Started), 5 (Data Preparation),
+and 13 (Troubleshooting) have been rewritten against
+FedImpute** with fresh screenshots and cover the
+current platform accurately.
+
+**Sections 3 (Dashboard), 4 (Pipelines + Panels),
+and 6--11 (Submit / Monitor / Download / QC / GWAS)
+still carry legacy screenshots** from the retired
+`impute.afrigen-d.org` service. The *concepts* -- VCF
+QC, panel choice, R² interpretation, GWAS comparison
+-- carry over unchanged. The specific UI screens,
+button labels, and submission flow have changed.
+Those sections will be re-captured against FedImpute
+as part of the ongoing content update; in the
+meantime, lean on [section 0](#_0-the-fedimpute-platform)
+and the [`/workflow`](/workflow) checklists for the
+current flow.
 :::
 
 ::: info Checklist for each hands-on step
