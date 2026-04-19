@@ -912,112 +912,111 @@ For the file `1k_afr_binary_1000k_chr22.vcf.gz`, answer these questions:
 
 *→ Live checklist: [Workflow Step 2 -- Submit the imputation job](/workflow#step-2-submit-the-imputation-job)*
 
-::: warning Legacy-UI walkthrough -- §§6--11
-Sections 6 through 11 below (Submit · Monitor ·
-Download · QC · GWAS · full Case Study) are the
-original 2025 short-course walkthrough against the
-retired `impute.afrigen-d.org` service. The
-**concepts** (upload a VCF, choose a panel,
-configure parameters, monitor the run, download
-results, interpret R², compare sparse vs imputed
-GWAS) transfer directly to FedImpute. The specific
-**UI screens, button labels, and URLs in the
-screenshots have changed.**
+This section covers the **four things** every
+imputation-service submission requires, regardless of
+platform: the input file, the reference panel, the
+job configuration, and the submission itself. The
+FedImpute-specific UI labels (button names,
+navigation paths) will be documented during the
+authenticated re-capture pass; the **decisions** you
+make at each stage are covered here and are
+transferable across services.
 
-- For the current FedImpute flow, use the
-  [`/workflow`](/workflow) page checklists as the
-  live source of truth during the workshop.
-- §§6--11 will be re-captured against the
-  authenticated FedImpute UI in Phase 2 of the
-  migration; until then, treat the figures below as
-  "reference to how a Michigan-style imputation
-  service looks" rather than as FedImpute
-  screenshots.
+### 6.1 Data upload
+
+::: tip FedImpute upload requirements
+Already covered in [§5](#_5-data-preparation-before-upload):
+**bgzipped VCF, sorted by position, hg19 or hg38,
+≥20 samples**. The platform performs automatic
+format validation during upload and will reject
+files that don't meet these requirements.
 :::
 
-### 6.1 Starting a New Job
+- **One chromosome per file is the common case** --
+  many imputation services require (or strongly
+  prefer) single-chromosome uploads. Split
+  multi-chromosome VCFs with
+  `bcftools view -r chrN input.vcf.gz -Oz -o chrN.vcf.gz`
+  before submitting if that applies to your
+  workflow.
+- **Watch for the validation step.** After upload,
+  FedImpute runs basic format and content checks.
+  Common failure modes (wrong build, REF/ALT flips,
+  non-bgzip `.gz`) are all caught here -- if the
+  file is rejected, the platform reports what
+  failed so you can fix it client-side.
 
-1. Click **"Run"** in the navigation menu to see available pipelines
+For the tutorial we use the sample VCF at
+`/data/1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz`
+-- 661 samples, chr22, hg38, already bgzipped and
+sorted.
 
-![Figure 8: Run menu showing available pipelines](/images/08-run-menu.png)
+### 6.2 Reference panel selection
 
-*Figure 8: Run menu showing available pipelines*
+This is the **most scientifically consequential
+decision** in the whole workflow. See
+[§4.2](#_4-2-available-reference-panels) for the
+current FedImpute panel list and
+[`/services`](/services#sengupta-2023-the-african-populations-benchmark)
+for the Sengupta et al. 2023 benchmark showing
+African panels deliver roughly 3.4× better NDR
+accuracy on SSA samples than European-focused
+panels.
 
-Available pipelines include:
+**Default for an African cohort in this workshop:
+H3Africa v7.** Fall back to H3Africa v6 (full or
+African-only subset) when reproducing older
+analyses.
 
-- **Genotype Imputation** - Main imputation workflow
-- **GWAS Training Workflow** - Run GWAS analysis (see Section 4.3)
-- **Allele Switch Checker** - QC tool for validating VCF files
-- **VCF Liftover** - Convert between genome builds
+### 6.3 Job configuration
 
-2. Select **"Genotype Imputation"** from the dropdown
+Most imputation services surface the same small set
+of job parameters. FedImpute's exact form layout
+will be documented in the Phase-2 capture; the
+parameters themselves are standard:
 
-3. You will see the job submission form
+<!-- markdownlint-disable MD013 -->
 
-![Figure 9: Job submission form for imputation](/images/09-job-submission-form.png)
+| Parameter | What it means | Typical choice |
+| --- | --- | --- |
+| **Job name** | Human-readable label for yourself | `afr_chr22_imputation_2026-04-20` |
+| **Reference panel** | Panel to match against | H3Africa v7 for African cohorts |
+| **Genome build** | Coordinate system of the input VCF | Match the panel; liftover if they differ |
+| **Phasing** | Haplotype-phasing algorithm | **Eagle** (fast, accurate, Minimac4 default) |
+| **Population** | Study-cohort ancestry | African for H3Africa panels |
+| **Output** | Result format | Compressed VCF (imputed genotypes + dosages) |
 
-*Figure 9: Job submission form for imputation*
+<!-- markdownlint-enable MD013 -->
 
-### 6.2 Step 1: Upload Your Data
+::: tip Phasing, briefly
+**Phasing** determines which alleles are inherited
+together on the same chromosome copy. Imputation
+matches your sample's phased **haplotypes** against
+the reference panel's, so better phasing → better
+matches → better imputation. **Eagle** is the
+standard phasing algorithm -- fast, accurate,
+scales to 100k+ samples, and pairs with Minimac4.
+:::
 
-1. **Drag and drop** your file into the upload area, OR
-2. Click **"Browse"** to select a file from your computer
+### 6.4 Submit
 
-3. Wait for the upload to complete (progress bar will show status)
+When you confirm the job, the platform assigns a
+**Job ID**, queues the run, and routes you to the
+monitoring view ([§7](#_7-monitoring-job-progress)
+continues from there). **Save the job ID** -- you'll
+need it if you close the tab and want to come back
+to the job later.
 
-4. The system will validate your file format
+Once submitted, the rest of the workflow is
+asynchronous: the platform runs the job, emails you
+when it completes, and keeps the output available
+for **7 days** ([§5.3](#_5-3-what-fedimpute-does-with-your-file)).
 
-> **Tip:** For this tutorial, we'll use sample data: `1k_afr_binary_1000k_chr22.vcf.gz`
->
-> ⚠️ **Important: One Chromosome Per File** - The imputation service requires each file to contain **only one chromosome**. Files with multiple chromosomes will be rejected. Split your VCF by chromosome before uploading (e.g., `chr1.vcf.gz`, `chr2.vcf.gz`, etc.).
-
-### 6.3 Step 2: Select Reference Panel
-
-1. **Select Reference Panel:**
-   - Click the dropdown to see available panels
-   - Choose **"H3Africa V6HC-S (GRCh38/hg38)"** for African populations
-
-![Figure 10: Reference panel selection dropdown](/images/10-reference-panel-dropdown.png)
-
-*Figure 10: Reference panel selection dropdown*
-
-2. Review the panel description to confirm it matches your needs
-
-### 6.4 Step 3: Configure Job Parameters
-
-Fill in the job configuration form:
-
-| Parameter | Description | Recommended Value |
-|-----------|-------------|-------------------|
-| **Job Name** | Descriptive name for your job | e.g., "AFR_chr22_imputation" |
-| **Genome Build** | Reference genome version | GRCh37 (hg19) or GRCh38 |
-| **Phasing** | Pre-phasing method | Eagle (recommended) |
-| **Population** | Study population | African / Mixed |
-| **QC Filters** | Quality control options | Default settings |
-| **Output Format** | Result file format | VCF (compressed) |
-
-> **💡 Key Concept: Phasing**
->
-> **Phasing** (or haplotype phasing) is the process of determining which alleles are inherited together on the same chromosome. Humans have two copies of each chromosome (one from each parent), and phasing figures out which variants came from which parent.
->
-> **Why does it matter for imputation?**
->
-> - Imputation works by matching your sample's **haplotypes** to reference panel haplotypes
-> - Accurate phasing improves imputation accuracy because it preserves the true LD structure
-> - **Eagle** is the recommended phasing algorithm - it's fast and accurate for large datasets
-
-### 6.5 Step 4: Review and Submit
-
-1. Review all settings on the confirmation page:
-   - Input file name and size
-   - Selected service and reference panel
-   - Job parameters
-
-2. Click **"Submit Job"**
-
-3. Note your **Job ID** for tracking
-
-4. You will be redirected to the job monitoring page
+<!-- TODO(mamana): after the authenticated walkthrough,
+     add screenshots of the four submission screens
+     (upload, panel, config, review) here, and
+     replace the TODO note. The conceptual content
+     above already holds. -->
 
 ---
 
@@ -1049,42 +1048,47 @@ Fill in the job configuration form:
 
 ---
 
-### 🏋️ Exercise 3: Submit Your First Job
+### 🏋️ Exercise 3: Submit your first job
 
-**Task:** Submit an imputation job using the sample data.
+**Task:** Submit an imputation job using the tutorial
+sample data.
 
-**Steps:**
+**Steps:** follow
+[Workflow Step 2](/workflow#step-2-submit-the-imputation-job)'s
+Data-prep → QC → Run → Verify checklist end-to-end:
 
-1. Navigate to Jobs → Create New Job
-2. Upload `1k_afr_binary_1000k_chr22.vcf.gz`
-3. Select H3Africa Imputation Service
-4. Choose the H3Africa Panel
-5. Set job name: "Tutorial_chr22_[YourName]"
-6. Select GRCh37 genome build
-7. Review and Submit
+1. Log in to FedImpute ([§2](#_2-getting-started))
+2. Upload the tutorial VCF
+   ([`/data/1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz`](/data/1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz))
+3. Select **H3Africa v7** reference panel
+4. Set a descriptive job name like
+   `afr_chr22_imputation_<yourname>`
+5. Confirm genome build is **hg38** (matches the
+   sample VCF and the panel)
+6. Submit and note the job ID
 
 <details>
-<summary><strong>✅ Success Criteria</strong></summary>
+<summary><strong>✅ Success criteria</strong></summary>
 
 You should see:
 
 - [ ] Job submission confirmation
 - [ ] Job ID assigned
 - [ ] Status shows "Queued" or "Running"
-- [ ] Job appears in your Jobs list
+- [ ] Job appears in your jobs list
 
 </details>
 
 <details>
-<summary><strong>🆘 Troubleshooting: Upload Failed</strong></summary>
+<summary><strong>🆘 If upload or submit fails</strong></summary>
 
-If your upload fails:
-
-1. Check your internet connection
-2. Verify file format is .vcf.gz
-3. Ensure file size is under 100 MB
-4. Try a different browser
-5. Clear browser cache and retry
+See [§13 Troubleshooting](#_13-troubleshooting) for
+the action-by-symptom table. The most common
+failures at submit time are **wrong compression**
+(plain gzip instead of bgzip), **wrong sort order**,
+**REF/ALT disagreement with the panel**, and
+**build mismatch**. All four are covered in the
+troubleshooting section.
 
 </details>
 
