@@ -638,48 +638,98 @@ Convert genomic coordinates between genome builds (e.g., GRCh37/hg19 to GRCh38/h
 
 ## 5. Data Preparation Before Upload
 
-Before uploading your data, ensure it meets the quality requirements.
+FedImpute publishes its input requirements in the
+landing-page FAQ at
+<https://fedimpute.afrigen-d.org>. This section
+summarises them and adds a few practical notes for
+the workshop dataset.
 
-### 5.1 Supported File Formats
+### 5.1 Supported file formats
 
-| Format | Extensions | Description |
-|--------|------------|-------------|
-| **VCF** | .vcf, .vcf.gz | Variant Call Format |
+FedImpute accepts **VCF**, either plain or
+**bgzip-compressed** (`.vcf.gz`).
 
-**Maximum file size:** 100 MB (contact support for larger files)
+<!-- markdownlint-disable MD013 -->
 
-### 5.2 Data Quality Requirements
+| Format | Extensions | Notes |
+| --- | --- | --- |
+| **VCF** | `.vcf` | Plain text VCF |
+| **bgzipped VCF** | `.vcf.gz` | **Recommended.** Must be bgzip, not plain gzip (use `bgzip`, not `gzip`). |
 
-Your input data should:
+<!-- markdownlint-enable MD013 -->
 
-- ✅ Contain **autosomal chromosomes only** (chr1-22)
-- ✅ Have **biallelic SNPs only**
-- ✅ Use **GRCh37 (hg19)** or **GRCh38 (hg38)** coordinates
-- ✅ Have **consistent REF/ALT alleles** with reference genome
-- ✅ Have **unique variant IDs**
-- ✅ Have **no duplicate samples**
+Check a `.gz` file is bgzipped with `file <name>.gz`
+-- you should see `BGZF` in the output (as in the
+tutorial VCF:
+`file sparse.vcf.gz` → *"Blocked GNU Zip Format
+(BGZF; gzip compatible)"*).
 
-### 5.3 Pre-upload Checklist
+### 5.2 FedImpute input requirements
 
-Before uploading, verify:
+Straight from the FedImpute FAQ:
 
-1. **File format is correct** (VCF)
-2. **File is compressed** (.vcf.gz recommended)
-3. **Genome build is known** (GRCh37 or GRCh38)
-4. **Sample size is appropriate** (not too small for reliable imputation)
-5. **MAF filter applied** (typically MAF > 1%)
+- ✅ Sorted by **chromosomal position**
+- ✅ Use a supported **reference build: hg19 or hg38**
+- ✅ Contain at least **20 samples**
 
-> **💡 Key Concept: MAF (Minor Allele Frequency)**
->
-> **MAF** is the frequency of the less common allele at a genetic variant in a population. It ranges from 0 to 0.5:
->
-> - **MAF = 0.5**: Both alleles equally common
-> - **MAF = 0.01**: Rare variant (1% of chromosomes carry minor allele)
-> - **MAF < 0.01**: Very rare variant
->
-> MAF matters for imputation because **rare variants are harder to impute accurately** - there are fewer examples in the reference panel to learn from.
+Additionally, for clean imputation you should also:
 
-> **Note:** The imputation service will perform additional QC checks after upload, but pre-cleaning your data improves success rates.
+- ✅ Keep **autosomal chromosomes** (chr1--22) unless
+  your panel / analysis explicitly supports
+  chrX/chrY
+- ✅ Use **biallelic SNPs** (split multi-allelic
+  sites with `bcftools norm -m -`)
+- ✅ Ensure **REF matches the chosen reference**
+  (run the Allele Switch Checker -- §4.3.2 -- or
+  `bcftools +fixref` first)
+- ✅ Give variants **unique IDs** where possible
+- ✅ Remove **duplicate samples** and known
+  first-degree relatives as appropriate for your
+  analysis
+
+### 5.3 What FedImpute does with your file
+
+Once uploaded:
+
+- Input VCFs are kept on the ILIFU research cloud
+  (UCT) for **30 days** before automatic deletion
+- Imputed results are kept for **7 days** after
+  completion
+- Results are **encrypted with a one-time password**
+  delivered by email -- download them before the
+  7-day expiry
+- All storage is **POPIA-compliant**; data stays on
+  African infrastructure
+
+(From the FedImpute FAQ "Where is my data stored?"
+and "How long are my results kept?")
+
+### 5.4 Pre-upload checklist
+
+Before submitting:
+
+1. File is **bgzipped VCF** (`.vcf.gz`) -- `file`
+   shows `BGZF`
+2. File is **sorted** (`bcftools sort`) and
+   **tabix-indexed** if multi-chromosome
+3. Genome build is **hg19 or hg38** and matches the
+   panel you will choose
+4. Sample count **≥ 20**
+5. Appropriate **MAF filter** applied for your
+   downstream analysis (typically MAF > 1% for
+   common-variant GWAS; lower if rare-variant work
+   is the goal)
+6. **Allele Switch Checker** run (§4.3.2) -- flips
+   or drops variants whose REF disagrees with the
+   panel
+
+::: tip MAF and imputation accuracy
+Imputation R² drops as MAF decreases. A common
+pattern: R² > 0.9 for MAF > 0.05, R² 0.5--0.9 for
+low-frequency variants, and highly variable for
+rare variants. Filter after imputation by R² (not
+just MAF) if rare-variant analysis is the goal.
+:::
 
 ---
 
