@@ -1098,56 +1098,67 @@ troubleshooting section.
 
 *→ Live checklist: [Workflow Step 3 -- Download imputed results + R² QC](/workflow#step-3-download-imputed-results-r2-qc) (monitoring + download combined in one slot)*
 
-### 7.1 Job Status Overview
+After submission, the job runs asynchronously on
+FedImpute's backend. You don't need to keep the
+browser open -- the platform emails you when it
+completes and keeps results retrievable for 7 days.
+But if you want to watch progress live (and during
+the workshop the watching is the interesting part),
+this section covers what to look for.
 
-Navigate to **"Jobs"** to see all your submissions:
+### 7.1 Job status categories
 
-![Figure 11: Jobs list showing submitted imputation jobs](/images/05-jobs-list.png)
+Imputation services use broadly the same status
+vocabulary, whatever the specific UI labels:
 
-*Figure 11: Jobs list showing submitted imputation jobs*
+| Status | Meaning |
+| --- | --- |
+| **Queued / Pending** | Submitted, waiting for compute capacity |
+| **Running / In progress** | Actively processing |
+| **Completed / Success** | Finished; download link available |
+| **Failed / Error** | Job halted with an error; see the error message |
+| **Cancelled** | Stopped on user request |
 
-| Status | Description | Icon |
-|--------|-------------|------|
-| **Queued** | Waiting to start | Gray clock |
-| **Running** | Currently processing | Blue spinner |
-| **Completed** | Successfully finished | Green checkmark |
-| **Failed** | Error occurred | Red exclamation |
-| **Cancelled** | User cancelled | Gray square |
+### 7.2 What the job actually does
 
-### 7.2 Viewing Job Details
+Under the hood, the job runs the four standard
+imputation pipeline stages (covered in depth in
+[/imputation §3](/imputation#_3-how-imputation-actually-works)):
 
-1. Click on a job name to view detailed information:
-   - **Job metadata** (ID, name, submission time)
-   - **Progress bar** (for running jobs)
-   - **Input Validation** summary
-   - **Quality Control** statistics
-   - **Phasing and Imputation** progress
-   - **Error messages** (if failed)
+1. **QC + harmonisation** -- verifies format, genome
+   build, REF/ALT, and samples
+2. **Phasing** -- Eagle reconstructs haplotypes from
+   the input genotypes
+3. **Imputation** -- Minimac4 matches your phased
+   haplotypes against the reference panel and
+   infers the missing genotypes
+4. **Post-processing** -- per-variant quality
+   metrics (R² / INFO) computed and packaged with
+   the output VCF
 
-![Figure 12: Job details page with progress information](/images/06-job-details.png)
+Most FedImpute job views show a progress indicator
+for each stage; which stage is running tells you a
+lot about where to look if something goes wrong
+(QC errors mean input problems, phasing errors
+usually mean alignment issues).
 
-*Figure 12: Job details page with progress information*
+### 7.3 Expected wall-clock
 
-### 7.3 Job Processing Steps
+For the tutorial input (661 samples, chr22,
+~4,400 variants) against H3Africa v7, imputation
+typically completes in **minutes**. Queue time can
+add more -- factor in **15–60 minutes total** for a
+single-chromosome submission during a busy workshop
+slot. Genome-wide (all autosomes) submissions for a
+larger cohort can run several hours.
 
-Typical imputation workflow stages:
+### 7.4 Managing a running job
 
-1. **Quality Control** - Input data validation
-2. **Phasing** - Haplotype estimation using Eagle
-3. **Imputation** - Genotype inference using Minimac4
-4. **Post-processing** - Quality metrics calculation
-5. **Completion** - Results available for download
-
-> **Estimated Time:** 15-60 minutes depending on data size and queue
-
-### 7.4 Managing Jobs
-
-From the Jobs page, you can:
-
-- **Cancel** a running job (click Cancel button)
-- **Retry** a failed job (click Retry button)
-- **Delete** old jobs (click Delete icon)
-- **Filter** by status using the dropdown
+Most imputation services expose the standard
+controls: **cancel** a running job, **retry** a
+failed one, and **delete** old ones. The FedImpute-
+specific affordances will be documented in the
+authenticated re-capture pass.
 
 ---
 
