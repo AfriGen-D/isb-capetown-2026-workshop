@@ -363,73 +363,107 @@ The FedImpute provides:
 
 ## 2. Getting Started
 
-### 2.1 Creating an Account
+FedImpute uses **AfriGen-D Identity** single sign-on,
+served by the Kibali auth server
+(`kibali.afrigen-d.org`). You register once with
+Kibali, and the same account is used to log in to
+FedImpute.
 
-1. Open your web browser and navigate to **[fedimpute.afrigen-d.org](https://fedimpute.afrigen-d.org)**
+### 2.1 Creating an account
 
-![Figure 1: FedImpute landing page](/images/01-landing-page.png)
+Open <https://fedimpute.afrigen-d.org/login> in your
+browser and click **Register** (top-right) or
+**Sign up** (inside the login card).
 
-*Figure 1: FedImpute landing page*
+![FedImpute login page with Register button top-right and Sign up link inside the card](/images/fedimpute/01-login.png)
 
-2. Click **"Register"** or **"Sign Up"**
+You will be redirected to the **AfriGen-D enrollment
+page** at
+<https://kibali.afrigen-d.org/if/flow/afrigend-enrollment/>.
+Fill in the eight fields -- the first six are
+required, the last field (Role / Position) is
+optional:
 
-3. Fill in the registration form:
-   - **Username**: Choose a unique username
-   - **Email**: Enter your institutional email
-   - **Password**: Create a strong password
-   - **Confirm Password**: Re-enter your password
+![Top of the Kibali enrollment form: Full Name, Email, Username, Password, Confirm Password](/images/fedimpute/02-enroll-top.png)
 
-4. Click **"Create Account"**
+| Field | Expected input | Required |
+| --- | --- | --- |
+| Full Name | First and last name | ✓ |
+| Email | Institutional email recommended | ✓ |
+| Username | Unique handle, lowercase, no spaces | ✓ |
+| Password | Meet complexity rules shown on the form | ✓ |
+| Confirm Password | Same as Password | ✓ |
+| Institution / Affiliation | e.g. *University of Cape Town* | ✓ |
+| Country | e.g. *South Africa* | ✓ |
+| Role / Position | e.g. *Researcher, PhD Student* | — |
 
-5. Check your email for verification (if required)
+Scroll to the bottom, tick the two consent checkboxes,
+and click **Continue**:
 
-### 2.2 Logging In
+![Bottom of the enrollment form: Institution, Country, Role, two consent checkboxes, blue Continue button](/images/fedimpute/03-enroll-bottom.png)
 
-1. Navigate to **[fedimpute.afrigen-d.org](https://fedimpute.afrigen-d.org)**
+- "I agree to the AfriGen-D Terms of Service and
+  understand that access to controlled datasets
+  requires a Data Access Agreement."
+- "I have read and accept the Privacy Policy and
+  understand my data will be processed per applicable
+  regulations."
 
-2. Enter your credentials:
-   - **Username**: Your registered username
-   - **Password**: Your password
+Kibali then sends a verification email to the address
+you supplied -- open it and click the confirmation
+link before continuing to the next step.
 
-![Figure 2: Login page](/images/02-login-page.png)
+### 2.2 Logging in to FedImpute
 
-*Figure 2: Login page*
+Once your email is verified, return to
+<https://fedimpute.afrigen-d.org/login> and click
+**Sign in with AfriGen-D Identity** (the big green
+button). Kibali handles the username + password
+prompt, then redirects you back to FedImpute as a
+logged-in user.
 
-3. Click **"Sign In"**
+<!-- TODO(mamana): after the first authenticated run,
+     add a screenshot of the post-login FedImpute
+     dashboard here and update section 3 below. -->
 
-![Figure 3: Login form with credentials](/images/03-login-filled.png)
+### 🏋️ Exercise 1 -- register, verify, log in
 
-*Figure 3: Login form with credentials*
-
-4. You will be redirected to the **Home Page**
-
-![Figure 4: Home page after successful login](/images/04-home-logged-in.png)
-
-*Figure 4: Home page after successful login*
-
----
-
-### 🏋️ Exercise 1: Create Your Account
-
-**Task:** Register for an account on the FedImpute.
+**Task:** create your AfriGen-D Identity, verify your
+email, and sign in to FedImpute.
 
 **Steps:**
 
-1. Go to [fedimpute.afrigen-d.org](https://fedimpute.afrigen-d.org)
-2. Click "Register"
-3. Fill in your details
-4. Verify your email (if required)
-5. Log in to access the Dashboard
+1. Visit <https://fedimpute.afrigen-d.org/login>.
+2. Click **Register**.
+3. Fill in the enrollment form and accept both
+   consent checkboxes.
+4. Click **Continue**.
+5. Open your email inbox and click the Kibali
+   verification link.
+6. Return to <https://fedimpute.afrigen-d.org/login>
+   and sign in with **Sign in with AfriGen-D Identity**.
+
+::: tip Workshop-day shortcut
+If you already have an AfriGen-D Identity from another
+service (AGVD via nyame is a *separate* account --
+see the [Accounts note](/agvd#access)), you still
+need to register with Kibali to use FedImpute. SSO
+across AfriGen-D services is rolling out; as of this
+workshop, FedImpute and AGVD have distinct account
+systems.
+:::
 
 <details>
-<summary><strong>✅ Verification Checklist</strong></summary>
+<summary><strong>✅ Verification checklist</strong></summary>
 
-Confirm you can see:
+Confirm you can see, after signing in:
 
-- [ ] Dashboard page after login
-- [ ] Navigation menu on the left
-- [ ] Your username in the top right corner
-- [ ] "Total Jobs" statistic (should be 0 for new accounts)
+- [ ] You are redirected back to FedImpute (not
+  Kibali)
+- [ ] "Log in" in the top nav has been replaced with
+  your name or account menu
+- [ ] You can reach the authenticated area of the
+  platform without being redirected again
 
 </details>
 
