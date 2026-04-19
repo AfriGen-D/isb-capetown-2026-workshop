@@ -14,21 +14,20 @@ Centre and Spa, Milnerton, Cape Town, South Africa
 **Duration:** 3 h 45 min content + 15-min buffer  
 **Organiser:** Mr Mamana Mbiyavanga (UCT / AfriGen-D)  
 
-::: warning Platform transition -- read before you start
+::: warning Screenshots note -- read before you start
 The step-by-step walkthrough below (sections 2--11)
-targets the **legacy** imputation UI at
-<https://impute.afrigen-d.org>. For ISB Cape Town 2026
-the workshop uses the new
-**Federated Genotype Imputation Platform (FedImpute)**
-at <https://fedimpute.afrigen-d.org>.
+was originally authored against the legacy AfriGen-D
+imputation service and still shows some of those UI
+screenshots. The workshop now uses **FedImpute** at
+<https://fedimpute.afrigen-d.org> for every step.
 
 The *concepts* (imputation theory, reference panel
 choice, R² interpretation, GWAS comparison) all carry
 over. The specific UI screens, button labels, and
 submission flow have changed -- see section 0 below
 for the FedImpute overview, and expect the downstream
-sections to be re-captured against FedImpute before
-the workshop day.
+screenshots to be re-captured against FedImpute as
+part of the ongoing content update.
 :::
 
 ::: info Checklist for each hands-on step
@@ -118,7 +117,9 @@ signup at
      screens (upload VCF, select reference panel,
      configure parameters, monitor progress, download
      results) against FedImpute. Sections 2-11 below
-     still show the legacy impute.afrigen-d.org UI. -->
+     still show the retired legacy UI; the URLs have
+     been updated to fedimpute.afrigen-d.org but the
+     screenshots have not yet been refreshed. -->
 
 ### Architecture (for the curious)
 
@@ -187,7 +188,7 @@ for genomic data curation.
 After completing this tutorial, you will be able to:
 
 1. Navigate the FedImpute interface (or the legacy
-   AfriGen-D Imputation Service, covered below)
+   FedImpute, covered below)
 2. Prepare genotype data for imputation (quality
    control)
 3. Submit imputation jobs using African-specific
@@ -324,9 +325,9 @@ Several factors influence how well imputation performs. Understanding these help
 >
 > The AfriGen-D service provides R² values for each imputed variant, allowing you to filter by quality.
 
-### The AfriGen-D Imputation Service
+### The FedImpute
 
-The AfriGen-D Imputation Service provides:
+The FedImpute provides:
 
 - Access to African-specific reference panels
 - Connection to H3Africa and other imputation services
@@ -364,11 +365,11 @@ The AfriGen-D Imputation Service provides:
 
 ### 2.1 Creating an Account
 
-1. Open your web browser and navigate to **[impute.afrigen-d.org](https://impute.afrigen-d.org)**
+1. Open your web browser and navigate to **[fedimpute.afrigen-d.org](https://fedimpute.afrigen-d.org)**
 
-![Figure 1: AfriGen-D Imputation Service landing page](/images/01-landing-page.png)
+![Figure 1: FedImpute landing page](/images/01-landing-page.png)
 
-*Figure 1: AfriGen-D Imputation Service landing page*
+*Figure 1: FedImpute landing page*
 
 2. Click **"Register"** or **"Sign Up"**
 
@@ -384,7 +385,7 @@ The AfriGen-D Imputation Service provides:
 
 ### 2.2 Logging In
 
-1. Navigate to **[impute.afrigen-d.org](https://impute.afrigen-d.org)**
+1. Navigate to **[fedimpute.afrigen-d.org](https://fedimpute.afrigen-d.org)**
 
 2. Enter your credentials:
    - **Username**: Your registered username
@@ -410,11 +411,11 @@ The AfriGen-D Imputation Service provides:
 
 ### 🏋️ Exercise 1: Create Your Account
 
-**Task:** Register for an account on the AfriGen-D Imputation Service.
+**Task:** Register for an account on the FedImpute.
 
 **Steps:**
 
-1. Go to [impute.afrigen-d.org](https://impute.afrigen-d.org)
+1. Go to [fedimpute.afrigen-d.org](https://fedimpute.afrigen-d.org)
 2. Click "Register"
 3. Fill in your details
 4. Verify your email (if required)
@@ -477,7 +478,7 @@ The top navigation bar provides access to:
 
 ### 4.1 Accessing Pipelines
 
-The AfriGen-D Imputation Service provides several genomics pipelines accessible via the **Run** menu in the navigation bar:
+The FedImpute provides several genomics pipelines accessible via the **Run** menu in the navigation bar:
 
 1. Click **"Run"** in the navigation menu
 
@@ -491,7 +492,7 @@ The AfriGen-D Imputation Service provides several genomics pipelines accessible 
 
 ### 4.2 Available Reference Panels
 
-The AfriGen-D Imputation Service provides the following reference panels:
+The FedImpute provides the following reference panels:
 
 | Panel | Build | Description |
 |-------|-------|-------------|
@@ -512,7 +513,7 @@ The **H3Africa V6HC-S** panel is the primary recommended choice for African popu
 ### 📝 Check Your Understanding: Pipelines
 
 <details>
-<summary><strong>Question 1:</strong> What reference panel is available on the AfriGen-D Imputation Service?</summary>
+<summary><strong>Question 1:</strong> What reference panel is available on the FedImpute?</summary>
 
 **Answer:** The **H3Africa V6HC-S** reference panel is available, which is specifically optimized for African and Pan-African populations using the GRCh38/hg38 genome build.
 
@@ -1809,7 +1810,7 @@ You have successfully completed this exercise if:
 
 ### What You Learned
 
-1. ✅ How to register and navigate the AfriGen-D Imputation Service
+1. ✅ How to register and navigate the FedImpute
 2. ✅ How to prepare data for imputation
 3. ✅ How to submit and monitor imputation jobs
 4. ✅ How to download and interpret results
@@ -1821,7 +1822,7 @@ You have successfully completed this exercise if:
 - **African-specific reference panels** significantly improve imputation for African populations
 - **R² > 0.3** is the minimum threshold for reliable imputed variants
 - **Quality assessment** is essential before downstream analysis
-- The **AfriGen-D Imputation Service** provides an accessible platform for African genomics research
+- The **FedImpute** provides an accessible platform for African genomics research
 
 ### Next Steps
 
@@ -1836,7 +1837,7 @@ You have successfully completed this exercise if:
 ### AfriGen-D Resources
 
 - **AfriGen-D Portal:** [afrigen-d.org](https://afrigen-d.org)
-- **Imputation Service:** [impute.afrigen-d.org](https://impute.afrigen-d.org)
+- **Imputation Service:** [fedimpute.afrigen-d.org](https://fedimpute.afrigen-d.org)
 - **African Genomics Medicine Portal (AGMP):** [agmp.afrigen-d.org](https://agmp.afrigen-d.org)
 - **African Genome Variation Database (AGVD):** [agvd.afrigen-d.org](https://agvd.afrigen-d.org)
 

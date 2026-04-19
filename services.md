@@ -42,7 +42,7 @@ imputation.
 | **Michigan Imputation Server 2** | [imputationserver.sph.umich.edu](https://imputationserver.sph.umich.edu) | Minimac4 | Eagle | Free academic, email signup | HRC r1.1, 1000G Phase 1/3, GAsP, CAAPA, HLA multi-ethnic, HapMap 2 |
 | **TOPMed Imputation Server** | [imputation.biodatacatalyst.nhlbi.nih.gov](https://imputation.biodatacatalyst.nhlbi.nih.gov) | Minimac4 | Eagle | Free with BioData Catalyst account | TOPMed r3 (133,597 samples, 445 M variants) |
 | *Sanger Imputation Service* (SIS) | <https://imputation.sanger.ac.uk> | PBWT | Eagle / ShapeIT | -- | HRC, AGR, 1000G Phase 3 -- **currently unavailable (site returns 410; down for maintenance since May 2025 with no ETA)** |
-| *Legacy AfriGen-D Service* | [impute.afrigen-d.org](https://impute.afrigen-d.org) | Minimac4 | Eagle | Free academic | H3Africa v6, 1000G Phase 3 -- **being retired in favour of FedImpute** |
+| *Legacy AfriGen-D Service* | ~~impute.afrigen-d.org~~ | Minimac4 | Eagle | -- | **Retired. Use FedImpute above for new jobs.** (URL still resolves but is not a target for new workflows.) |
 
 <!-- markdownlint-enable MD013 MD060 -->
 
