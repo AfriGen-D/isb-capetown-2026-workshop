@@ -33,15 +33,15 @@ on the day based on participant progress.
 | Time | Topic | Duration |
 | --- | --- | --- |
 | 14:00--14:15 | Welcome, introductions, workshop overview | 15 min |
-| 14:15--14:35 | **Introduction to AfriGen-D Resources and Data Discovery** (recording -- Sumir Panji / Lyndon Zass): overview of AfriGen-D resources, navigating the AfriGen-D catalogues | 20 min |
-| 14:35--14:55 | Theory: African genetic diversity, reference panels, biocuration context | 20 min |
-| 14:55--15:10 | Hands-on: **GWAS on SPARSE data** (baseline) -- thin Manhattan, motivate imputation | 15 min |
-| 15:10--15:35 | Hands-on: Submit imputation job on FedImpute (account, upload, configure) | 25 min |
-| 15:35--16:00 | Hands-on: Download imputed results + R² quality assessment (job completes during this slot) | 25 min |
-| **16:00--16:30** | **Break** (30 min at the 2-hour mark -- refreshments, stretch, light conversation) | 30 min |
-| 16:30--17:00 | Hands-on: **GWAS on IMPUTED data** -- side-by-side Manhattan + QQ vs baseline | 30 min |
-| 17:00--17:20 | Hands-on: AGMP -- pharmacogenomic variants | 20 min |
-| 17:20--17:35 | Hands-on: AGVD -- population-specific frequencies | 15 min |
+| 14:15--14:35 | **Introduction to AfriGen-D Resources and Data Discovery** (recording -- Sumir Panji / Lyndon Zass): overview of AfriGen-D resources, navigating the AfriGen-D catalogues ([logistics](#pre-recorded-intro-14-15)) | 20 min |
+| 14:35--14:55 | [**Theory**: African genetic diversity, reference panels, biocuration context](/theory) | 20 min |
+| 14:55--15:10 | Hands-on: [**GWAS on SPARSE data** (baseline)](/workflow#step-1-gwas-on-sparse-data-baseline) -- thin Manhattan, motivate imputation | 15 min |
+| 15:10--15:35 | Hands-on: [Submit imputation job on FedImpute](/workflow#step-2-submit-the-imputation-job) (account, upload, configure) | 25 min |
+| 15:35--16:00 | Hands-on: [Download imputed results + R² quality assessment](/workflow#step-3-download-imputed-results-r2-qc) (job completes during this slot) | 25 min |
+| **16:00--16:30** | **[Break](#break-logistics)** (30 min at the 2-hour mark -- refreshments, stretch, light conversation) | 30 min |
+| 16:30--17:00 | Hands-on: [**GWAS on IMPUTED data**](/workflow#step-4-gwas-on-imputed-data-comparison) -- side-by-side Manhattan + QQ vs baseline | 30 min |
+| 17:00--17:20 | Hands-on: [**AGMP**](/workflow#step-5-agmp-pharmacogenomic-lookup) -- pharmacogenomic variants ([overview](/agmp)) | 20 min |
+| 17:20--17:35 | Hands-on: [**AGVD**](/workflow#step-6-agvd-population-frequency-comparison) -- population-specific frequencies ([overview](/agvd)) | 15 min |
 | 17:35--17:45 | Integration, discussion, Q&A, feedback | 10 min |
 | 17:45--18:00 | *Buffer / free Q&A / instructor available (workshop block officially runs to 18:00)* | 15 min |
 
