@@ -261,6 +261,36 @@ Genotype imputation is a statistical method for inferring unobserved genotypes i
 3. The imputation algorithm finds **matching haplotypes** between your samples and the reference
 4. It **predicts missing genotypes** based on what's observed in similar haplotypes
 
+The same progression in three pictures
+(from the AfriGen-D AGM 2025 reference-panel talk):
+
+**Step 1 — starting state.** Your sample has only a
+few known genotypes (top two rows: "GWAS
+Haplotypes"). The reference panel below has full
+haplotypes from many other individuals.
+
+![Sparse GWAS haplotypes above a dense reference panel of 1000 Genomes haplotypes](/images/imputation-concept/01-gwas-haplotypes.png)
+
+**Step 2 — finding matches.** The algorithm searches
+the reference panel for **haplotypes that match your
+observed genotypes**. Here the purple, green, and
+orange blocks are three reference haplotypes that
+align with the sample.
+
+![Reference panel with three matching haplotypes highlighted in purple, orange, and green](/images/imputation-concept/02-match-reference.png)
+
+**Step 3 — imputing the missing genotypes.** The
+genotypes carried by the matched reference
+haplotypes are transferred into your sample. The
+lowercase letters in the top panel are the
+**imputed** calls -- inferred, not measured.
+
+![Sample haplotypes now shown as complete sequences with imputed calls filled in as lowercase letters](/images/imputation-concept/03-impute-genotype.png)
+
+*(For the conceptual version of this explanation and
+the tool-level details, see the
+[Genotype Imputation background page](/imputation).)*
+
 Imputation enables:
 
 - **Increased marker density** for GWAS without additional genotyping costs
