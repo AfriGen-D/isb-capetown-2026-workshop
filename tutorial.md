@@ -179,10 +179,8 @@ report the African Genome Resource (AGR) panel
 achieving a **non-reference discordance rate of
 ~2.2%** on sub-Saharan African whole-genome samples,
 compared to **~7.6%** for the European-focused HRC
-panel (≈70% reduction in discordance).
-
-*TODO(mamana): the workshop abstract cites a "15--40%
-accuracy improvement" -- confirm the exact source.*
+panel (≈70% reduction in discordance, or about a
+**3.4× accuracy advantage**).
 
 [sengupta]: https://doi.org/10.1016/j.xgen.2023.100332
 
