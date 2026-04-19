@@ -72,12 +72,17 @@ submission, once as the payoff after download.
 ## 0. The FedImpute Platform
 
 **FedImpute** (Federated Genotype Imputation Platform)
-is AfriGen-D's new unified interface to multiple
-imputation backends. Instead of managing separate
-accounts with separate services, you sign in once and
-FedImpute routes your job to the right backend --
-H3Africa, Michigan Imputation Server, or a future
-federated node.
+is AfriGen-D's unified, GA4GH-native interface to
+**African-hosted** imputation infrastructure. You
+sign in once with your AfriGen-D Identity, and
+FedImpute routes your job to an African imputation
+node -- currently the **H3Africa panel backend
+hosted on the ILIFU research cloud at UCT**, with
+additional federated African nodes to follow.
+Michigan and TOPMed imputation servers are
+**separate, non-federated services** -- FedImpute is
+designed as an African-first alternative to them, not
+a front-end over them.
 
 ![FedImpute landing page](/images/platforms/elwazi-01-landing.png)
 
@@ -133,13 +138,22 @@ signup at
 
 FedImpute has three layers:
 
+<!-- markdownlint-disable MD013 -->
+
 | Layer | Implementation | Role |
 | --- | --- | --- |
 | Frontend | Next.js (SSR React) | Job submission, monitoring, results |
 | Orchestration API | Django + FastAPI | Auth, job routing, status aggregation |
-| Backends | H3Africa, Michigan Imputation Server | Imputation via GA4GH-compliant adapters |
+| Backends | H3Africa panel on the ILIFU research cloud at UCT; future African nodes | Imputation via GA4GH-compliant adapters (WES, DRS, Passport) |
 
-![FedImpute architecture + participating institutions](/images/platforms/elwazi-02-about.png)
+<!-- markdownlint-enable MD013 -->
+
+Per the platform's own About page, the current
+participating institutions are the **H3Africa
+Consortium** and the **University of Cape Town /
+ILIFU**.
+
+![FedImpute About page -- participating institutions: H3Africa Consortium and UCT/ILIFU](/images/platforms/elwazi-02-about.png)
 
 ---
 

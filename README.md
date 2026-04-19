@@ -16,10 +16,12 @@ This site is a VitePress-based tutorial covering three
 AfriGen-D resources:
 
 - **FedImpute** -- Federated Genotype Imputation
-  Platform. One unified interface to multiple
-  imputation backends (H3Africa, Michigan Imputation
-  Server) via GA4GH standards. African-led,
-  African-hosted on the ILIFU research cloud.
+  Platform. GA4GH-native (Beacon, DRS, WES,
+  Passport). African-led, African-hosted on the ILIFU
+  research cloud at UCT; routes jobs to the H3Africa
+  panel backend with further federated African nodes
+  to follow. (Michigan and TOPMed imputation servers
+  are separate, non-federated services.)
   <https://fedimpute.afrigen-d.org>
 - **AGMP** -- African Genomic Medicine Portal.
   17,470 curated variants across 6,270 genes, 48

@@ -195,12 +195,18 @@ is not destiny; **population match** is.
 
 Picking the wrong panel is analytically cheap and
 scientifically expensive. FedImpute's federated pitch
-is: **don't force one choice globally**. The same
-platform can route jobs to H3Africa, Michigan
-Imputation Server, or other federated nodes via
-GA4GH adapters. The curator's job is to document the
-choice with full provenance (RO-Crate) so downstream
-analyses can interpret the output correctly.
+is: **don't force the African cohort onto a single
+Eurocentric panel**. The platform hosts African-
+specific panels (H3Africa v6 / v7) on African
+infrastructure (ILIFU / UCT), with further federated
+African nodes to follow. Michigan and TOPMed
+imputation servers are **separate, non-federated
+services** -- FedImpute is an African-first
+alternative, not a proxy in front of them. The
+curator's job in either case is to document the
+panel + service choice with full provenance
+(RO-Crate) so downstream analyses can interpret the
+output correctly.
 
 ---
 
