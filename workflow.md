@@ -491,7 +491,7 @@ That is biocuration-first analysis.
 ## Troubleshooting index
 
 - Legacy imputation troubleshooting:
-  [tutorial §12](/tutorial#12-troubleshooting)
+  [tutorial §13](/tutorial#_13-troubleshooting)
 - FedImpute-specific issues:
   <https://helpdesk.afrigen-d.org>
 - AGMP / AGVD data issues:

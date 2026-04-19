@@ -71,8 +71,8 @@ See [theory §1](/theory) for the federation rationale.
 
 | Panel | Samples | Haplotypes | Ancestry focus | Genome build | Primary host |
 | --- | --- | --- | --- | --- | --- |
-| **H3Africa v6** | 4,447 | 8,894 | **African (48 populations)** | GRCh37 + GRCh38 | AfriGen-D / H3ABioNet |
-| **H3Africa v7** *(TODO)* | *TBD* | *TBD* | African, expanded cohorts (AGenDA) | GRCh38 | AfriGen-D |
+| **H3Africa v6** | 4,447 | 8,894 | **African (48 populations)**; full + African-only subsets available on FedImpute | GRCh37 + GRCh38 | AfriGen-D / H3ABioNet |
+| **H3Africa v7** | *TBD* | *TBD* | **African-ancestry imputation** (live on FedImpute); successor to v6, expanded cohorts (AGenDA) | GRCh38 | AfriGen-D |
 | **African Genome Resource (AGR)** | ~4,956 | ~9,912 | African + African-ancestry | GRCh37 | Sanger |
 | **TOPMed r3** | 133,597 | ~267,194 | Multi-ancestry (US-focused) | GRCh38 | TOPMed Imputation Server |
 | **HRC r1.1** | 32,470 | ~64,940 | Predominantly European | GRCh37 | Michigan, Sanger |
@@ -82,19 +82,20 @@ See [theory §1](/theory) for the federation rationale.
 
 <!-- markdownlint-enable MD013 MD060 -->
 
-::: warning H3Africa v6 → v7
-The tutorial currently targets **H3Africa v6**
-(8,894 haplotypes from 48 populations, the baseline
-used in [Sengupta et al. 2023][sengupta] when paired
-with the AGR panel at Sanger). A **v7** release is in
-preparation, incorporating newly generated African
-whole-genome data from the
-[AGenDA project](https://doi.org/10.1038/s41586-025-09935-7)
-(H3Africa follow-on).
+::: info H3Africa v6 → v7 -- both now live on FedImpute
+Both **H3Africa v6** (the 8,894-haplotype / 48-population
+panel used as the baseline in
+[Sengupta et al. 2023][sengupta] when paired with AGR
+at Sanger) **and the successor H3Africa v7** are
+currently available on FedImpute according to its
+[FAQ](https://fedimpute.afrigen-d.org). v7 targets
+African-ancestry imputation and incorporates newer
+cohorts, building on the work of initiatives such as
+the [AGenDA project](https://doi.org/10.1038/s41586-025-09935-7).
 
 <!-- TODO(mamana): fill in v7 haplotype count, sample
-     count, population coverage, benchmark-NDR numbers
-     vs v6, and expected FedImpute availability date. -->
+     count, population coverage, and benchmark-NDR
+     numbers vs v6 when those numbers are published. -->
 :::
 
 ## Sengupta 2023 -- the African-populations benchmark

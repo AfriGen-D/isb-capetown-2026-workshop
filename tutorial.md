@@ -1784,7 +1784,7 @@ You have successfully completed this exercise if:
 
 ---
 
-## 12. Best Practices and Tips
+## 12. Best practices and tips
 
 ### Data Preparation
 
@@ -1870,27 +1870,62 @@ You have successfully completed this exercise if:
 
 ---
 
-## 12. Troubleshooting
+## 13. Troubleshooting
 
-### Common Issues and Solutions
+Platform-agnostic failure modes first -- these are
+the ones worth memorising because they recur
+regardless of which imputation service you run on.
 
-| Problem | Possible Cause | Solution |
-|---------|----------------|----------|
-| Upload fails | File too large | Compress file or split by chromosome |
-| Job stuck in queue | Service busy | Wait or try different time |
-| Job fails at QC | Data format issues | Check file format and genome build |
-| Low R² values | Population mismatch | Use appropriate reference panel |
-| Missing variants | Not in reference | Expected for rare variants |
+<!-- markdownlint-disable MD013 -->
 
-### Getting Help
+| Symptom | Likely cause | What to do |
+| --- | --- | --- |
+| **Upload rejected** | Wrong compression -- plain `gzip` instead of `bgzip` | Recompress with `bgzip` (`file <name>.gz` must show *BGZF*) |
+| **Upload rejected: "must be sorted"** | VCF isn't sorted by position | `bcftools sort -Oz -o sorted.vcf.gz unsorted.vcf.gz` |
+| **Upload rejected: "minimum 20 samples"** | Cohort smaller than FedImpute's minimum | Add samples or run on a local imputation stack |
+| **Job fails at QC: allele mismatch** | REF allele disagrees with the chosen panel | Run [Allele Switch Checker](#allele-switch-checker-checkref) first; flip or drop offenders |
+| **Job fails at QC: build mismatch** | Input is hg19 but panel is hg38 (or vice versa) | Liftover with [VCF Liftover](#vcf-liftover) -- hg19 → hg38 is the common case |
+| **Job stuck in queue** | Service busy at the workshop-day peak | Wait; the job runs once capacity frees |
+| **Low R² across the board** | Population-panel mismatch | See [/services](/services) -- African cohorts should use H3Africa, not HRC/1000G |
+| **Low R² on rare variants only** | Expected -- imputation is statistical | Filter by R² (e.g. R² > 0.8) before rare-variant analysis |
+| **Missing variants in output** | Variant absent from the panel | Expected; fold in a second panel if you need them |
+| **Can't download: "password expired"** | The one-time password email is >7 days old | Re-submit; results are deleted after 7 days |
 
-- **Documentation:** [afrigen-d.org](https://afrigen-d.org)
-- **Support:** [helpdesk.afrigen-d.org](https://helpdesk.afrigen-d.org)
+<!-- markdownlint-enable MD013 -->
+
+::: tip When things fail silently
+The most damaging failure mode is a job that
+**completes** but produces low-quality output. Always
+look at the R² histogram and variant count before
+drawing conclusions -- the
+[Workflow Step 3 checklist](/workflow#step-3-download-imputed-results-r%C2%B2-qc)
+walks through the QC that catches this.
+:::
+
+### FedImpute-specific diagnostics
+
+- **Auth redirect loop:** if clicking *Sign in with
+  AfriGen-D Identity* bounces you back to the login
+  page, clear cookies for
+  `kibali.afrigen-d.org` and
+  `fedimpute.afrigen-d.org`, then retry.
+- **Account not recognised after registration:** the
+  verification email has a 24-hour window. If it
+  expires, re-register with the same email.
+- **Download link expired:** FedImpute keeps imputed
+  results for **7 days** after completion, encrypted
+  with a one-time password sent by email. Re-run the
+  job if the window has passed.
+
+### Getting help
+
+- **Documentation:** <https://afrigen-d.org>
+- **Support / helpdesk:** <https://helpdesk.afrigen-d.org>
 - **Email:** <support@bioinformaticsinstitute.africa>
 
 ---
 
-## 13. Summary
+## 14. Summary
 
 ### What You Learned
 
