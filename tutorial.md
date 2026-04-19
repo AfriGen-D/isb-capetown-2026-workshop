@@ -910,6 +910,8 @@ For the file `1k_afr_binary_1000k_chr22.vcf.gz`, answer these questions:
 
 ## 6. Submitting an Imputation Job
 
+*→ Live checklist: [Workflow Step 2 -- Submit the imputation job](/workflow#step-2-submit-the-imputation-job)*
+
 ::: warning Legacy-UI walkthrough -- §§6--11
 Sections 6 through 11 below (Submit · Monitor ·
 Download · QC · GWAS · full Case Study) are the
@@ -1090,6 +1092,8 @@ If your upload fails:
 
 ## 7. Monitoring Job Progress
 
+*→ Live checklist: [Workflow Step 3 -- Download imputed results + R² QC](/workflow#step-3-download-imputed-results-r2-qc) (monitoring + download combined in one slot)*
+
 ### 7.1 Job Status Overview
 
 Navigate to **"Jobs"** to see all your submissions:
@@ -1186,6 +1190,8 @@ From the Jobs page, you can:
 ---
 
 ## 8. Downloading Results
+
+*→ Live checklist: [Workflow Step 3 -- Download imputed results + R² QC](/workflow#step-3-download-imputed-results-r2-qc)*
 
 ### 8.1 Accessing Completed Results
 
@@ -1311,6 +1317,8 @@ You should find:
 
 ## 9. Quality Assessment
 
+*→ Live checklist: [Workflow Step 3 -- Download imputed results + R² QC](/workflow#step-3-download-imputed-results-r2-qc) (Verify block)*
+
 ### 9.1 Imputation Quality Metrics
 
 After downloading your results, assess imputation quality using R² scores.
@@ -1423,6 +1431,8 @@ If most variants are below 0.3, there may be a problem with:
 ---
 
 ## 10. Basic GWAS Visualization
+
+*→ Live checklists: [Workflow Step 1 -- GWAS on SPARSE](/workflow#step-1-gwas-on-sparse-data-baseline) (baseline) and [Workflow Step 4 -- GWAS on IMPUTED + comparison](/workflow#step-4-gwas-on-imputed-data-comparison)*
 
 ### 10.1 Introduction to GWAS Plots
 
@@ -1613,6 +1623,8 @@ See the "Combined Plot" section in the notebook for implementation hints.
 ---
 
 ## 11. Case Study: Complete Imputation and GWAS Workflow
+
+*→ Live walkthrough: [Workflow steps 1--4 end-to-end](/workflow) (this case study covers the same sparse → impute → compare loop as a single narrative).*
 
 This section demonstrates a complete end-to-end workflow from raw genotype data to GWAS results, comparing outcomes between sparse (original) and imputed data.
 
@@ -2038,7 +2050,7 @@ The most damaging failure mode is a job that
 **completes** but produces low-quality output. Always
 look at the R² histogram and variant count before
 drawing conclusions -- the
-[Workflow Step 3 checklist](/workflow#step-3-download-imputed-results-r%C2%B2-qc)
+[Workflow Step 3 checklist](/workflow#step-3-download-imputed-results-r2-qc)
 walks through the QC that catches this.
 :::
 

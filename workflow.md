@@ -60,6 +60,12 @@ motivated.
 the **sparse** input VCF (~4,400 variants on chr22),
 establishing what GWAS "looks like" before imputation.
 
+**Tutorial cross-reference:**
+[§10 Basic GWAS Visualization](/tutorial#_10-basic-gwas-visualization)
+for Manhattan / QQ plot basics;
+[§11 Case Study](/tutorial#_11-case-study-complete-imputation-and-gwas-workflow)
+walks the full sparse → impute → compare loop end-to-end.
+
 ### Data prep
 
 - [ ] Download the sparse VCF:
@@ -132,6 +138,14 @@ wall-clock is well under 25 min.
 
 **Goal:** submit a chr22 imputation job on FedImpute
 using the H3Africa reference panel.
+
+**Tutorial cross-reference:**
+[§2 Getting Started](/tutorial#_2-getting-started)
+(account + login),
+[§5 Data Preparation](/tutorial#_5-data-preparation-before-upload)
+(VCF QC + bgzip + sort),
+[§6 Submitting an Imputation Job](/tutorial#_6-submitting-an-imputation-job)
+(upload → panel → configure → submit).
 
 ### Data prep
 
@@ -210,6 +224,12 @@ imputation quality by R². Finish before the break at
 by R², and confirm you have a markedly denser variant
 set.
 
+**Tutorial cross-reference:**
+[§7 Monitoring Job Progress](/tutorial#_7-monitoring-job-progress),
+[§8 Downloading Results](/tutorial#_8-downloading-results),
+[§9 Quality Assessment](/tutorial#_9-quality-assessment)
+(R² interpretation + filtering).
+
 ### Data prep
 
 - [ ] Job from step 2 is in **Completed** state
@@ -275,6 +295,12 @@ step 1.
 tail **extend**, and understand what imputation
 bought you.
 
+**Tutorial cross-reference:**
+[§10 Basic GWAS Visualization](/tutorial#_10-basic-gwas-visualization)
+(Manhattan + QQ + sparse/imputed comparison);
+[§11 Case Study](/tutorial#_11-case-study-complete-imputation-and-gwas-workflow)
+has the fully-worked comparison with interpretation.
+
 ### Data prep
 
 - [ ] Filtered imputed VCF from step 3 (R² > 0.3 at
@@ -333,6 +359,12 @@ correction was dropped -- include PCs if not already.
 output, look up curated pharmacogenomic evidence in
 AGMP and export a TSV of drug-gene-variant
 associations.
+
+**Page cross-reference:** [`/agmp`](/agmp) -- the
+dedicated AGMP session page. Covers data at a glance
+(17,470 variants, 6,270 genes, 48 drugs, 1,579
+phenotypes), portal objectives, and the hands-on
+exercises that use this step's checklist.
 
 ### Data prep
 
@@ -393,6 +425,13 @@ interpretation in the right population" story.
 **Goal:** for the same variants as step 5, pull
 AGVD's population-cluster frequencies and compare
 against gnomAD-African / 1000G-AFR.
+
+**Page cross-reference:** [`/agvd`](/agvd) -- the
+dedicated AGVD session page. Covers the 11 population
+clusters (Western / Eastern / Southern / Central /
+Northern Africa + Ex-Africa + global comparators),
+the MAF threshold filter, and the three hands-on
+exercises mapped onto this step's checklist.
 
 ### Data prep
 
