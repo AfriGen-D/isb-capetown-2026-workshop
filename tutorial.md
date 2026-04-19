@@ -207,8 +207,8 @@ for genomic data curation.
 
 After completing this tutorial, you will be able to:
 
-1. Navigate the FedImpute interface (or the legacy
-   FedImpute, covered below)
+1. Navigate the **FedImpute** interface at
+   <https://fedimpute.afrigen-d.org>
 2. Prepare genotype data for imputation (quality
    control)
 3. Submit imputation jobs using African-specific
@@ -343,16 +343,18 @@ Several factors influence how well imputation performs. Understanding these help
 > - **R² 0.3-0.8**: Moderate quality - use with caution
 > - **R² < 0.3**: Low quality - consider filtering out
 >
-> The AfriGen-D service provides R² values for each imputed variant, allowing you to filter by quality.
+> FedImpute provides R² values for each imputed variant, allowing you to filter by quality.
 
-### The FedImpute
-
-The FedImpute provides:
+### What FedImpute provides
 
 - Access to African-specific reference panels
-- Connection to H3Africa and other imputation services
-- User-friendly web interface
-- Quality reports and visualization
+  (H3Africa v6 and v7)
+- African-hosted infrastructure on the ILIFU research
+  cloud at UCT -- data stays in South Africa under
+  POPIA
+- GA4GH-standards-native job submission, monitoring,
+  and provenance (RO-Crate)
+- Quality reports and visualisation
 
 ---
 
@@ -532,7 +534,7 @@ The top navigation bar provides access to:
 
 ### 4.1 Accessing Pipelines
 
-The FedImpute provides several genomics pipelines accessible via the **Run** menu in the navigation bar:
+FedImpute provides several genomics pipelines accessible via the **Run** menu in the navigation bar:
 
 1. Click **"Run"** in the navigation menu
 
@@ -546,7 +548,7 @@ The FedImpute provides several genomics pipelines accessible via the **Run** men
 
 ### 4.2 Available Reference Panels
 
-The FedImpute provides the following reference panels:
+FedImpute provides the following reference panels:
 
 | Panel | Build | Description |
 |-------|-------|-------------|
@@ -567,7 +569,7 @@ The **H3Africa V6HC-S** panel is the primary recommended choice for African popu
 ### 📝 Check Your Understanding: Pipelines
 
 <details>
-<summary><strong>Question 1:</strong> What reference panel is available on the FedImpute?</summary>
+<summary><strong>Question 1:</strong> What reference panel is available on FedImpute?</summary>
 
 **Answer:** The **H3Africa V6HC-S** reference panel is available, which is specifically optimized for African and Pan-African populations using the GRCh38/hg38 genome build.
 
@@ -1949,7 +1951,7 @@ walks through the QC that catches this.
 
 ### What You Learned
 
-1. ✅ How to register and navigate the FedImpute
+1. ✅ How to register for FedImpute and navigate its interface
 2. ✅ How to prepare data for imputation
 3. ✅ How to submit and monitor imputation jobs
 4. ✅ How to download and interpret results
