@@ -110,7 +110,7 @@ export default withMermaid(defineConfig({
   markdown: {
     theme: { light: 'github-light', dark: 'github-dark' },
     config: (md) => {
-      md.use(taskLists, { enabled: false, label: true })
+      md.use(taskLists, { enabled: true, label: true })
     },
   },
 }))
