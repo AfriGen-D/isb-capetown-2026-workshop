@@ -58,6 +58,45 @@ Imputation doesn't invent information; it
 **interpolates** using patterns of linkage
 disequilibrium (LD) already present in the reference.
 
+### The idea in three pictures
+
+The diagram below -- adapted from the AfriGen-D AGM
+2025 reference-panel talk -- shows the imputation
+workflow as three sequential states.
+
+**1. Starting state.** Your sample has a few known
+genotypes (red/green letters in the top two rows --
+"GWAS Haplotypes") scattered across otherwise
+unobserved positions. A dense reference panel (the
+table below) has full haplotypes from many other
+samples.
+
+![Sparse GWAS haplotypes above a dense reference panel of 1000 Genomes haplotypes, showing just a handful of observed positions](/images/imputation-concept/01-gwas-haplotypes.png)
+
+**2. Finding matches.** The algorithm scans the
+reference panel for **haplotypes that match your
+observed genotypes** at the positions you did
+measure. Here the purple block (top-of-panel match)
+and the green block (bottom-of-panel match) align
+with the two sample haplotypes; a short orange block
+picks up an additional match at the right edge.
+
+![Same reference panel with three haplotype matches highlighted in purple, orange, and green boxes](/images/imputation-concept/02-match-reference.png)
+
+**3. Imputing the missing genotypes.** Once matching
+haplotypes are identified, the genotypes *they*
+carry at the unobserved positions are transferred
+back onto your sample. The lowercase letters in the
+top panel are the **imputed** calls -- they weren't
+measured on your array, but are inferred from the
+reference haplotype the algorithm matched.
+
+![Sample haplotypes now shown as complete sequences (lowercase imputed calls filled in from the matched reference haplotypes)](/images/imputation-concept/03-impute-genotype.png)
+
+*Figures: AfriGen-D AGM 2025, reference-panel +
+imputation + Beacon talk. Reproduced for educational
+use in this workshop.*
+
 ## 2. Why imputation exists -- applications
 
 ### GWAS power-up
