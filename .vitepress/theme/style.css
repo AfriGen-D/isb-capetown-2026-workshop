@@ -64,6 +64,28 @@
   text-decoration-color: var(--vp-c-brand-1);
 }
 
+/* Responsive YouTube / video embeds.
+   Wrap an <iframe> in <div class="youtube-embed">
+   for a 16:9 block that fills the content column. */
+.youtube-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin: 1.5rem 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #000;
+}
+
+.youtube-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 /* Admonition blocks: reinforce brand palette */
 .custom-block.tip {
   border-color: var(--vp-c-brand-3);

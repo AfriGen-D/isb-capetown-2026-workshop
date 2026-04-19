@@ -33,7 +33,7 @@ on the day based on participant progress.
 | Time | Topic | Duration |
 | --- | --- | --- |
 | 14:00--14:15 | Welcome, introductions, workshop overview | 15 min |
-| 14:15--14:35 | **Introduction to AfriGen-D Resources and Data Discovery** (recording -- Sumir Panji / Lyndon Zass): overview of AfriGen-D resources, navigating the AfriGen-D catalogues ([logistics](#pre-recorded-intro-14-15)) | 20 min |
+| 14:15--14:35 | **[Introduction to AfriGen-D Resources and Data Discovery](#pre-recorded-intro-14-15)** (recording -- Sumir Panji / Lyndon Zass): overview of AfriGen-D resources, navigating the AfriGen-D catalogues ([▶ YouTube](https://www.youtube.com/watch?v=dU13Zijq_7g&t=122s)) | 20 min |
 | 14:35--14:55 | [**Theory**: African genetic diversity, reference panels, biocuration context](/theory) | 20 min |
 | 14:55--15:10 | Hands-on: [**GWAS on SPARSE data** (baseline)](/workflow#step-1-gwas-on-sparse-data-baseline) -- thin Manhattan, motivate imputation | 15 min |
 | 15:10--15:35 | Hands-on: [Submit imputation job on FedImpute](/workflow#step-2-submit-the-imputation-job) (account, upload, configure) | 25 min |
@@ -65,9 +65,23 @@ on the day based on participant progress.
 The 20-minute **Introduction to AfriGen-D Resources
 and Data Discovery** (Sumir Panji / Lyndon Zass) is
 played as a recording. Laptops down during this slot
--- it's a one-speaker-to-room format, and the
-recording plus slides are made available afterward on
-this site.
+-- it's a one-speaker-to-room format.
+
+**Watch the recording:**
+[YouTube (starts at 2:02)](https://www.youtube.com/watch?v=dU13Zijq_7g&t=122s).
+Available before and after the workshop for review.
+
+<!-- markdownlint-disable MD033 MD013 -->
+<div class="youtube-embed">
+  <iframe
+    src="https://www.youtube.com/embed/dU13Zijq_7g?start=122"
+    title="Introduction to AfriGen-D Resources and Data Discovery (Panji / Zass)"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
+<!-- markdownlint-enable MD033 MD013 -->
 
 ## Break Logistics
 
