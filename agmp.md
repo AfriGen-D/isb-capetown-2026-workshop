@@ -62,7 +62,7 @@ single portal organised around four entry points:
 
 ![AGMP About page with objectives, contributors, and data sources](/images/platforms/agmp-02-about.png)
 
-## Hands-on (30 min)
+## Hands-on (20 min)
 
 ::: warning Content being authored for 2026
 This hands-on walkthrough is new for the 2026 edition.

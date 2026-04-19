@@ -1,18 +1,28 @@
 ---
 description: >-
-  30-minute theory slot for the AfriGen-D tutorial at ISB Cape Town 2026.
+  20-minute theory slot for the AfriGen-D tutorial at ISB Cape Town 2026.
   African genetic diversity, reference panel selection, and biocuration
   context for the hands-on that follows.
 ---
 
 # Theory: African diversity, reference panels, biocuration
 
-The 30-minute theory slot at the top of the workshop
-frames the three hands-on sessions that follow. It is
-deliberately short -- just enough context to read the
-plots you're about to generate, and to recognise why
-each step is a **biocuration** task, not just a
-computational one.
+The 20-minute theory slot at the top of the workshop
+(14:35--14:55) frames the three hands-on sessions
+that follow. It is deliberately short -- just enough
+context to read the plots you're about to generate,
+and to recognise why each step is a **biocuration**
+task, not just a computational one.
+
+::: tip 20-min live + deeper reading
+The live presentation covers the **headline idea**
+of each of the three sections below in ~6 minutes
+each (18 min + 2 min Q&A buffer). Each section
+carries additional depth intended as pre- or
+post-workshop reading -- use the "On this page"
+outline to jump straight to the subsections that
+matter for your own project.
+:::
 
 ::: info Why these three themes together
 Imputation accuracy depends on **African genetic
@@ -31,7 +41,7 @@ builds the biocuration framing from first principles.
 
 ---
 
-## 1. African genetic diversity (≈10 min)
+## 1. African genetic diversity (≈6 min live; ~10 min with extended reading)
 
 ### The oldest branch
 
@@ -127,7 +137,7 @@ reference panel, a GWAS, or an ACMG classification.
 
 ---
 
-## 2. Reference panels (≈10 min)
+## 2. Reference panels (≈6 min live; ~10 min with extended reading)
 
 ### What a reference panel is
 
@@ -210,7 +220,7 @@ output correctly.
 
 ---
 
-## 3. Biocuration context (≈10 min)
+## 3. Biocuration context (≈6 min live; ~10 min with extended reading)
 
 ### Biocuration in one sentence
 

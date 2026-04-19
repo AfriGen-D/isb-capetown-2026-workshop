@@ -67,7 +67,7 @@ Africa, not one flat "AFR" bin.
   AGVD release (e.g. `AGVD_24A_Main`) for
   reproducibility
 
-## Hands-on (30 min)
+## Hands-on (15 min)
 
 ::: warning Content being authored for 2026
 This hands-on walkthrough is new for the 2026 edition.

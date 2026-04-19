@@ -58,7 +58,7 @@ export default withMermaid(defineConfig({
         ],
       },
       {
-        text: 'Background (30 min theory)',
+        text: 'Background (20 min theory + reading)',
         items: [
           { text: 'African diversity, panels, biocuration', link: '/theory' },
           { text: 'Genotype imputation (how it works)', link: '/imputation' },
