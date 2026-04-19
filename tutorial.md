@@ -16,29 +16,25 @@ Centre and Spa, Milnerton, Cape Town, South Africa
 
 ::: warning Screenshots note -- read before you start
 The workshop now uses **FedImpute** at
-<https://fedimpute.afrigen-d.org> for every step, and
-all URLs and instructions below target it.
+<https://fedimpute.afrigen-d.org> for every step,
+and all URLs and instructions below target it.
 
 **Rewritten against FedImpute (current):**
-sections 2 (Getting Started), 4.2 (Reference
-Panels, from the live FedImpute FAQ), 5 (Data
-Preparation), and 13 (Troubleshooting).
+sections 2 (Getting Started), 4.2 (Reference Panels,
+from the live FedImpute FAQ), 5 (Data Preparation),
+and 13 (Troubleshooting).
 
-**Softened to concept-level pending re-capture:**
-sections 3 (Dashboard) and 4.1 (Pipeline listing).
-The text no longer asserts specific UI details that
-may have changed; the FedImpute-specific layout will
-be documented after an authenticated walkthrough.
-
-**Still carry legacy screenshots and step-by-step
-from the retired `impute.afrigen-d.org` service:**
-sections 6--11 (Submit / Monitor / Download / QC /
-GWAS / Case Study). The *concepts* transfer directly,
-the *UI screens* have changed. Lean on
+**Rewritten at concept level pending authenticated
+re-capture:** sections 3 (Dashboard), 4.1 (Pipeline
+listing), and 6--11 (Submit / Monitor / Download /
+QC / GWAS / Case Study). These describe the
+*decisions* and *outputs* that are identical across
+imputation services; the FedImpute-specific UI
+chrome (button names, exact navigation paths) will
+be captured in Phase 2. Use
 [section 0](#_0-the-fedimpute-platform) and the
-[`/workflow`](/workflow) checklists for the current
-flow while those sections are re-captured in
-Phase 2.
+[`/workflow`](/workflow) checklists as the source
+of truth for the live flow.
 :::
 
 ::: info Checklist for each hands-on step
@@ -686,70 +682,73 @@ you want to use is hg38-only.
 
 ---
 
-### 4.3 Additional Pipelines
+### 4.3 Companion pipelines
 
-The AfriGen-D service offers several additional pipelines beyond imputation:
+Alongside the imputation pipeline, AfriGen-D
+tooling historically included three companion
+pipelines for common pre/post-imputation chores.
+The current FedImpute exposure of each will be
+confirmed during the authenticated re-capture pass;
+the *concepts* below are what you need regardless of
+where each step is run (FedImpute, a local
+`bcftools` pipeline, or a separate workflow
+manager).
 
-#### GWAS Training Workflow
+#### GWAS training workflow
 
-A complete Genome-Wide Association Study (GWAS) workflow using PLINK2 for training purposes.
+A parameterised GWAS pipeline built around PLINK2
+for hands-on teaching.
 
-![Figure 5: GWAS training workflow configuration](/images/11-gwas-training-workflow.png)
+- **Inputs:** genotype VCF, phenotype table
+  (tab-delimited), optional covariates (PCA).
+- **Key parameters:** phenotype column name, MAF
+  threshold (typically 0.01), sample missingness
+  (0.1), SNP missingness (0.1), HWE cutoff (1e-6).
+- **Output:** association summary statistics +
+  Manhattan / QQ plots.
 
-*Figure 5: GWAS training workflow configuration*
+The workshop runs this pipeline **twice** (once on
+sparse input, once on imputed output) to expose the
+before/after difference -- see
+[§10 GWAS visualisation](#_10-basic-gwas-visualization).
 
-**Input requirements:**
+#### Allele-switch checker
 
-- **Genotype file**: VCF format
-- **Phenotype file**: Tab-delimited format with phenotype columns
-- **Covariate file** (optional): PCA results or other covariates
+A pre-imputation QC step that reconciles the target
+VCF's REF/ALT orientation against the reference
+panel it will be imputed against.
 
-**Key parameters:**
+- **Detects:** strand flips (A↔T, C↔G ambiguity),
+  allele switches (REF/ALT swapped relative to the
+  panel), and sites with invalid alleles.
+- **Resolves:** either *corrects* the site
+  (recommended; swaps REF/ALT to match the panel)
+  or *removes* the site (conservative; drops the
+  problematic variant).
 
-- **Column name**: Specify which phenotype column to analyze
-- **MAF threshold**: Minor allele frequency filter (default: 0.01)
-- **Sample missingness**: Maximum missing rate per sample (default: 0.1)
-- **SNP missingness**: Maximum missing rate per variant (default: 0.1)
-- **HWE p-value threshold**: Hardy-Weinberg equilibrium filter (default: 0.000001)
+On FedImpute the equivalent check runs automatically
+during submission; for local pre-flight,
+`bcftools norm --check-ref` and `bcftools +fixref`
+do the same work offline.
 
-#### Allele Switch Checker (Checkref)
+#### VCF liftover
 
-A quality control tool for detecting and fixing allele switches between your target VCF and reference panels.
+Convert variant coordinates between genome builds
+(most commonly hg19 → hg38 for H3Africa v6/v7
+panels).
 
-![Figure 6: Allele switch checker (Checkref) tool](/images/12-allele-switch-checker.png)
+- **Source / target build:** your input and the
+  panel's build.
+- **Chain file:** selected automatically based on
+  source/target; for manual runs, use the UCSC
+  `hg19ToHg38.over.chain.gz` chain.
+- **Validate output:** always spot-check a few
+  lifted coordinates against
+  <https://genome.ucsc.edu> to catch chain
+  edge-cases (chromosome boundaries, inversions).
 
-*Figure 6: Allele switch checker (Checkref) tool*
-
-**Use this tool to:**
-
-- Validate your VCF files before imputation
-- Detect strand issues and allele mismatches
-- Fix identified issues automatically
-
-**Options for handling switches:**
-
-- **Remove Switched Sites**: Delete problematic variants
-- **Correct Switched Sites**: Swap REF/ALT alleles to match reference
-
-#### VCF Liftover
-
-Convert genomic coordinates between genome builds (e.g., GRCh37/hg19 to GRCh38/hg38).
-
-![Figure 7: VCF liftover tool for genome build conversion](/images/13-vcf-liftover.png)
-
-*Figure 7: VCF liftover tool for genome build conversion*
-
-**When to use:**
-
-- Your data is in an older genome build (hg19) but the reference panel requires hg38
-- You need to harmonize data from different sources
-
-**Configuration options:**
-
-- **Source build**: Your input file's genome build
-- **Target build**: Desired output genome build
-- **Chain file**: Automatically selected based on source/target
-- **Validate output**: Optional validation checks
+CrossMap and Picard `LiftoverVcf` are the standard
+offline equivalents.
 
 ---
 
@@ -1208,36 +1207,47 @@ authenticated re-capture pass.
 
 *→ Live checklist: [Workflow Step 3 -- Download imputed results + R² QC](/workflow#step-3-download-imputed-results-r2-qc)*
 
-### 8.1 Accessing Completed Results
+When a job finishes, FedImpute exposes the output via
+the job's Results view. There is a **7-day retention
+window** from completion: after that, the output is
+purged and you would need to re-run the job. Pull
+the files to your laptop during the workshop so the
+R² QC and downstream GWAS steps can work off a local
+copy.
 
-1. Navigate to **"Jobs"** and find your completed job
+### 8.1 What is produced
 
-2. Click on the job name to open details
+Every imputation job produces the same output shape,
+regardless of platform:
 
-3. Click on the **"Results"** tab to see downloadable files
+| File | What it contains | Typical format |
+| --- | --- | --- |
+| **Imputed VCF** | Per-sample imputed genotypes (dosages + called genotypes) | `.vcf.gz` |
+| **Info / quality file** | Per-variant imputation quality (R² / INFO, MAF, genotyped flag) | `.info.gz` or embedded in the VCF INFO field |
+| **Summary statistics** | Counts: variants in, variants out, reference overlap, stages completed | `.txt` |
+| **Log file** | Job-level processing log (useful when something goes wrong) | `.log` |
 
-![Figure 13: Job results tab with downloadable files](/images/07-job-results.png)
+### 8.2 Retrieving the files
 
-*Figure 13: Job results tab with downloadable files*
+The specific retrieval affordance (download button
+per file, bulk ZIP, one-time password for encrypted
+output) varies by platform. The FedImpute-specific
+flow is documented in the authenticated re-capture
+pass. For the workshop:
 
-### 8.2 Available Output Files
+- Grab all files for your job as soon as it
+  completes -- the 7-day window starts at that
+  moment.
+- If the platform emails a one-time password (some
+  services encrypt output at rest), save it
+  alongside the download. You will need it to
+  decompress the VCF.
+- Verify the file sizes look plausible before you
+  leave the Results view (a dose VCF under ~10 MB
+  for a full chromosome is a red flag: the job
+  likely ran on a heavily subset panel).
 
-| File | Description | Format |
-|------|-------------|--------|
-| **Imputed VCF** | Imputed genotypes | .vcf.gz |
-| **Info File** | Imputation quality metrics (R²) | .info.gz |
-| **Statistics** | Summary statistics | .txt |
-| **Log File** | Processing log | .log |
-
-### 8.3 Downloading Files
-
-1. Click the **"Download"** button next to each file, OR
-
-2. Click **"Download All"** for bulk download
-
-3. Files will be downloaded to your computer
-
-### 8.4 Understanding the Info File
+### 8.3 Understanding the Info File
 
 The `.info` file contains quality metrics for each variant:
 
@@ -1297,10 +1307,11 @@ The `.info` file contains quality metrics for each variant:
 
 **Steps:**
 
-1. Find your completed job in the Jobs list
-2. Click on the job name
-3. Download all result files
-4. Open the .info file and find:
+1. Open your completed job on FedImpute and go to
+   its results view (platform-specific; follow
+   [Workflow Step 3](/workflow#step-3-download-imputed-results-r2-qc))
+2. Pull all output files to your laptop
+3. Open the info / quality file and find:
    - A variant with high R² (> 0.8)
    - A variant with low R² (< 0.3)
 
@@ -1376,12 +1387,29 @@ info_file = "your_imputed_data.info.gz"
 
 ### 9.3 Filtering by Quality
 
-For downstream analysis, filter variants by R²:
+For downstream analysis, filter variants by R².
+Minimac4 output carries R² in the VCF `INFO/R2`
+field, so `bcftools` can filter in place:
 
 ```bash
 # Keep only well-imputed variants (R² > 0.3)
-# This is typically done with bcftools or similar tools
+bcftools view \
+  -e 'INFO/R2<0.3' \
+  -Oz -o chr22.imputed.r2filt.vcf.gz \
+  chr22.dose.vcf.gz
+bcftools index -t chr22.imputed.r2filt.vcf.gz
+
+# Stricter cutoff for fine-mapping (R² > 0.8)
+bcftools view \
+  -e 'INFO/R2<0.8' \
+  -Oz -o chr22.imputed.r2hi.vcf.gz \
+  chr22.dose.vcf.gz
 ```
+
+Some platforms ship the per-variant metrics in a
+separate `.info.gz` sidecar file rather than in the
+VCF INFO field; in that case, filter the VCF against
+the list of variant IDs that clear your R² threshold.
 
 ---
 
@@ -1761,34 +1789,44 @@ Two GWAS analyses were performed using the GWAS Training Workflow:
 
 #### Manhattan Plot: Sparse Data (4,423 variants)
 
-![Manhattan plot from sparse data](/images/gwas-sparse-manhattan.png)
+Running the sparse baseline through the GWAS
+notebook produces a thin Manhattan with a single
+genome-wide significant peak:
 
-*Figure 15: Manhattan plot from sparse/original data showing limited variant coverage. Note the single genome-wide significant peak and large gaps between variants.*
-
-**Observations:**
-- Single genome-wide significant peak at **Chr22:36276581**
+- Single peak at **Chr22:36276581** reaching
+  -log10(P) ≈ 11
 - Scattered points with large gaps between variants
 - Limited ability to fine-map the signal
-- Peak reaches -log10(P) ≈ 11
 
 #### Manhattan Plot: Imputed Data (797,319 variants)
 
-![Manhattan plot from imputed data](/images/gwas-imputed-manhattan.png)
+Re-running the same GWAS on the imputed dose VCF
+fills the plot out and exposes the secondary signal:
 
-*Figure 16: Manhattan plot from imputed data showing dense variant coverage. Note the additional secondary signal and much better resolution across the chromosome.*
-
-**Observations:**
-- Same primary signal at **Chr22:36276581** (-log10P ≈ 10)
-- **NEW secondary signal at Chr22:39277008** (-log10P ≈ 8.5)
-- Much denser coverage allowing better regional characterization
-- Multiple suggestive signals visible across the chromosome
+- Same primary signal at **Chr22:36276581**
+  (-log10P ≈ 10)
+- **NEW secondary signal at Chr22:39277008**
+  (-log10P ≈ 8.5)
+- Much denser coverage allowing better regional
+  characterisation
+- Multiple suggestive signals visible across the
+  chromosome
 - Better resolution for identifying causal variants
 
-#### Side-by-Side Comparison
+#### Side-by-side Comparison
 
-![Side-by-side Manhattan plot comparison](/images/gwas-comparison-side-by-side.png)
+Plotting the two Manhattans side-by-side (or
+animated by toggling between them) is the most
+persuasive way to communicate the imputation
+payoff: the sparse plot looks like scattered dots
+around a single tower; the imputed plot looks like
+a skyline, with the extra secondary tower visible
+only after imputation.
 
-*Figure 17: Side-by-side comparison of Manhattan plots from sparse (left) and imputed (right) data, highlighting the dramatic increase in variant density and the discovery of the secondary signal.*
+*The workshop participants generate their own
+side-by-side Manhattans during
+[Workflow Step 4](/workflow#step-4-gwas-on-imputed-data-comparison);
+the pre-built legacy renderings have been retired.*
 
 ### 11.6 Key Findings Summary
 
@@ -1915,16 +1953,22 @@ Best practice is to filter to R² > 0.3 for discovery and R² > 0.8 for fine-map
    - Check the genome build (hg19 or hg38)
    - Compress with gzip if not already
 
-2. **Run Allele Switch Check**
-   - Navigate to Run → Allele Switch Checker
-   - Upload your VCF file
-   - Download the corrected output
+2. **Run allele-switch / strand check**
+   - Validate REF/ALT orientation against the reference
+     panel (FedImpute performs this automatically
+     during the imputation submission; you can also
+     run `bcftools norm --check-ref` locally first
+     to catch obvious errors before upload)
 
-3. **Run Imputation**
-   - Navigate to Run → Genotype Imputation
-   - Upload the allele-corrected VCF
-   - Select H3Africa V6HC-S panel
-   - Wait for completion (~20 min)
+3. **Submit imputation on FedImpute**
+   - Sign in at <https://fedimpute.afrigen-d.org>
+     and follow
+     [Workflow Step 2](/workflow#step-2-submit-the-imputation-job)
+   - Upload the sorted, bgzipped VCF
+   - Select an African-appropriate panel (H3Africa
+     v6 or v7; see [§4.2](#_4-2-available-reference-panels))
+   - Wait for completion (minutes for a single
+     chromosome; factor queue time)
 
 4. **Run GWAS on both datasets**
    - Run GWAS Training on original (sparse) data
@@ -2050,7 +2094,7 @@ regardless of which imputation service you run on.
 | **Upload rejected** | Wrong compression -- plain `gzip` instead of `bgzip` | Recompress with `bgzip` (`file <name>.gz` must show *BGZF*) |
 | **Upload rejected: "must be sorted"** | VCF isn't sorted by position | `bcftools sort -Oz -o sorted.vcf.gz unsorted.vcf.gz` |
 | **Upload rejected: "minimum 20 samples"** | Cohort smaller than FedImpute's minimum | Add samples or run on a local imputation stack |
-| **Job fails at QC: allele mismatch** | REF allele disagrees with the chosen panel | Run [Allele Switch Checker](#allele-switch-checker-checkref) first; flip or drop offenders |
+| **Job fails at QC: allele mismatch** | REF allele disagrees with the chosen panel | Run the [allele-switch check](#allele-switch-checker) first; flip or drop offenders |
 | **Job fails at QC: build mismatch** | Input is hg19 but panel is hg38 (or vice versa) | Liftover with [VCF Liftover](#vcf-liftover) -- hg19 → hg38 is the common case |
 | **Job stuck in queue** | Service busy at the workshop-day peak | Wait; the job runs once capacity frees |
 | **Low R² across the board** | Population-panel mismatch | See [/services](/services) -- African cohorts should use H3Africa, not HRC/1000G |
