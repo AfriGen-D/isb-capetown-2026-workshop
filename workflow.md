@@ -94,30 +94,27 @@ walks the full sparse → impute → compare loop end-to-end.
 
 ### Run
 
-::: warning Live-platform limitation (April 2026)
-FedImpute's **GWAS Training** pipeline wizard only
-uploads VCF files; the Phenotype File field expects
-the file pre-staged on the backend, and without it
-the job fails at `UPDATE_PHENOTYPE` with *"cannot
-open ... No such file or directory"*. Until that's
-fixed, **run GWAS locally with PLINK** on the sparse
-VCF (same phenotype file). See
-[tutorial §10.2](/tutorial#_10-2-using-the-gwas-visualization-notebook-hands-on)
-for the notebook-based path.
-:::
+FedImpute's **GWAS Training** wizard runs on the
+federated node with a dedicated phenotype upload
+widget (added 20 April 2026):
 
-Either:
-
-- [ ] **Local PLINK (recommended for the live
-  session):** load `plot_r2_distribution.ipynb` /
-  `gwas_visualization.ipynb` with the sparse VCF
-  and phenotype file, run PLINK2 logistic GWAS
-  (`B1 → logistic`), save Manhattan + QQ plots.
-- [ ] **FedImpute GWAS Training (pre-staged
-  phenotype):** launch the pipeline, upload the VCF,
-  type the phenotype filename in the text field,
-  submit -- but only if the workshop-day admin has
-  confirmed the pheno file is staged on the backend.
+- [ ] Sign in to FedImpute + click **New Job**
+- [ ] Select **GWAS Training** pipeline → Continue
+- [ ] Select the AfriGen-D Genotype Imputation
+  Server → Continue
+- [ ] **Upload & Configure**:
+  - **Input VCF**: the sparse
+    `1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz`
+    via the drop-zone
+  - **Phenotype File**: the
+    `1k_afr_661_samples_phenotype.txt` via the
+    `.txt`/`.tsv` drop-zone below
+  - **Phenotype column name**: `B1`
+  - Defaults: MAF 0.01, Sample Missing 0.1,
+    Genotype Missing 0.1, HWE 1e-6
+- [ ] Review & Submit: tick both DUA checkboxes →
+  **Submit Job**
+- [ ] Wait ~1-2 minutes for completion
 
 ### Verify
 
@@ -351,19 +348,20 @@ has the fully-worked comparison with interpretation.
 
 ### Run
 
-Same live-platform caveat as Step 1: the FedImpute
-**GWAS Training** wizard doesn't accept phenotype
-uploads as of April 2026. Prefer the local path for
-a like-for-like comparison with Step 1:
+Re-submit **GWAS Training** with the imputed input:
 
-- [ ] Re-run the GWAS locally with PLINK on the
-  **imputed dose VCF** (post R² > 0.3 filter from
-  Step 3)
-- [ ] Keep the same phenotype, model (logistic), and
-  thresholds (MAF ≥ 0.01, missingness 0.1) as Step 1
-- [ ] The imputed dose VCF is much larger than the
-  sparse baseline -- expect minutes, not seconds,
-  for PLINK to finish
+- [ ] Extract the imputed dose VCF from the
+  `chr_22.zip` downloaded in Step 3 using its
+  encryption password:
+  `unzip -P <password> chr_22.zip`
+- [ ] Filter by R² > 0.3 (discovery) or R² > 0.5
+  (workshop demo) to keep the upload under 500 MB:
+  `bcftools view -e 'INFO/R2<0.5' -Oz -o chr22.imputed.r2med.vcf.gz chr_22.dose.vcf.gz`
+- [ ] On FedImpute, **New Job → GWAS Training**
+  again, upload the filtered imputed VCF + same
+  phenotype file, keep thresholds identical to
+  Step 1
+- [ ] Submit; expect **2-3 min** wall-clock
 
 ### Verify
 

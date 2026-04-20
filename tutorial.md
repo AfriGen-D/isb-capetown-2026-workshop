@@ -629,52 +629,37 @@ UCT):
 | **Allele Switch Checker** | Data Preparation | Nextflow | QC tool: detects allele switches between a target VCF and a reference-panel legend file, optionally fixes mismatches. |
 | **GWAS Training** | Training | Nextflow (PLINK2) | Full GWAS workflow: VCF-to-PLINK conversion, QC, HWE filtering, association analysis. Designed for training. |
 
-::: warning GWAS Training -- two file-staging gaps
-The GWAS Training pipeline is live, but running the
-full workshop "sparse → impute → re-GWAS" loop on
-FedImpute alone currently hits **two UI gaps**
-(confirmed by live tests on 20 April 2026):
+::: tip You can run the whole workshop on FedImpute
+The **GWAS Training** pipeline means participants
+can produce both the "before" and "after" Manhattan
+plots for the imputation payoff entirely on
+FedImpute -- no local PLINK install required. The
+Step 4 wizard accepts:
 
-**1. Phenotype file cannot be uploaded.** The Step 4
-drop-zone accepts only `.vcf` / `.vcf.gz` -- the
-React component silently drops any other file type
-even if you paste the HTML `accept` attribute. The
-**Phenotype File** parameter is just a text input
-that the pipeline then looks up in the same input
-directory. If the file isn't pre-staged on the
-backend, the job fails at `UPDATE_PHENOTYPE` after
-~1-2 minutes with:
+- **Input VCF** via the VCF drop-zone
+  (`.vcf`/`.vcf.gz`, ≤500 MB)
+- **Phenotype File** via a dedicated `.txt`/`.tsv`
+  drop-zone below the VCF (tab-separated,
+  `FID IID <phenotype_col>` header)
+- **Phenotype column name** (defaults to `B1`)
+- **Covariate File (optional)** -- same format
 
-> `tail: cannot open '<pheno>.txt' for reading: No such file or directory`
+Run time for the tutorial input (661 samples, chr22
+sparse or R²-filtered imputed) is **1-3 minutes**
+end-to-end. Outputs include the PLINK2 `.glm.firth`
+summary stats, Manhattan + QQ + PCA plots, lambda,
+and a Nextflow timeline -- see
+[§10](#_10-basic-gwas-visualization).
 
-Earlier stages (VCF_TO_PLINK, PLINK_QC, PLINK_HWE,
-PCA_ANALYSIS) do run successfully, so even a failed
-run produces `pca_results.eigenval`,
-`pca_results.eigenvec`, and a Nextflow
-`timeline.html`.
-
-**2. Imputation outputs aren't visible in the input
-picker.** The **Previous upload → Browse my files**
-modal filters to **"My Upload"** files (i.e. your
-VCF uploads). Imputation **Results** (the
-`chr_<N>.zip` bundle containing the imputed dose
-VCF) are stored on the same ILIFU backend but do
-**not** appear in that picker. So you can't pick the
-imputation output from your previous Imputation job
-as the input for a follow-up GWAS job from within
-the wizard today.
-
-**Workaround for the live workshop:** run the
-before / after GWAS locally with PLINK against the
-sparse VCF and the imputed dose VCF (you extract
-the latter from the `chr_<N>.zip` you downloaded in
-[§8](#_8-downloading-results) using its
-Overview-tab encryption password). The workshop
-notebooks in [§10.2](#_10-2-using-the-gwas-visualization-notebook-hands-on)
-already cover this path. Until the wizard grows (a)
-a phenotype-upload widget and (b) an "Imputation
-Result" filter in Browse my files, the FedImpute-
-native GWAS loop needs admin pre-staging.
+::: info Early-April 2026 platform history
+When this tutorial was first written, the GWAS
+Training wizard accepted only VCF uploads and the
+phenotype had to be pre-staged by an admin. The
+dedicated `.txt`/`.tsv` phenotype drop-zone + a
+separate "Phenotype column name" text field were
+added by the AfriGen-D team on 20 April 2026 and
+verified in the live walkthrough captured here.
+:::
 :::
 
 Click any pipeline card to see the right-hand
@@ -1752,6 +1737,68 @@ After imputation, you may perform Genome-Wide Association Studies. Key visualiza
 - **Manhattan Plot** - Shows -log10(p-values) across the genome
 - **QQ Plot** - Compares observed vs expected p-value distribution
 
+::: tip FedImpute produces these plots natively
+Submit the **GWAS Training** pipeline (§4.1) with
+the sparse input VCF + phenotype, and it emits:
+
+- `gwas_results.B1.glm.firth` -- PLINK2 summary
+  statistics
+- `gwas_manhattan.png` + `manhattan_plot.png` --
+  Manhattan plots
+- `qq_plot.png` + `gwas_qq.png` -- QQ plots
+- `publication_combined.png` -- combined figure
+- `pca_scatter.png` + `pca_scree.png` -- PCA QC
+- `lambda.txt` -- genomic inflation factor + a
+  human-readable interpretation
+
+Run time is ~1-3 min for the tutorial input. The
+§10.2 notebook path below is a useful offline
+alternative when you want to re-plot the same
+statistics with `gwaslab` for publication.
+:::
+
+### Live walkthrough: sparse vs imputed (chr22, 661 samples)
+
+Running the pipeline twice -- once on the 4,423-
+variant sparse input and once on the R²>0.5-
+filtered imputed dose VCF (19,171 variants) --
+produced the headline comparison the workshop is
+built around:
+
+| Metric | Sparse GWAS | Imputed GWAS (R² > 0.5) |
+| --- | --- | --- |
+| Variants analysed | **889** (post-PLINK QC) | **15,779** (post-PLINK QC) |
+| Top hit | chr22:36276581 (p = 1.74e-11) | chr22:36276581 (p = 5.97e-11) |
+| Variants at p < 5e-8 | 1 | **5** (chr22:36276581, 36281936, 36282430, 50237830-40142) |
+| New locus revealed | -- | **chr22:50.2Mb region** (3 genome-wide-sig SNPs, invisible in sparse) |
+| Nearby fine-mapping at top locus | 1 peak SNP | 4 peak SNPs within 10 kb (36276230, 36276581, 36279104, 36281936, 36282430) |
+| Genomic inflation λ | 2.54 | 2.52 |
+| Wall-clock | 1m 34s | 2m 3s |
+
+**Sparse Manhattan + QQ (baseline)**
+
+![Sparse Manhattan plot](/images/gwas/sparse-gwas_manhattan.png)
+
+![Sparse QQ plot](/images/gwas/sparse-qq_plot.png)
+
+**Imputed Manhattan + QQ (R² > 0.5 filter)**
+
+![Imputed Manhattan plot](/images/gwas/imputed-gwas_manhattan.png)
+
+![Imputed QQ plot](/images/gwas/imputed-qq_plot.png)
+
+Two visual read-outs dominate:
+
+1. The Manhattan plot's gap-filled skyline effect --
+   the sparse baseline has wide empty stretches
+   across chr22; the imputed version fills them in
+   and shows a *second* genome-wide-significant
+   cluster near 50.2 Mb that the sparse sample
+   rate simply couldn't see.
+2. The QQ tail extends further on the imputed run
+   -- more low p-values, unchanged λ, consistent
+   with added power rather than added confounding.
+
 ### 10.2 Using the GWAS Visualization Notebook (Hands-on)
 
 **Open the notebook:** `gwas_visualization.ipynb`
@@ -2379,8 +2426,7 @@ regardless of which imputation service you run on.
 | **Job fails: "QC step failed" on H3Africa v6 African-only** | Sparse input × smaller panel = not enough matched sites per chunk | Click **Retry** and switch to **H3Africa v6 (full)** -- the larger panel typically has enough overlap to produce valid chunks |
 | **Submit button stays disabled** | Data Use Agreement checkboxes not ticked | Scroll to the bottom of Review & Submit and check **both** DUA boxes |
 | **AGVD "Login Required" on variant detail** | Per-population frequency breakdowns require a signed-in nyame account | Sign in at <https://nyame.afrigen-d.org/accounts/login/>; new accounts require manual activation (plan ahead) |
-| **GWAS Training fails: `UPDATE_PHENOTYPE` cannot open `<pheno>.txt`** | Phenotype file not pre-staged on the backend; the wizard only uploads VCFs | Until the wizard accepts phenotype uploads, run GWAS locally with PLINK on the imputed dose VCF from §8. See [§10.2](#_10-2-using-the-gwas-visualization-notebook-hands-on). |
-| **Imputed `chr_<N>.zip` missing from "Browse my files" on a follow-up job** | The picker filters to My Upload VCFs only; imputation Results aren't exposed as reusable inputs yet | Download the ZIP from the imputation job's Files tab (§8), extract it locally, and either upload the dose VCF as a new input or run downstream analysis locally. |
+| **Imputed `chr_<N>.zip` missing from "Browse my files" on a follow-up job** | The picker filters to My Upload VCFs only; imputation Results aren't exposed as reusable inputs yet | Download the ZIP from the imputation job's Files tab (§8), extract it locally (`unzip -P <password>`), filter by R² with `bcftools` (§9.3), and upload the filtered dose VCF as a new input to GWAS Training. |
 
 <!-- markdownlint-enable MD013 -->
 
