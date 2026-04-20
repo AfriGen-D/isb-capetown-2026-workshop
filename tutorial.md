@@ -1360,67 +1360,102 @@ copy.
 ### 8.1 What is produced
 
 FedImpute's **Files** tab lists outputs grouped into
-sections. Based on the live tutorial run, expect to
-see the following (names reflect the actual file
-names emitted by `imputationserver2`):
+sections. On a successful run against H3Africa v6
+(full), the completed job's Files tab looks like
+this (sizes from the live tutorial run on chr22):
 
-**INPUT FILES** (carried through from your
-submission)
+![Completed job Files tab: INPUT FILES, RESULTS (chr_22.zip 644.7 MB), REPORTS (quality-control.html), STATISTICS, PROVENANCE (ro-crate-metadata.json)](/images/fedimpute/44-v6full-completed-files.png)
 
-| File | What it contains |
-| --- | --- |
-| *(your uploaded VCF)* | e.g. `1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz` -- the exact file you uploaded, for provenance. |
+**INPUT FILES** (carried through from your submission)
 
-**STATISTICS** (emitted during QC; appear even if
-the job later fails)
+| File | Size | Notes |
+| --- | --- | --- |
+| *(your uploaded VCF)* | 219 KB for the tutorial | The exact file you uploaded, for provenance. |
 
-| File | What it contains |
-| --- | --- |
-| `qc_report.txt` | Summary of input QC checks: sample count, SNP overlap, strand alignment. ~1 KB. |
-| `snps-typed-only.txt` | Typed-only SNPs -- present in your input but not in the reference panel (they are passed through as-is, not imputed). Tens of KB for the tutorial input. |
-| `snps-excluded.txt` | SNPs removed during QC (monomorphic, low call rate, or allele mismatch). Usually very small. |
+**RESULTS** -- the main scientific outputs
 
-**IMPUTATION OUTPUT** (emitted after Imputation +
-Post-processing stages complete)
+| File | Size | Notes |
+| --- | --- | --- |
+| `chr_<N>.zip` | **~645 MB** for chr22 | Imputed genotypes with dosage and quality scores. AES-256-encrypted ZIP containing `chr_<N>.dose.vcf.gz` (imputed VCF) + `chr_<N>.info.gz` (per-variant R² / INFO). The encryption password appears in the Overview tab's **TIMING** panel (click the eye icon to reveal, copy icon to clipboard-copy). |
 
-| File | What it contains |
-| --- | --- |
-| `chr<N>.dose.vcf.gz` | Per-sample imputed genotypes with dosages. The main scientific output. |
-| `chr<N>.info.gz` | Per-variant imputation quality (R² / INFO, MAF, Genotyped/Imputed flag). Used for the R² QC in §9. |
-| `report.txt` | Summary of the run: variants in / out, R² distribution by MAF bin, panel overlap. |
+**REPORTS** -- browser-viewable quality assessment
 
-**OTHER**
+| File | Size | Notes |
+| --- | --- | --- |
+| `quality-control.html` | 1.9 MB | Interactive imputation quality report with per-chromosome R² metrics, MAF-stratified distributions, and cumulative coverage curves. Open in any browser. |
 
-| File | What it contains |
-| --- | --- |
-| `chunks-excluded.txt` | Imputation windows (20 Mb each for chr22) that failed to produce valid imputed genotypes. **If this file is non-empty the job may still succeed but with gaps.** |
+**STATISTICS** (emitted during QC; appear even if the job later fails)
+
+| File | Size | Notes |
+| --- | --- | --- |
+| `qc_report.txt` | ~1 KB | Summary of input QC checks: sample count, SNP overlap, strand alignment. |
+| `snps-typed-only.txt` | ~40 KB for the tutorial | Typed-only SNPs -- present in your input but not in the reference panel. Passed through as-is, not imputed. |
+| `snps-excluded.txt` | ~200 bytes | SNPs removed during QC (monomorphic, low call rate, or allele mismatch). |
+
+**PROVENANCE**
+
+| File | Size | Notes |
+| --- | --- | --- |
+| `ro-crate-metadata.json` | ~100 KB | RO-Crate GA4GH workflow run record -- parameters, input/output hashes, tool versions, timing. Attach this to your downstream analysis for full reproducibility. |
 
 The Files tab populates **incrementally** -- you can
 see `qc_report.txt` within seconds of the QC stage
-starting, long before the main imputed VCF lands.
+starting, long before the main imputed ZIP lands.
 Useful for diagnosing a job that looks slow.
+
+::: tip Plan for the download size
+A single-chromosome imputed ZIP against H3Africa v6
+is ~600 MB; a full genome-wide submission pushes
+into several GB. Make sure you download on a
+reliable connection within the 7-day retention
+window -- the platform does not keep partial
+downloads.
+:::
 
 ### 8.2 Retrieving the files
 
-The specific retrieval affordance (download button
-per file, bulk ZIP, one-time password for encrypted
-output) depends on whether AES-256 encryption was
-enabled at submit (§6.4). On FedImpute the Files
-tab on the job page shows every output with a
-per-file **Download** button plus a bulk option.
-For the workshop:
+Every row in the Files tab has a per-file
+**Download** button (the streaming is direct from
+the federated node, no bulk-ZIP intermediate).
+Workflow for the tutorial:
 
-- Grab all files for your job as soon as it
-  completes -- the 7-day window starts at that
-  moment.
-- If the platform emails a one-time password (some
-  services encrypt output at rest), save it
-  alongside the download. You will need it to
-  decompress the VCF.
-- Verify the file sizes look plausible before you
-  leave the Results view (a dose VCF under ~10 MB
-  for a full chromosome is a red flag: the job
-  likely ran on a heavily subset panel).
+1. **Copy the encryption password first.** On the
+   completed job's **Overview** tab, scroll to the
+   right-hand panel: below *WES RUN ID* is an
+   **ENCRYPTION PASSWORD** row showing a masked
+   string. Click the eye icon to reveal and the
+   copy-to-clipboard icon to grab it. Save it
+   somewhere you can find again -- without it the
+   main RESULTS ZIP is unusable.
+2. **Download `chr_<N>.zip`.** This is the main
+   scientific output (~600 MB per chromosome).
+3. **Download `quality-control.html`** -- the
+   interactive R² report that §9 walks through.
+4. **Download `ro-crate-metadata.json`** -- the
+   GA4GH workflow-run provenance record. Attach it
+   to your downstream analysis for reproducibility.
+5. Extract the ZIP with the password:
+
+   ```bash
+   # macOS / Linux
+   unzip -P "<paste the password>" chr_22.zip
+   # Produces:
+   #   chr_22.dose.vcf.gz
+   #   chr_22.info.gz
+   ```
+
+6. Do a sanity check on the output size. For the
+   tutorial input (661 samples, chr22, sparse
+   4,423-variant baseline) against H3Africa v6
+   (full), expect the imputed dose VCF to be
+   **hundreds of MB** uncompressed -- the panel has
+   58.7M variants and most chr22 loci (~3M) will be
+   imputed. A dose VCF under ~10 MB is a red flag.
+
+Remember the **7-day retention window** starts when
+the job completes, not when you download. Pull the
+files as soon as the email arrives (or as soon as
+you see *Completed* on the job page).
 
 ### 8.3 Understanding the Info File
 
