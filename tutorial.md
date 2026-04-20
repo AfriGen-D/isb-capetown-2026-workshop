@@ -617,7 +617,7 @@ for the full pipeline catalogue:
 
 ![FedImpute /workflows: 3 cards (Genotype Imputation, VCF Liftover, Allele Switch Checker) plus GWAS Training; right-side details panel for the selected pipeline](/images/fedimpute/09-workflows.png)
 
-As of April 2026 FedImpute hosts **four pipelines**
+As of April 2026 FedImpute hosts **five pipelines**
 native to the platform (all running on the
 AfriGen-D Genotype Imputation Server at ILIFU
 UCT):
@@ -628,6 +628,15 @@ UCT):
 | **VCF Liftover** | Data Preparation | Nextflow | Convert between genome builds (e.g. GRCh37/hg19 ↔ GRCh38/hg38) with QC reporting. |
 | **Allele Switch Checker** | Data Preparation | Nextflow | QC tool: detects allele switches between a target VCF and a reference-panel legend file, optionally fixes mismatches. |
 | **GWAS Training** | Training | Nextflow (PLINK2) | Full GWAS workflow: VCF-to-PLINK conversion, QC, HWE filtering, association analysis. Designed for training. |
+| **Imputation QC** | QC | Nextflow | Post-imputation quality assessment. Upload an imputed VCF (with INFO/R2) and get an interactive report with R² distribution, MAF-stratified R², and filtered VCFs at standard quality cutoffs (R² > 0.3, > 0.5, > 0.8). Removes the need to run `bcftools view -e 'INFO/R2<...'` locally. |
+
+::: tip /workflows vs /jobs/new count mismatch
+The `/workflows` page currently shows **4**
+pipelines (missing GWAS Training); the **New Job**
+wizard at `/jobs/new` correctly lists all **5**.
+The discrepancy is a known UI bug -- trust
+`/jobs/new`.
+:::
 
 ::: tip You can run the whole workshop on FedImpute
 The **GWAS Training** pipeline means participants
@@ -1597,6 +1606,24 @@ After downloading your results, assess imputation quality using R² scores.
 1. **Overall R² distribution** - Most variants should have R² > 0.3
 2. **MAF-stratified R²** - Rare variants typically have lower R²
 3. **Comparison with genotyped variants** - Validation of accuracy
+
+::: tip Hosted alternative: the Imputation QC pipeline
+FedImpute now hosts a dedicated **Imputation QC**
+pipeline (§4.1) that does everything in this
+section as a single job: upload the imputed VCF
+(with `INFO/R2`) and receive an interactive report
+with R² distribution, MAF-stratified R², and
+**filtered VCFs at standard quality cutoffs
+(R² > 0.3, > 0.5, > 0.8)** -- so you don't need to
+run the `bcftools view -e 'INFO/R2<...'` filter
+locally. It's the best option for participants who
+don't want to install `bcftools`.
+
+The local/notebook path below remains useful when
+you want to sit with the numbers, customise the
+cutoff, or combine R² filters with other VCF
+manipulations in one pipeline.
+:::
 
 ### 9.2 Plotting R² Distribution (Hands-on)
 
