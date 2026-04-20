@@ -1388,7 +1388,9 @@ this (sizes from the live tutorial run on chr22):
 
 | File | Size | Notes |
 | --- | --- | --- |
-| `qc_report.txt` | ~1 KB | Summary of input QC checks: sample count, SNP overlap, strand alignment. |
+| `qc_report.txt` | ~700 bytes | Summary of input QC checks: sample count, SNP overlap, strand alignment. Uses `::group::` markdown for the Files-tab preview renderer. |
+| `qc_output.txt` | ~300 bytes | Stdout from `imputationserver-utils` (the genepi QC tool that runs before phasing). Shows the utility version, e.g. `imputationserver-utils 1.5.3`. |
+| `chunks_summary.txt` | ~100 bytes | Per-chromosome chunk accounting: `Chunks total / Chunks passed QC / Chunks excluded`. For the tutorial input: 2 / 2 / 0 (all chunks passed). |
 | `snps-typed-only.txt` | ~40 KB for the tutorial | Typed-only SNPs -- present in your input but not in the reference panel. Passed through as-is, not imputed. |
 | `snps-excluded.txt` | ~200 bytes | SNPs removed during QC (monomorphic, low call rate, or allele mismatch). |
 
@@ -1415,8 +1417,15 @@ downloads.
 ### 8.2 Retrieving the files
 
 Every row in the Files tab has a per-file
-**Download** button (the streaming is direct from
-the federated node, no bulk-ZIP intermediate).
+**Download** button. The button resolves to the
+**GA4GH WES v1.1.0 outputs endpoint** on the
+federated node -- e.g.
+`https://<node>/ga4gh/wes/v1/runs/<wes-run-id>/outputs/<filename>` --
+so scripted retrieval (via `curl` with your session
+cookie) works as a drop-in. The WES run ID is shown
+in the Overview tab's right-hand panel under **WES
+RUN ID**.
+
 Workflow for the tutorial:
 
 1. **Copy the encryption password first.** On the
