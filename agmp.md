@@ -45,7 +45,7 @@ single portal organised around four entry points:
 | Variants | 17,470 |
 | Unique studies | 1,194 |
 
-![AGMP data overview and top-ten graphs](/images/platforms/agmp-03-summary.png)
+![AGMP data overview and top-ten graphs](/images/platforms/agmp-02-summary.png)
 
 ## Portal Objectives
 
@@ -64,13 +64,7 @@ single portal organised around four entry points:
 
 ## Hands-on (20 min)
 
-::: warning Content being authored for 2026
-This hands-on walkthrough is new for the 2026 edition.
-The queries, screenshots, and sample exports below
-are a scaffold -- the instructor will walk through
-each step live and update this page afterward.
-:::
-
+No account is required -- AGMP is a public portal.
 By the end of the session, participants will be able
 to:
 
@@ -78,46 +72,96 @@ to:
    gene, drug, phenotype)
 2. Search for pharmacogenomic variants by gene, drug,
    or clinical annotation
-3. Interpret evidence levels and curation status
+3. Interpret the drug / gene / variant / region
+   columns and drill into linked PharmGKB studies
 4. Export curated variant sets for integration with
    external analyses
-5. Connect AGMP evidence with imputed genotypes from
-   the earlier FedImpute session
 
-### Exercise 1 -- Drug-gene association
+### Exercise 1 -- Drug-gene association for CYP2D6
 
-Search AGMP for a clinically relevant gene (for
-example **CYP2D6** or **DPYD**) and find the drugs for
-which African-relevant pharmacogenomic evidence
-exists.
+**CYP2D6** metabolises ~25% of clinically used drugs
+and is one of the most variable pharmacogenes in
+African populations. Let's walk through the query
+live.
 
-<!-- TODO(mamana): replace with the exact gene + drug
-     combo you plan to walk through live, include a
-     screenshot of the search result and the linked
-     PharmGKB entries. -->
+1. Open <https://agmp.afrigen-d.org>.
+2. Select **Gene** as the search category, enter
+   `CYP2D6`, and click **Search**.
+3. On the result card, click **Gene Associations**.
+   The portal opens
+   `/drug-phenotype-associations/CYP2D6/`.
 
-### Exercise 2 -- Export a variant set
+![CYP2D6 gene-drug-phenotype associations](/images/platforms/agmp-04-cyp2d6-associations.png)
 
-Using the Summary view and the "top ten variants"
-panel, pick a variant of interest and export its
-associated study list as TSV/CSV.
+You should see:
 
-<!-- TODO(mamana): verify the export flow and capture
-     a screenshot of the export file format so
-     participants know what to expect. -->
+- **Gene header:** UniProt ID `P10635`, function
+  summary (cytochrome P450 superfamily, polymorphic
+  "poor metaboliser" phenotype)
+- **Drug Associations table:** 48 entries. Each row
+  lists the **variant** (star allele, e.g. `CYP2D6*17`,
+  `CYP2D6*29`, `CYP2D6*40`), the **drug**
+  (e.g. codeine, dextromethorphan), a **description**
+  of the effect, the **p-value**, the **region** and
+  **country** (East Africa / Tanzania, African
+  American / Afro-Caribbean / USA), the study PMID,
+  the variant type (Star allele), and the source DB
+  (PharmGKB).
+- **Phenotype Associations table:** "No data available
+  in table" -- CYP2D6 has drug associations but not
+  disease / phenotype associations in AGMP v1.2.
+
+::: tip Star-allele nomenclature
+Pharmacogenes like CYP2D6 are described in
+**star-allele** form (`*1`, `*2`, ... `*40`) rather
+than as individual SNPs. Each star allele is a
+haplotype of several variants with a defined
+metabolic phenotype (normal, intermediate, poor,
+ultra-rapid). AGMP stores the star allele *name*;
+to translate to a concrete list of SNPs, follow the
+PharmGKB link in the rightmost column.
+:::
+
+### Exercise 2 -- Browse the Summary dashboard
+
+The Summary view gives a bird's-eye view of what
+AGMP currently covers.
+
+1. From any page, click **Summary** in the top
+   navigation.
+2. Observe the **Data Overview** table:
+
+   | Category | Count |
+   | --- | --- |
+   | Genes | 6,270 |
+   | Drugs | 48 |
+   | Phenotypes | 1,579 |
+   | Variants | 17,470 |
+   | Unique studies | 1,194 |
+
+3. Switch between the **Graphs** tabs: Top Ten Drugs,
+   Top Ten Genes, Top Ten Variants, Top Ten
+   Phenotypes. Note which drugs (efavirenz,
+   warfarin), genes (CYP2D6, CYP2B6), and phenotypes
+   (HIV response, warfarin dosing) dominate the
+   African evidence base.
+4. Scroll to the **Distribution Map** (choropleth by
+   study country). Most data points are from West
+   and East Africa, plus African-diaspora studies
+   in the USA.
+
+![AGMP Summary dashboard with counts, graphs, and study distribution map](/images/platforms/agmp-02-summary.png)
 
 ### Exercise 3 -- Integrate with imputation output
 
-Take a variant you imputed earlier in the FedImpute
-session, look it up in AGMP, and discuss what its
-drug-response evidence (or lack thereof) means for
-downstream clinical interpretation in an African
-cohort.
-
-<!-- TODO(mamana): suggest 3-5 variants from the
-     tutorial VCF that have known AGMP entries so the
-     exercise is reliably productive rather than
-     speculative. -->
+Take a chr22 variant from your FedImpute output
+(imputation dose VCF) and look it up in AGMP by
+searching by **Variant** with the rsID. Most variants
+will return no AGMP entry (that's expected -- AGMP is
+curated, not comprehensive). When a hit does come
+back, the page shows which drugs the variant has
+been associated with in African populations, which
+is the actionable signal for clinical interpretation.
 
 ## How AGMP Was Built
 
