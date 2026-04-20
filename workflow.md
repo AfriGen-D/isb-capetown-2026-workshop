@@ -94,13 +94,30 @@ walks the full sparse → impute → compare loop end-to-end.
 
 ### Run
 
-- [ ] Launch the **GWAS Training Workflow** pipeline on
-  the imputation service (see
-  [tutorial §4.3.1](/tutorial#gwas-training-workflow))
-- [ ] Upload the sparse VCF + phenotype file
-- [ ] Choose the linear / logistic model as
-  appropriate (binary B1 → logistic)
-- [ ] Submit
+::: warning Live-platform limitation (April 2026)
+FedImpute's **GWAS Training** pipeline wizard only
+uploads VCF files; the Phenotype File field expects
+the file pre-staged on the backend, and without it
+the job fails at `UPDATE_PHENOTYPE` with *"cannot
+open ... No such file or directory"*. Until that's
+fixed, **run GWAS locally with PLINK** on the sparse
+VCF (same phenotype file). See
+[tutorial §10.2](/tutorial#_10-2-using-the-gwas-visualization-notebook-hands-on)
+for the notebook-based path.
+:::
+
+Either:
+
+- [ ] **Local PLINK (recommended for the live
+  session):** load `plot_r2_distribution.ipynb` /
+  `gwas_visualization.ipynb` with the sparse VCF
+  and phenotype file, run PLINK2 logistic GWAS
+  (`B1 → logistic`), save Manhattan + QQ plots.
+- [ ] **FedImpute GWAS Training (pre-staged
+  phenotype):** launch the pipeline, upload the VCF,
+  type the phenotype filename in the text field,
+  submit -- but only if the workshop-day admin has
+  confirmed the pheno file is staged on the backend.
 
 ### Verify
 
@@ -334,11 +351,19 @@ has the fully-worked comparison with interpretation.
 
 ### Run
 
-- [ ] Re-run the **GWAS Training Workflow** with the
-  imputed VCF as input
-- [ ] Keep the same phenotype, model, and options as
-  step 1 for a like-for-like comparison
-- [ ] Submit and wait (should again be fast)
+Same live-platform caveat as Step 1: the FedImpute
+**GWAS Training** wizard doesn't accept phenotype
+uploads as of April 2026. Prefer the local path for
+a like-for-like comparison with Step 1:
+
+- [ ] Re-run the GWAS locally with PLINK on the
+  **imputed dose VCF** (post R² > 0.3 filter from
+  Step 3)
+- [ ] Keep the same phenotype, model (logistic), and
+  thresholds (MAF ≥ 0.01, missingness 0.1) as Step 1
+- [ ] The imputed dose VCF is much larger than the
+  sparse baseline -- expect minutes, not seconds,
+  for PLINK to finish
 
 ### Verify
 

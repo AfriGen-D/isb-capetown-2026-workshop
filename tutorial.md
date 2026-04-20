@@ -629,13 +629,30 @@ UCT):
 | **Allele Switch Checker** | Data Preparation | Nextflow | QC tool: detects allele switches between a target VCF and a reference-panel legend file, optionally fixes mismatches. |
 | **GWAS Training** | Training | Nextflow (PLINK2) | Full GWAS workflow: VCF-to-PLINK conversion, QC, HWE filtering, association analysis. Designed for training. |
 
-::: tip You can run the whole workshop on FedImpute
-The **GWAS Training** pipeline means participants
-can produce both the "before" and "after" Manhattan
-plots for the imputation payoff entirely on
-FedImpute -- no local PLINK install is required.
-The workshop's [workflow checklists](/workflow) wire
-GWAS Training into Steps 1 and 4.
+::: warning GWAS Training -- phenotype-upload gap
+The GWAS Training pipeline is live but has a
+**known workshop-day limitation** (confirmed by
+live test on 20 April 2026): the submission wizard
+only accepts **VCF** uploads via the drop-zone. The
+**Phenotype File** field on Step 4 is a plain text
+input that the pipeline then looks up in the same
+input directory -- if the file isn't pre-staged on
+the backend, the job fails at the `UPDATE_PHENOTYPE`
+step after ~1-2 minutes with:
+
+> `tail: cannot open '<pheno>.txt' for reading: No such file or directory`
+
+Earlier QC stages (VCF_TO_PLINK, PLINK_QC,
+PLINK_HWE, PCA_ANALYSIS) do run successfully, so you
+get PCA eigenvalues / eigenvectors back even on a
+failed run.
+
+**Workaround until the wizard supports phenotype
+upload:** run the before / after GWAS locally with
+PLINK (see [§10.2](#_10-2-using-the-gwas-visualization-notebook-hands-on))
+against the imputed dose VCF you download from
+[§8](#_8-downloading-results). The workshop notebooks
+already cover this path.
 :::
 
 Click any pipeline card to see the right-hand
@@ -2340,6 +2357,7 @@ regardless of which imputation service you run on.
 | **Job fails: "QC step failed" on H3Africa v6 African-only** | Sparse input × smaller panel = not enough matched sites per chunk | Click **Retry** and switch to **H3Africa v6 (full)** -- the larger panel typically has enough overlap to produce valid chunks |
 | **Submit button stays disabled** | Data Use Agreement checkboxes not ticked | Scroll to the bottom of Review & Submit and check **both** DUA boxes |
 | **AGVD "Login Required" on variant detail** | Per-population frequency breakdowns require a signed-in nyame account | Sign in at <https://nyame.afrigen-d.org/accounts/login/>; new accounts require manual activation (plan ahead) |
+| **GWAS Training fails: `UPDATE_PHENOTYPE` cannot open `<pheno>.txt`** | Phenotype file not pre-staged on the backend; the wizard only uploads VCFs | Until the wizard accepts phenotype uploads, run GWAS locally with PLINK on the imputed dose VCF from §8. See [§10.2](#_10-2-using-the-gwas-visualization-notebook-hands-on). |
 
 <!-- markdownlint-enable MD013 -->
 
