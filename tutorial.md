@@ -14,27 +14,18 @@ Centre and Spa, Milnerton, Cape Town, South Africa
 **Duration:** 3 h 45 min content + 15-min buffer  
 **Organiser:** Mr Mamana Mbiyavanga (UCT / AfriGen-D)  
 
-::: warning Screenshots note -- read before you start
-The workshop now uses **FedImpute** at
-<https://fedimpute.afrigen-d.org> for every step,
-and all URLs and instructions below target it.
-
-**Rewritten against FedImpute (current):**
-sections 2 (Getting Started), 4.2 (Reference Panels,
-from the live FedImpute FAQ), 5 (Data Preparation),
-and 13 (Troubleshooting).
-
-**Rewritten at concept level pending authenticated
-re-capture:** sections 3 (Dashboard), 4.1 (Pipeline
-listing), and 6--11 (Submit / Monitor / Download /
-QC / GWAS / Case Study). These describe the
-*decisions* and *outputs* that are identical across
-imputation services; the FedImpute-specific UI
-chrome (button names, exact navigation paths) will
-be captured in Phase 2. Use
-[section 0](#_0-the-fedimpute-platform) and the
-[`/workflow`](/workflow) checklists as the source
-of truth for the live flow.
+::: tip Captured against the live FedImpute platform
+All sections below have been validated against the
+current production platform at
+<https://fedimpute.afrigen-d.org>. Screenshots were
+captured during a live walkthrough (April 2026)
+using the actual `mamanambiya` test account on
+Kibali, running a real imputation job on the
+AfriGen-D Genotype Imputation Server at ILIFU UCT
+and live queries against AGMP and AGVD. A handful
+of section-level notes call out workshop-day
+caveats (panel choice for sparse input, AGVD beta
+activation window).
 :::
 
 ::: info Checklist for each hands-on step
@@ -83,7 +74,7 @@ Michigan and TOPMed imputation servers are
 designed as an African-first alternative to them, not
 a front-end over them.
 
-![FedImpute landing page](/images/platforms/elwazi-01-landing.png)
+![FedImpute landing page at fedimpute.afrigen-d.org](/images/fedimpute/00-landing-full.png)
 
 ### Why Federated?
 
@@ -115,23 +106,22 @@ a front-end over them.
 
 ### Log in
 
-![FedImpute login screen](/images/platforms/elwazi-03-login.png)
+![FedImpute login screen -- single "Sign in with AfriGen-D Identity" SSO button](/images/fedimpute/01-login.png)
 
-Log in with your **AfriGen-D Identity** account. If
-you don't have one,
+The login page is deliberately minimal: **one SSO
+button** that redirects you to AfriGen-D Identity
+(Kibali) at
+[kibali.afrigen-d.org](https://kibali.afrigen-d.org).
+No email / password form lives on FedImpute itself.
+
+If you don't have an account,
 [register here](https://kibali.afrigen-d.org/if/flow/afrigend-enrollment/)
 -- this SSO account covers FedImpute. AGVD does
 **not yet** share the SSO and requires a separate
 signup at
-<https://nyame.afrigen-d.org/accounts/login/>.
-
-<!-- TODO(mamana): re-capture detailed step-by-step
-     screens (upload VCF, select reference panel,
-     configure parameters, monitor progress, download
-     results) against FedImpute. Sections 2-11 below
-     still show the retired legacy UI; the URLs have
-     been updated to fedimpute.afrigen-d.org but the
-     screenshots have not yet been refreshed. -->
+<https://nyame.afrigen-d.org/accounts/login/>
+(see the AGVD page for beta-release / manual-
+activation caveats).
 
 ### Architecture (for the curious)
 
@@ -152,7 +142,12 @@ participating institutions are the **H3Africa
 Consortium** and the **University of Cape Town /
 ILIFU**.
 
-![FedImpute About page -- participating institutions: H3Africa Consortium and UCT/ILIFU](/images/platforms/elwazi-02-about.png)
+**Current network state (April 2026):** 1 online
+node (AfriGen-D Genotype Imputation Server at
+ILIFU UCT), 32 total CPUs, 213 total jobs run,
+4 reference panels exposed. The architecture is
+designed for federation across African institutions
+-- additional nodes are in onboarding.
 
 ---
 
@@ -426,16 +421,15 @@ Open <https://fedimpute.afrigen-d.org/login> in your
 browser and click **Register** (top-right) or
 **Sign up** (inside the login card).
 
-![FedImpute login page with Register button top-right and Sign up link inside the card](/images/fedimpute/01-login.png)
+![FedImpute login page -- single "Sign in with AfriGen-D Identity" SSO button, Sign up link below](/images/fedimpute/01-login.png)
 
 You will be redirected to the **AfriGen-D enrollment
 page** at
 <https://kibali.afrigen-d.org/if/flow/afrigend-enrollment/>.
-Fill in the eight fields -- the first six are
-required, the last field (Role / Position) is
-optional:
+Fill in the eight fields -- the first seven are
+required, the last (Role / Position) is optional:
 
-![Top of the Kibali enrollment form: Full Name, Email, Username, Password, Confirm Password](/images/fedimpute/02-enroll-top.png)
+![Filled Kibali enrollment form: Full Name, Email, Username, Password, Confirm Password, Institution, Country, Role, two consent checkboxes, blue Continue button](/images/fedimpute/02-enroll-filled.png)
 
 | Field | Expected input | Required |
 | --- | --- | --- |
@@ -448,10 +442,8 @@ optional:
 | Country | e.g. *South Africa* | ✓ |
 | Role / Position | e.g. *Researcher, PhD Student* | — |
 
-Scroll to the bottom, tick the two consent checkboxes,
-and click **Continue**:
-
-![Bottom of the enrollment form: Institution, Country, Role, two consent checkboxes, blue Continue button](/images/fedimpute/03-enroll-bottom.png)
+Scroll to the bottom and tick the **two consent
+checkboxes**:
 
 - "I agree to the AfriGen-D Terms of Service and
   understand that access to controlled datasets
@@ -460,22 +452,47 @@ and click **Continue**:
   understand my data will be processed per applicable
   regulations."
 
-Kibali then sends a verification email to the address
-you supplied -- open it and click the confirmation
-link before continuing to the next step.
+Click the blue **Continue** button. Kibali sends a
+verification email to the address you supplied --
+open it and click the confirmation link before
+continuing to the next step.
+
+::: warning "Failed to update user" -- known error for existing users
+If you see this error after hitting Continue:
+
+> Request has been denied.  
+> Failed to update user. Please try again later.
+
+it usually means the chosen **username or email is
+already registered** on Kibali (for example because
+you enrolled through a dev environment or a previous
+workshop). Choose a different username, or jump
+straight to **Sign in** and use
+[Forgot password](https://kibali.afrigen-d.org/if/flow/afrigend-password-recovery/)
+to recover the existing account.
+
+![Kibali enrollment denial banner: "Failed to update user"](/images/fedimpute/02-enroll-error.png)
+:::
 
 ### 2.2 Logging in to FedImpute
 
 Once your email is verified, return to
 <https://fedimpute.afrigen-d.org/login> and click
 **Sign in with AfriGen-D Identity** (the big green
-button). Kibali handles the username + password
-prompt, then redirects you back to FedImpute as a
-logged-in user.
+button). Kibali handles the login prompt in two
+steps:
 
-<!-- TODO(mamana): after the first authenticated run,
-     add a screenshot of the post-login FedImpute
-     dashboard here and update section 3 below. -->
+1. **Username step.** Enter your Kibali username (or
+   the email address you registered with) and click
+   **Log in**.
+2. **Password step.** Kibali shows your avatar +
+   username, then prompts for the password. Enter
+   it and click **Continue**.
+
+![Kibali password prompt showing the avatar/username above the password field](/images/fedimpute/07b-kibali-step2.png)
+
+On success you are redirected back to FedImpute at
+`/dashboard`, fully authenticated.
 
 ### 🏋️ Exercise 1 -- register, verify, log in
 
@@ -522,45 +539,71 @@ Confirm you can see, after signing in:
 
 ## 3. Dashboard overview
 
-::: warning FedImpute UI capture pending
-This section describes the **legacy AfriGen-D
-Imputation Service** dashboard. The exact FedImpute
-dashboard layout (button names, menus, panel
-sections) will be documented after an authenticated
-re-capture pass. The concepts below -- jobs list,
-status categories, navigation -- map to any modern
-imputation service and are a good mental model to
-arrive with.
-:::
+Once signed in, FedImpute redirects you to
+`/dashboard`, which is the main hub for everything
+you do on the platform:
 
-Once signed in, a typical imputation-service
-dashboard lets you:
+![FedImpute dashboard: welcome header, 4 KPI cards, 5 quick-access buttons, federated-nodes card, recent-jobs list](/images/fedimpute/08-dashboard.png)
 
-- **See your submitted jobs** with a status for each
-  (queued, running, completed, failed)
-- **Submit a new job** through a pipeline selector
-- **Download results** from completed jobs
-- **Manage your account** (profile, logout, Data
-  Access Agreements)
+### Left navigation (7 items)
 
-On FedImpute specifically, the screens live under the
-authenticated routes at
-<https://fedimpute.afrigen-d.org> after you sign in
-via AfriGen-D Identity (§2).
+| Item | Route | What it does |
+| --- | --- | --- |
+| **Dashboard** | `/dashboard` | Top-level KPIs + quick-access cards (this page) |
+| **Nodes** | `/services` | Federated imputation-node catalogue |
+| **Jobs** | `/jobs` | Your job history with status + search |
+| **New Job** | `/jobs/new` | 5-step wizard to submit a new job |
+| **Explorer** | `/explorer` | Browse datasets, results, and reference panels (GA4GH Data Connect) |
+| **Workflows** | `/workflows` | All available pipelines and analysis tools |
+| **Settings** | `/settings` | Account settings |
 
-### Navigation on the live platform
+### Top-of-page KPIs
 
-FedImpute exposes Home and About as public routes;
-everything else becomes reachable once you are
-signed in. The exact menu structure will be
-documented alongside screenshots in the Phase-2
-re-capture pass.
+Four summary cards at the top of the dashboard:
 
-<!-- TODO(mamana): capture the FedImpute dashboard
-     once authenticated + list the actual nav items.
-     Replace the "typical imputation-service
-     dashboard" bullets with FedImpute-specific ones.
-  -->
+- **Nodes Online** -- count of federated imputation
+  nodes currently reachable (1 as of April 2026)
+- **Reference Panels** -- panels discoverable across
+  all federated nodes (4 as of April 2026)
+- **Total CPUs** -- aggregate compute capacity
+  currently registered (32)
+- **Standards** -- GA4GH standards implemented (7:
+  DRS v1.5.0, WES v1.1.0, Passport/Visa, Service
+  Info, Data Connect v1.0.0, TRS v2, RO-Crate)
+
+### Quick-access cards
+
+Below the KPIs, five large action cards take you
+straight to the most common tasks:
+
+- **New Job** → submit an imputation or analysis job
+- **Browse Nodes** → view node capacity and panels
+- **Explore Files** → your uploads, results, and
+  the reference-panel catalogue
+- **Browse Workflows** → available pipelines
+- **My Jobs** → your job history and results
+
+### Federated Nodes + Recent Jobs
+
+The bottom half of the dashboard splits into two
+panels:
+
+- **Federated Nodes** -- cards per online node with
+  location, status badge, and a "View all" link to
+  `/services`.
+- **Recent Jobs** -- your last few submissions with
+  workflow type, filename, timestamp, and status.
+  Useful for a quick check-in after signing in.
+
+### Related AfriGen-D Tools
+
+Scrolling further shows a "Related AfriGen-D Tools"
+band linking to
+[AGVD](https://agvd.afrigen-d.org/),
+[AGMP](https://agmp.afrigen-d.org/), and
+[Beacon](https://beacon.afrigen-d.org/) --
+useful as a one-click jump-off for the later
+workshop sessions.
 
 ---
 
@@ -568,59 +611,72 @@ re-capture pass.
 
 ### 4.1 Accessing Pipelines
 
-::: warning FedImpute UI capture pending
-The pipeline list below inherits from the legacy
-AfriGen-D Imputation Service. The **Genotype
-Imputation** pipeline is definitely on FedImpute
-(it's the platform's main purpose). Whether the
-supporting tools (GWAS Training, Allele Switch
-Checker, VCF Liftover) are hosted on FedImpute
-itself or are separate services will be confirmed
-during the Phase-2 authenticated re-capture.
+Click **Workflows** in the left nav (or visit
+<https://fedimpute.afrigen-d.org/workflows> directly)
+for the full pipeline catalogue:
+
+![FedImpute /workflows: 3 cards (Genotype Imputation, VCF Liftover, Allele Switch Checker) plus GWAS Training; right-side details panel for the selected pipeline](/images/fedimpute/09-workflows.png)
+
+As of April 2026 FedImpute hosts **four pipelines**
+native to the platform (all running on the
+AfriGen-D Genotype Imputation Server at ILIFU
+UCT):
+
+| Pipeline | Category | Runtime | Purpose |
+| --- | --- | --- | --- |
+| **Genotype Imputation** | Imputation | Nextflow (`imputationserver2` v2.0.12) | Eagle v2.4 phasing + Minimac4 imputation. Based on Michigan Imputation Server 2. |
+| **VCF Liftover** | Data Preparation | Nextflow | Convert between genome builds (e.g. GRCh37/hg19 ↔ GRCh38/hg38) with QC reporting. |
+| **Allele Switch Checker** | Data Preparation | Nextflow | QC tool: detects allele switches between a target VCF and a reference-panel legend file, optionally fixes mismatches. |
+| **GWAS Training** | Training | Nextflow (PLINK2) | Full GWAS workflow: VCF-to-PLINK conversion, QC, HWE filtering, association analysis. Designed for training. |
+
+::: tip You can run the whole workshop on FedImpute
+The **GWAS Training** pipeline means participants
+can produce both the "before" and "after" Manhattan
+plots for the imputation payoff entirely on
+FedImpute -- no local PLINK install is required.
+The workshop's [workflow checklists](/workflow) wire
+GWAS Training into Steps 1 and 4.
 :::
 
-The pipelines this tutorial references:
-
-- **Genotype Imputation** -- the main workflow,
-  using African-specific reference panels (see §4.2)
-- **GWAS Training Workflow** -- GWAS analysis using
-  PLINK2 on the imputed output
-- **Allele Switch Checker** (Checkref) -- QC tool
-  for detecting strand / allele issues before
-  imputation (§4.3.2)
-- **VCF Liftover** -- convert between genome builds
-  (hg19 ↔ hg38) before imputation when the input
-  build doesn't match the panel (§4.3.3)
-
-<!-- TODO(mamana): confirm during Phase-2
-     authenticated walkthrough which of these
-     pipelines are actually on FedImpute's /run (or
-     equivalent) page vs separate tools. Update this
-     list accordingly. -->
+Click any pipeline card to see the right-hand
+**Workflow Details** panel with type, version, node,
+source repo (e.g.
+[github.com/afrigen-d/imputationserver2](https://github.com/afrigen-d/imputationserver2))
+and the default parameter set. The bottom **Run this
+workflow** button jumps you straight into the **New
+Job** wizard (§6) pre-scoped to that pipeline.
 
 ### 4.2 Available Reference Panels
 
-Per the live FedImpute FAQ at
-<https://fedimpute.afrigen-d.org>:
+FedImpute's reference-panel catalogue lives at
+<https://fedimpute.afrigen-d.org/explorer?tab=panels>
+(or click the "Reference Panels" KPI card on the
+dashboard). The current **four panels**, with the
+exact metadata FedImpute exposes:
+
+![FedImpute Explorer → Reference Panels tab: 4 panel cards with build, sample + variant counts, and access badges](/images/fedimpute/11-reference-panels.png)
 
 <!-- markdownlint-disable MD013 -->
 
-| Panel | Build | Notes |
-| --- | --- | --- |
-| **H3Africa v6 (full)** | hg38 (hg19 via liftover) | African-specific, 48 populations, 8,894 haplotypes. The baseline panel used in [Sengupta et al. 2023][sengupta-panels]. |
-| **H3Africa v6 (African-only subset)** | hg38 | Sub-set of v6 restricted to African-ancestry haplotypes; useful when the admixed cohorts in v6 would dilute the population match. |
-| **H3Africa v7** | hg38 | Successor to v6, targets **African-ancestry imputation** specifically. Incorporates newer cohorts. This is the recommended default for African studies on FedImpute. |
-| **HapMap2 (CEU)** | hg19 / hg38 | European-ancestry panel, kept for **benchmarking** against African panels -- not for primary analysis of African cohorts. |
+| Panel | Build | Samples | Variants | Population | Access |
+| --- | --- | --- | --- | --- | --- |
+| **H3Africa v6 (full)** | hg38 | 4,447 | 58,669,063 | Global: 48 countries, 182 ethnic groups, 39% African (KGP, HGDP, 54gene, GAPW, SAALS, AWI-Gen cohorts) | Granted after enrolment |
+| **H3Africa v6 African-only** | hg38 | 1,895 | 42,331,932 | African: 22 countries, 118 ethnic groups, 100% African. Smaller and faster for African-ancestry imputation. | Granted after enrolment |
+| **H3Africa v7** | hg38 | 6,213 | 78,600,000 | Global: 6 continents, 5 African regions, 39% African. Updated variant calling + expanded sample set. | **Request Access** |
+| **HapMap2 chr20 (CEU)** | hg19 | 60 | 37,855 | CEU (European). For benchmarking / testing only (chr20 only). | Granted |
 
 <!-- markdownlint-enable MD013 -->
 
-[sengupta-panels]: https://doi.org/10.1016/j.xgen.2023.100332
+Each panel card in the Explorer also shows the
+underlying **DRS URI** (for example
+`drs://api-drs.afrigen-d.dev/4c27d0d5-…`), a
+**Reference** / **Read-Only** tag, a star rating, and
+the job count that has used that panel. H3Africa v7
+is gated by a Data Access Agreement -- click
+**Request Access** to review and accept the DAA
+terms in-app.
 
-More panels are added as they are published by the
-H3Africa Consortium -- check the FAQ item "Which
-reference panels are available?" at
-<https://fedimpute.afrigen-d.org> for the current
-list.
+[sengupta-panels]: https://doi.org/10.1016/j.xgen.2023.100332
 
 **Recommended panels for African cohorts**
 
@@ -911,100 +967,137 @@ For the file `1k_afr_binary_1000k_chr22.vcf.gz`, answer these questions:
 
 *→ Live checklist: [Workflow Step 2 -- Submit the imputation job](/workflow#step-2-submit-the-imputation-job)*
 
-This section covers the **four things** every
-imputation-service submission requires, regardless of
-platform: the input file, the reference panel, the
-job configuration, and the submission itself. The
-FedImpute-specific UI labels (button names,
-navigation paths) will be documented during the
-authenticated re-capture pass; the **decisions** you
-make at each stage are covered here and are
-transferable across services.
+FedImpute's job submission is a **5-step wizard**.
+Click **New Job** in the left nav (or the green
+quick-access button on the dashboard) to start at
+`/jobs/new`.
 
-### 6.1 Data upload
+![Step 1 of the New Job wizard: four workflow cards -- Genotype Imputation, VCF Liftover, Allele Switch Checker, GWAS Training](/images/fedimpute/13-new-job.png)
 
-::: tip FedImpute upload requirements
-Already covered in [§5](#_5-data-preparation-before-upload):
-**bgzipped VCF, sorted by position, hg19 or hg38,
-≥20 samples**. The platform performs automatic
-format validation during upload and will reject
-files that don't meet these requirements.
+### 6.1 Select Workflow
+
+Step 1 offers the four hosted pipelines from §4.1.
+For imputation, click the **Genotype Imputation**
+card (top-left) and then the green **Continue**
+button. For the full workshop flow you will revisit
+this step for **GWAS Training** later on to run the
+before / after GWAS.
+
+### 6.2 Select Service
+
+Step 2 shows the federated nodes that can run the
+chosen workflow. There is currently one node online
+(AfriGen-D Genotype Imputation Server at ILIFU UCT)
+which is pre-selected.
+
+![Step 2: service selection -- AfriGen-D node card, 500 MB max file size, vcf + vcf.gz formats](/images/fedimpute/14-new-job-service.png)
+
+The right-hand **Service Details** panel surfaces
+the hard constraints you need to check:
+
+- **Max File Size: 500 MB per file**
+- **Supported Formats: vcf, vcf.gz**
+- Continent: Africa
+- GA4GH endpoints exposed: WES, DRS, Data Connect
+
+Click **Continue**.
+
+### 6.3 Select Panel
+
+Step 3 is where the **most scientifically
+consequential** decision happens. Pick a reference
+panel from the four described in
+[§4.2](#_4-2-available-reference-panels).
+
+![Step 3: panel cards showing H3Africa v6 (full), v6 African-only, v7, HapMap2 chr20 (CEU) with samples/variants/population metadata](/images/fedimpute/15-new-job-panel.png)
+
+::: tip Panel choice for African cohorts
+- **H3Africa v6 (full)** -- broad reference surface
+  (58.7M variants, global) with a solid African
+  representation. **Recommended default for sparse
+  input data (e.g. SNP-array coverage ~4-10k
+  variants per chromosome)** because the larger
+  panel increases overlap.
+- **H3Africa v6 African-only** -- smaller (42.3M
+  variants, 1,895 samples, 100% African). Better
+  population match but lower overlap; requires
+  denser input to work well. In the live test run
+  for this tutorial, the sparse 4,423-variant chr22
+  VCF **failed QC** against this panel because the
+  chunked windows had too few matched sites.
+- **H3Africa v7** -- newest panel (78.6M variants,
+  6,213 samples). Recommended once you have Data
+  Access Agreement approval (click
+  **Request Access**).
+- **HapMap2 chr20 (CEU)** -- benchmarking only.
 :::
 
-- **One chromosome per file is the common case** --
-  many imputation services require (or strongly
-  prefer) single-chromosome uploads. Split
-  multi-chromosome VCFs with
-  `bcftools view -r chrN input.vcf.gz -Oz -o chrN.vcf.gz`
-  before submitting if that applies to your
-  workflow.
-- **Watch for the validation step.** After upload,
-  FedImpute runs basic format and content checks.
-  Common failure modes (wrong build, REF/ALT flips,
-  non-bgzip `.gz`) are all caught here -- if the
-  file is rejected, the platform reports what
-  failed so you can fix it client-side.
+Click the chosen panel card, then **Continue**.
 
-For the tutorial we use the sample VCF at
-`/data/1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz`
--- 661 samples, chr22, hg38, already bgzipped and
-sorted.
+### 6.4 Upload & Configure
 
-### 6.2 Reference panel selection
+Step 4 combines file upload and parameter editing.
 
-This is the **most scientifically consequential
-decision** in the whole workflow. See
-[§4.2](#_4-2-available-reference-panels) for the
-current FedImpute panel list and
-[`/services`](/services#sengupta-2023-the-african-populations-benchmark)
-for the Sengupta et al. 2023 benchmark showing
-African panels deliver roughly 3.4× better NDR
-accuracy on SSA samples than European-focused
-panels.
+![Step 4: upload drop zone on the left, job summary on the right showing service, reference panel, workflow, parameters](/images/fedimpute/17-file-uploaded.png)
 
-**Default for an African cohort in this workshop:
-H3Africa v7.** Fall back to H3Africa v6 (full or
-African-only subset) when reproducing older
-analyses.
+**Upload.** Drag-and-drop a VCF into the dashed drop
+zone, or click to pick a file. The right-hand **Job
+Summary** updates in real time to show file count,
+total size, and (once uploaded) a computed input
+hash for provenance. Our tutorial input is
+`1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz`
+at 219 KB.
 
-### 6.3 Job configuration
+**Parameters.** Below the upload area, the form
+exposes the same parameters the pipeline runs with:
 
-Most imputation services surface the same small set
-of job parameters. FedImpute's exact form layout
-will be documented in the Phase-2 capture; the
-parameters themselves are standard:
-
-<!-- markdownlint-disable MD013 -->
-
-| Parameter | What it means | Typical choice |
+| Parameter | Default | Notes |
 | --- | --- | --- |
-| **Job name** | Human-readable label for yourself | `afr_chr22_imputation_2026-04-20` |
-| **Reference panel** | Panel to match against | H3Africa v7 for African cohorts |
-| **Genome build** | Coordinate system of the input VCF | Match the panel; liftover if they differ |
-| **Phasing** | Haplotype-phasing algorithm | **Eagle** (fast, accurate, Minimac4 default) |
-| **Population** | Study-cohort ancestry | African for H3Africa panels |
-| **Output** | Result format | Compressed VCF (imputed genotypes + dosages) |
+| Job Name | (filename) | Free text -- give it something searchable, e.g. `isb-2026-tutorial-chr22-v6afr`. |
+| Array Build | hg38 | Must match the panel. Use VCF Liftover (§4.3) if it doesn't. |
+| Phasing Engine | `eagle` | Eagle v2.4 (phased output). |
+| Allele Frequency Check | `mixed` | Use `mixed` for cosmopolitan / admixed cohorts; leave as-is for African studies. |
+| rsq Filter | `0` (off) | Post-imputation R² cutoff -- leave at 0 and filter downstream in §9. |
+| Mode | Quality Control & Imputation | End-to-end. The other choice (QC-only) is useful for pre-flighting. |
+| AES 256 Encryption | No | Optional; if enabled, FedImpute emails a one-time password for the output VCF. |
+| Generate Meta-imputation File | No | Only relevant when combining panels. |
 
-<!-- markdownlint-enable MD013 -->
+Click **Continue** when the upload and parameters
+are set.
 
-::: tip Phasing, briefly
-**Phasing** determines which alleles are inherited
-together on the same chromosome copy. Imputation
-matches your sample's phased **haplotypes** against
-the reference panel's, so better phasing → better
-matches → better imputation. **Eagle** is the
-standard phasing algorithm -- fast, accurate,
-scales to 100k+ samples, and pairs with Minimac4.
-:::
+### 6.5 Review & Submit
 
-### 6.4 Submit
+Step 5 is a read-only summary of everything above,
+plus the **Data Use Agreement** checkboxes:
 
-When you confirm the job, the platform assigns a
-**Job ID**, queues the run, and routes you to the
-monitoring view ([§7](#_7-monitoring-job-progress)
-continues from there). **Save the job ID** -- you'll
-need it if you close the tab and want to come back
-to the job later.
+![Step 5: review card with service, workflow, reference panel, input & parameters, DUA checkboxes ticked, green Submit Job button](/images/fedimpute/19-dua-checked.png)
+
+Three things to check before submitting:
+
+1. **The Service / Workflow / Reference Panel** cards
+   match what you intended.
+2. The **Estimated duration** near the bottom of the
+   page (computed from previous runs). In the live
+   test this showed *"9h 47m, based on 2 previous
+   runs (limited data)"* -- the estimate can be
+   wildly off for panels with few prior runs; your
+   actual job often completes much faster.
+3. Both **Data Use Agreement** checkboxes are
+   ticked:
+   - "I will not attempt to re-identify or contact
+     research participants."
+   - "I will report any inadvertent data release,
+     security breach or other data management
+     incident of which I become aware."
+
+When both boxes are checked the green **Submit Job**
+button in the top-right activates. Click it. FedImpute
+assigns a UUID Job ID, queues the run, and redirects
+you to `/jobs/<uuid>` -- the monitoring view covered
+in [§7](#_7-monitoring-job-progress).
+
+**Save the Job ID** (copy it from the URL or the
+page header) -- you need it if you close the tab.
 
 Once submitted, the rest of the workflow is
 asynchronous: the platform runs the job, emails you
@@ -1120,44 +1213,97 @@ vocabulary, whatever the specific UI labels:
 
 ### 7.2 What the job actually does
 
-Under the hood, the job runs the four standard
-imputation pipeline stages (covered in depth in
-[/imputation §3](/imputation#_3-how-imputation-actually-works)):
+FedImpute's job view exposes **six pipeline stages**
+with a dedicated progress bar per stage:
 
-1. **QC + harmonisation** -- verifies format, genome
-   build, REF/ALT, and samples
-2. **Phasing** -- Eagle reconstructs haplotypes from
-   the input genotypes
-3. **Imputation** -- Minimac4 matches your phased
-   haplotypes against the reference panel and
-   infers the missing genotypes
-4. **Post-processing** -- per-variant quality
-   metrics (R² / INFO) computed and packaged with
-   the output VCF
+![Job detail page: six-stage pipeline progress with Queued / Input Validation / Quality Control / Phasing / Imputation / Post-processing; Cancel button top-right; Overview / Files / Usage / Logs tabs](/images/fedimpute/21-job-progress-1.png)
 
-Most FedImpute job views show a progress indicator
-for each stage; which stage is running tells you a
-lot about where to look if something goes wrong
-(QC errors mean input problems, phasing errors
-usually mean alignment issues).
+| # | Stage | What it does |
+| --- | --- | --- |
+| 1 | **Queued** | Submission received, waiting for compute capacity. Typically fast (seconds to a few minutes). |
+| 2 | **Input Validation** | Format check: parses the VCF header, confirms bgzip, verifies ≥20 samples. |
+| 3 | **Quality Control** | Harmonisation against the panel: strand flips, A/T & C/G genotypes, allele switches, monomorphic sites, typed-only variants (present in input, absent from panel). Emits `qc_report.txt`, `snps-typed-only.txt`, `snps-excluded.txt`, `chunks-excluded.txt`. |
+| 4 | **Phasing** | Eagle v2.4 reconstructs per-sample haplotypes. |
+| 5 | **Imputation** | Minimac4 matches phased haplotypes against the reference panel and infers missing genotypes. |
+| 6 | **Post-processing** | Writes the imputed dose VCF, computes per-variant R² / INFO, packages all outputs. |
 
-### 7.3 Expected wall-clock
+The underlying pipeline is
+[afrigen-d/imputationserver2](https://github.com/afrigen-d/imputationserver2)
+v2.0.12 running on Nextflow 25.10.4 (visible in the
+**Logs** tab).
 
-For the tutorial input (661 samples, chr22,
-~4,400 variants) against H3Africa v7, imputation
-typically completes in **minutes**. Queue time can
-add more -- factor in **15–60 minutes total** for a
-single-chromosome submission during a busy workshop
-slot. Genome-wide (all autosomes) submissions for a
-larger cohort can run several hours.
+### 7.3 QC statistics
 
-### 7.4 Managing a running job
+While QC runs, the **QC STATISTICS** panel populates
+in real time with the harmonisation counts -- this
+is the most informative part of the whole monitoring
+view:
 
-Most imputation services expose the standard
-controls: **cancel** a running job, **retry** a
-failed one, and **delete** old ones. The FedImpute-
-specific affordances will be documented in the
-authenticated re-capture pass.
+![QC STATISTICS section: Input Validation (SNPs call rate < 90%), Quality Control (alt-freq >0.5 sites, match, reference overlap, etc.)](/images/fedimpute/23-job-progress-3.png)
+
+Typical counts to expect (real values from the
+tutorial chr22 input):
+
+| Metric | Value |
+| --- | --- |
+| SNPs call rate < 90% | 0 |
+| Alternative allele freq > 0.5 sites | 4,335 |
+| Match (matched to panel) | 1,803 |
+| Reference Overlap | 40.81% |
+| Typed only sites (input, not in panel) | 2,616 |
+| Monomorphic sites | 3 |
+| Excluded sites in total | 4 |
+| Allele mismatch | 1 |
+| Strand flip | 0 |
+| A/T, C/G genotypes | 0 |
+| Invalid alleles | 0 |
+| Duplicated sites | 0 |
+
+**Reference overlap** is the headline number: how
+many input SNPs matched a panel site. **<~50% on
+the African-only subset is a red flag** for sparse
+input -- fall back to H3Africa v6 (full).
+
+### 7.4 Expected wall-clock
+
+**For the tutorial input (661 samples, chr22,
+~4,400 variants), plan on 15-30 minutes.** The
+platform shows its own **Estimated duration** near
+the top of the job page (computed from previous
+runs) -- this can be wildly off for panels with few
+priors. The live test showed a 9h 47m estimate on
+H3Africa v6 African-only that actually completed
+(as a QC failure) in 22m 29s. Take the estimate as
+a ceiling, not a target.
+
+### 7.5 Managing a running job
+
+Controls available on the job detail page:
+
+- **Cancel** (top-right) -- stops a running job.
+  Cancelled jobs keep their partial outputs in the
+  Files tab for inspection.
+- **Retry** -- appears when a job has Failed. Opens
+  the New Job wizard pre-populated with the failed
+  job's parameters so you can tweak one setting
+  (typically a different panel) and resubmit.
+
+![Failed job view: red "Job Failed" banner with the reason, Retry button top-right, pipeline showing which stage failed](/images/fedimpute/26-job-failed-logs.png)
+
+- **View logs** -- opens the raw Nextflow pipeline
+  output showing each process submission and the
+  failure line.
+- **Workflow repo** -- external link to the
+  pipeline's source on GitHub. Useful when the UI
+  error is terse and you want to read the actual
+  process code.
+- **Tabs** (Overview / Files / Usage / Logs):
+  - **Files** lists intermediate + output files as
+    they're produced; you can download mid-run.
+  - **Usage** shows CPU, memory, and wall-clock
+    consumed per process.
+  - **Logs** shows the Nextflow console output and
+    the workflow parameters JSON.
 
 ---
 
@@ -2101,6 +2247,10 @@ regardless of which imputation service you run on.
 | **Low R² on rare variants only** | Expected -- imputation is statistical | Filter by R² (e.g. R² > 0.8) before rare-variant analysis |
 | **Missing variants in output** | Variant absent from the panel | Expected; fold in a second panel if you need them |
 | **Can't download: "password expired"** | The one-time password email is >7 days old | Re-submit; results are deleted after 7 days |
+| **Kibali enrollment: "Failed to update user"** | Username or email already exists on Kibali | Pick a different username, or go to **Sign in** and use **Forgot password** to recover |
+| **Job fails: "QC step failed" on H3Africa v6 African-only** | Sparse input × smaller panel = not enough matched sites per chunk | Click **Retry** and switch to **H3Africa v6 (full)** -- the larger panel typically has enough overlap to produce valid chunks |
+| **Submit button stays disabled** | Data Use Agreement checkboxes not ticked | Scroll to the bottom of Review & Submit and check **both** DUA boxes |
+| **AGVD "Login Required" on variant detail** | Per-population frequency breakdowns require a signed-in nyame account | Sign in at <https://nyame.afrigen-d.org/accounts/login/>; new accounts require manual activation (plan ahead) |
 
 <!-- markdownlint-enable MD013 -->
 

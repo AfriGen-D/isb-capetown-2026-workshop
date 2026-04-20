@@ -174,21 +174,35 @@ using the H3Africa reference panel.
 
 ### Run
 
+FedImpute's **New Job** flow is a 5-step wizard at
+[`/jobs/new`](https://fedimpute.afrigen-d.org/jobs/new):
+
 - [ ] Log in to **FedImpute** via AfriGen-D Identity
   SSO:
   [`fedimpute.afrigen-d.org/login`](https://fedimpute.afrigen-d.org/login)
-- [ ] Choose **Imputation** pipeline
-- [ ] Reference panel: **H3Africa v6** (African-
-  optimised; see [theory §2](/theory#_2-reference-panels-10-min)
-  for the conceptual rationale and
-  [services & panels](/services) for the full
-  comparison and Sengupta 2023 benchmark)
-- [ ] Phasing: **Eagle** (default)
-- [ ] Population: African
-- [ ] Upload the sparse VCF
-- [ ] Submit the job
-- [ ] Note the **job ID** -- you'll need it for the
-  download step
+- [ ] **Step 1 — Select Workflow:** click
+  **Genotype Imputation** → Continue
+- [ ] **Step 2 — Select Service:** AfriGen-D
+  Genotype Imputation Server (only node online);
+  note **Max File Size 500 MB** → Continue
+- [ ] **Step 3 — Select Panel:** **H3Africa v6
+  (full)** for sparse input (more overlap, more
+  forgiving of thin SNP array coverage). African-
+  only is smaller but tutorial input is too sparse
+  for it; see [tutorial §6.3](/tutorial#_6-3-select-panel)
+  for why. → Continue
+- [ ] **Step 4 — Upload & Configure:** drag & drop
+  `1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz`;
+  set **Job Name** to something searchable
+  (e.g. `isb-2026-chr22-sparse-v6full`); leave
+  Array Build `hg38`, Phasing `eagle`, rsq Filter
+  `0`, Mode **Quality Control & Imputation**. →
+  Continue
+- [ ] **Step 5 — Review & Submit:** verify the
+  summary, tick **both Data Use Agreement**
+  checkboxes, then click **Submit Job**
+- [ ] Note the **job UUID** in the URL after submit
+  (`/jobs/<uuid>`) -- save it for the download step
 
 ### Verify
 
