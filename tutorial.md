@@ -740,15 +740,16 @@ you want to use is hg38-only.
 
 ### 4.3 Companion pipelines
 
-Alongside the imputation pipeline, AfriGen-D
-tooling historically included three companion
-pipelines for common pre/post-imputation chores.
-The current FedImpute exposure of each will be
-confirmed during the authenticated re-capture pass;
-the *concepts* below are what you need regardless of
-where each step is run (FedImpute, a local
-`bcftools` pipeline, or a separate workflow
-manager).
+Alongside the imputation pipeline, FedImpute hosts
+three companion workflows (confirmed live at
+`/workflows` -- see §4.1): **GWAS Training**, **VCF
+Liftover**, and **Allele Switch Checker**. The
+sections below describe what each does conceptually
+so you recognise when to run them -- the click-path
+is the same 5-step wizard as for Genotype Imputation
+(§6). Where FedImpute doesn't cover a step, the
+sections also note the offline equivalent (bcftools,
+CrossMap, Picard).
 
 #### GWAS training workflow
 
@@ -1104,11 +1105,6 @@ asynchronous: the platform runs the job, emails you
 when it completes, and keeps the output available
 for **7 days** ([§5.3](#_5-3-what-fedimpute-does-with-your-file)).
 
-<!-- TODO(mamana): after the authenticated walkthrough,
-     add screenshots of the four submission screens
-     (upload, panel, config, review) here, and
-     replace the TODO note. The conceptual content
-     above already holds. -->
 
 ---
 
@@ -1363,23 +1359,56 @@ copy.
 
 ### 8.1 What is produced
 
-Every imputation job produces the same output shape,
-regardless of platform:
+FedImpute's **Files** tab lists outputs grouped into
+sections. Based on the live tutorial run, expect to
+see the following (names reflect the actual file
+names emitted by `imputationserver2`):
 
-| File | What it contains | Typical format |
-| --- | --- | --- |
-| **Imputed VCF** | Per-sample imputed genotypes (dosages + called genotypes) | `.vcf.gz` |
-| **Info / quality file** | Per-variant imputation quality (R² / INFO, MAF, genotyped flag) | `.info.gz` or embedded in the VCF INFO field |
-| **Summary statistics** | Counts: variants in, variants out, reference overlap, stages completed | `.txt` |
-| **Log file** | Job-level processing log (useful when something goes wrong) | `.log` |
+**INPUT FILES** (carried through from your
+submission)
+
+| File | What it contains |
+| --- | --- |
+| *(your uploaded VCF)* | e.g. `1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz` -- the exact file you uploaded, for provenance. |
+
+**STATISTICS** (emitted during QC; appear even if
+the job later fails)
+
+| File | What it contains |
+| --- | --- |
+| `qc_report.txt` | Summary of input QC checks: sample count, SNP overlap, strand alignment. ~1 KB. |
+| `snps-typed-only.txt` | Typed-only SNPs -- present in your input but not in the reference panel (they are passed through as-is, not imputed). Tens of KB for the tutorial input. |
+| `snps-excluded.txt` | SNPs removed during QC (monomorphic, low call rate, or allele mismatch). Usually very small. |
+
+**IMPUTATION OUTPUT** (emitted after Imputation +
+Post-processing stages complete)
+
+| File | What it contains |
+| --- | --- |
+| `chr<N>.dose.vcf.gz` | Per-sample imputed genotypes with dosages. The main scientific output. |
+| `chr<N>.info.gz` | Per-variant imputation quality (R² / INFO, MAF, Genotyped/Imputed flag). Used for the R² QC in §9. |
+| `report.txt` | Summary of the run: variants in / out, R² distribution by MAF bin, panel overlap. |
+
+**OTHER**
+
+| File | What it contains |
+| --- | --- |
+| `chunks-excluded.txt` | Imputation windows (20 Mb each for chr22) that failed to produce valid imputed genotypes. **If this file is non-empty the job may still succeed but with gaps.** |
+
+The Files tab populates **incrementally** -- you can
+see `qc_report.txt` within seconds of the QC stage
+starting, long before the main imputed VCF lands.
+Useful for diagnosing a job that looks slow.
 
 ### 8.2 Retrieving the files
 
 The specific retrieval affordance (download button
 per file, bulk ZIP, one-time password for encrypted
-output) varies by platform. The FedImpute-specific
-flow is documented in the authenticated re-capture
-pass. For the workshop:
+output) depends on whether AES-256 encryption was
+enabled at submit (§6.4). On FedImpute the Files
+tab on the job page shows every output with a
+per-file **Download** button plus a bulk option.
+For the workshop:
 
 - Grab all files for your job as soon as it
   completes -- the 7-day window starts at that
@@ -1815,7 +1844,23 @@ See the "Combined Plot" section in the notebook for implementation hints.
 
 *→ Live walkthrough: [Workflow steps 1--4 end-to-end](/workflow) (this case study covers the same sparse → impute → compare loop as a single narrative).*
 
-This section demonstrates a complete end-to-end workflow from raw genotype data to GWAS results, comparing outcomes between sparse (original) and imputed data.
+This section demonstrates a complete end-to-end
+workflow from raw genotype data to GWAS results,
+comparing outcomes between sparse (original) and
+imputed data.
+
+::: tip Validated against the live platform
+The QC numbers below (Reference Overlap 55.68 %,
+Matched Variants 2,460, etc.) were reproduced
+end-to-end on FedImpute on 20 April 2026 using the
+`mamanambiya` test account, the same sparse chr22
+VCF, and the **H3Africa v6 (full)** panel. The
+FedImpute UI label "H3Africa v6 (full)"
+corresponds to the reference-panel YAML file at
+`h3africa/v6hc-s-african/refpanel.yaml` on the
+ILIFU backend; the "V6HC-S" naming in the table
+below therefore refers to the same panel family.
+:::
 
 ### 11.1 Study Overview
 
