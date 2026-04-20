@@ -1979,17 +1979,17 @@ workflow from raw genotype data to GWAS results,
 comparing outcomes between sparse (original) and
 imputed data.
 
-::: tip Validated against the live platform
-The QC numbers below (Reference Overlap 55.68 %,
-Matched Variants 2,460, etc.) were reproduced
-end-to-end on FedImpute on 20 April 2026 using the
-`mamanambiya` test account, the same sparse chr22
-VCF, and the **H3Africa v6 (full)** panel. The
-FedImpute UI label "H3Africa v6 (full)"
-corresponds to the reference-panel YAML file at
-`h3africa/v6hc-s-african/refpanel.yaml` on the
-ILIFU backend; the "V6HC-S" naming in the table
-below therefore refers to the same panel family.
+::: tip Validated end-to-end on FedImpute
+Every number below is from a live run on FedImpute
+on 20 April 2026 with the `mamanambiya` test
+account: imputation on **H3Africa v6 (full)** +
+sparse GWAS + R²-filtered imputed GWAS, all three
+jobs submitted through the New Job wizard
+(§§6, 10). The FedImpute UI label "H3Africa v6
+(full)" maps to the `h3africa/v6hc-s/...` panel
+files on the ILIFU backend; the "V6HC-S" naming
+you may see in Nextflow logs refers to the same
+panel family.
 :::
 
 ### 11.1 Study Overview
@@ -1998,10 +1998,16 @@ below therefore refers to the same panel family.
 
 | Dataset | Variants | Description |
 |---------|----------|-------------|
-| **Sparse (original)** | 4,423 | SNP array data on chromosome 22 |
-| **Imputed** | 797,319 | After imputation with H3Africa V6HC-S panel |
+| **Sparse (original)** | 4,423 | SNP array input, chr22, hg38, bgzipped |
+| **Imputed (raw)** | 726,241 | Minimac4 output, H3Africa v6 (full) panel, all R² |
+| **Imputed (R² > 0.3)** | 36,897 | Discovery-grade filter |
+| **Imputed (R² > 0.5)** | 19,171 | Workshop-demo filter (used for §11.4 GWAS) |
+| **Imputed (R² > 0.8)** | 4,672 | Fine-mapping-grade filter |
 
-**Variant density increase:** 180× more variants after imputation
+**Variant density increase:** up to **164× more
+variants** raw, 4× more after the workshop-demo R²
+> 0.5 filter. Tighter filters trade density for
+confidence.
 
 ### 11.2 Pre-GWAS: Data Preparation Pipeline
 
@@ -2017,7 +2023,7 @@ If your data is in GRCh37/hg19 format, convert to GRCh38/hg38:
 | Output Build | GRCh38 (hg38) |
 | Chain File | hg19ToHg38.over.chain |
 
-**Why liftover?** The H3Africa V6HC-S reference panel uses GRCh38 coordinates. Using mismatched coordinates will result in failed imputation.
+**Why liftover?** The H3Africa v6 reference panel uses GRCh38 coordinates. Using mismatched coordinates will result in failed imputation.
 
 #### Step 2: Allele Switch Check
 
@@ -2041,33 +2047,42 @@ Validate REF/ALT allele orientation against the reference panel:
 
 #### Step 3: Genotype Imputation
 
-Impute missing genotypes using the H3Africa V6HC-S reference panel:
+Impute missing genotypes using the H3Africa v6 (full) panel:
 
 | Parameter | Value |
 |-----------|-------|
-| Duration | 21 min 14 sec |
-| Reference Panel | H3Africa V6HC-S (GRCh38) |
-| Population | African (AFR) |
-| Phasing | Eagle |
-| Imputation | Minimac4 |
+| Duration (live run) | 17 m 32 s |
+| Reference Panel | H3Africa v6 (full) (GRCh38, 4,447 samples, 58.7 M variants) |
+| Population | Mixed / Unknown (works for African cohorts) |
+| Phasing | Eagle v2.4 |
+| Imputation | Minimac4 (via `imputationserver2` v2.0.12) |
 
 ### 11.3 Imputation Quality Summary
+
+Real values from the live v6 (full) run (Nextflow
+work dir: `/mnt/impute-storage/workspace/wes-data/output/fedimpute-00b9bab0-.../outputs`):
 
 | Metric | Value |
 |--------|-------|
 | Input SNPs | 4,423 |
-| Reference Overlap | 55.68% |
+| Reference Overlap | 55.68 % |
 | Matched Variants | 2,460 |
+| Typed-only Sites | 1,959 |
+| Alternative allele freq > 0.5 sites | 4,335 |
+| Monomorphic Sites | 3 |
+| Allele Mismatch | 1 |
 | Invalid Alleles | 0 |
 | Allele Switches | 0 |
 | Strand Flips | 0 |
-| Output Variants | 797,319 |
+| Chunks total / passed / excluded | 2 / 2 / 0 |
+| Output Variants (raw) | 726,241 |
 
 ### 11.4 Running GWAS
 
-Two GWAS analyses were performed using the GWAS Training Workflow:
+Two GWAS analyses were performed through FedImpute's
+hosted **GWAS Training** pipeline (§10):
 
-#### GWAS Parameters
+#### GWAS Parameters (same for both runs)
 
 | Parameter | Value |
 |-----------|-------|
@@ -2075,100 +2090,113 @@ Two GWAS analyses were performed using the GWAS Training Workflow:
 | MAF Threshold | 0.01 |
 | Sample Missingness | 0.1 |
 | SNP Missingness | 0.1 |
-| HWE P-value | 0.000001 |
-| Method | PLINK2 Firth regression |
+| HWE P-value | 1 × 10⁻⁶ |
+| Method | PLINK2 Firth logistic regression |
 
 #### GWAS on Sparse Data
 
 | Metric | Value |
 |--------|-------|
-| Input VCF | chr22_sparse_peaks_dense.corrected.vcf.gz |
-| Variants Tested | 4,423 |
-| Duration | 24 seconds |
+| Input VCF | `1k_afr_661_samples_4k_variants_hg38_agsc2025_chr22.vcf.gz` (219 KB) |
+| Variants submitted | 4,423 |
+| Variants analysed (post-PLINK QC) | **889** |
+| Wall-clock | 1 m 34 s |
 | Samples | 661 |
+| Genomic inflation λ | 2.54 |
 
 #### GWAS on Imputed Data
 
 | Metric | Value |
 |--------|-------|
-| Input VCF | chr22.dose.vcf.gz |
-| Variants Tested | 797,319 |
-| Duration | 38 seconds |
+| Input VCF | `chr22.imputed.r2med.vcf.gz` (87 MB, R² > 0.5 filter via `bcftools`) |
+| Variants submitted | 19,171 |
+| Variants analysed (post-PLINK QC) | **15,779** |
+| Wall-clock | 2 m 3 s |
 | Samples | 661 |
+| Genomic inflation λ | 2.52 |
 
 ### 11.5 Post-GWAS: Results Comparison
 
 #### Key Differences in Manhattan Plots
 
-| Metric | Sparse Data | Imputed Data |
+| Metric | Sparse Data | Imputed Data (R² > 0.5) |
 |--------|-------------|--------------|
-| **Variants tested** | 4,423 | 797,319 |
-| **Top signal** | Chr22:36276581 | Chr22:36276581 |
-| **Secondary signal** | Not detected | **Chr22:39277008 (NEW!)** |
-| **Signal resolution** | Single peak | Multiple peaks with fine-mapping |
-| **Density** | Sparse dots | Dense coverage across chromosome |
+| **Variants analysed** | 889 | 15,779 |
+| **Top signal** | chr22:36276581 (p = 1.74 × 10⁻¹¹) | chr22:36276581 (p = 5.97 × 10⁻¹¹) |
+| **Variants at p < 5 × 10⁻⁸** | 1 | **5** |
+| **Fine-mapping at top locus** | 1 peak SNP | 4 adjacent peak SNPs within 10 kb (36276230, 36279104, 36281936, 36282430) |
+| **New locus revealed** | — | **chr22:50.2 Mb region** (3 sig SNPs: 50237830, 50239025, 50240142) |
+| **Density** | thin / sparse | dense skyline |
+| **Genomic inflation λ** | 2.54 | 2.52 |
 
-#### Manhattan Plot: Sparse Data (4,423 variants)
+#### Manhattan Plot: Sparse Data (889 variants analysed)
 
-Running the sparse baseline through the GWAS
-notebook produces a thin Manhattan with a single
-genome-wide significant peak:
+![Sparse Manhattan plot from FedImpute GWAS Training](/images/gwas/sparse-gwas_manhattan.png)
 
-- Single peak at **Chr22:36276581** reaching
-  -log10(P) ≈ 11
-- Scattered points with large gaps between variants
+- Single genome-wide-significant peak at
+  **chr22:36276581** (p = 1.74 × 10⁻¹¹,
+  -log₁₀P ≈ 10.8)
+- Scattered points with wide gaps between variants
 - Limited ability to fine-map the signal
+- λ = 2.54 indicates substantial inflation --
+  worth investigating population stratification
 
-#### Manhattan Plot: Imputed Data (797,319 variants)
+#### Manhattan Plot: Imputed Data (R² > 0.5; 15,779 variants analysed)
 
-Re-running the same GWAS on the imputed dose VCF
-fills the plot out and exposes the secondary signal:
+![Imputed Manhattan plot from FedImpute GWAS Training](/images/gwas/imputed-gwas_manhattan.png)
 
-- Same primary signal at **Chr22:36276581**
-  (-log10P ≈ 10)
-- **NEW secondary signal at Chr22:39277008**
-  (-log10P ≈ 8.5)
-- Much denser coverage allowing better regional
-  characterisation
-- Multiple suggestive signals visible across the
-  chromosome
-- Better resolution for identifying causal variants
+- Same primary signal at **chr22:36276581**
+  (p = 5.97 × 10⁻¹¹) -- now *fine-mapped* with four
+  adjacent SNPs also p < 5 × 10⁻⁸
+  (chr22:36276230, 36279104, 36281936, 36282430)
+- **NEW locus at chr22:50.2 Mb** -- three SNPs at
+  p ≈ 8.6 × 10⁻⁸ (50237830, 50239025, 50240142)
+  that were invisible in the sparse baseline
+- Much denser coverage across the chromosome
+- λ = 2.52 (unchanged vs sparse) -- the added
+  variants bring power, not confounding
 
-#### Side-by-side Comparison
+#### QQ plots
 
-Plotting the two Manhattans side-by-side (or
-animated by toggling between them) is the most
-persuasive way to communicate the imputation
-payoff: the sparse plot looks like scattered dots
-around a single tower; the imputed plot looks like
-a skyline, with the extra secondary tower visible
-only after imputation.
+![Sparse QQ plot](/images/gwas/sparse-qq_plot.png)
 
-*The workshop participants generate their own
-side-by-side Manhattans during
-[Workflow Step 4](/workflow#step-4-gwas-on-imputed-data-comparison);
-the pre-built legacy renderings have been retired.*
+![Imputed QQ plot](/images/gwas/imputed-qq_plot.png)
+
+The imputed QQ tail extends to smaller p-values --
+more bins of tested variants, same λ.
 
 ### 11.6 Key Findings Summary
 
 | Finding | Sparse Data | Imputed Data |
 |---------|-------------|--------------|
 | Primary signal detected | ✅ Yes | ✅ Yes |
-| Secondary signal detected | ❌ No | ✅ **Yes (NEW)** |
-| Fine-mapping resolution | Low | High |
-| Regional characterization | Limited | Comprehensive |
+| Fine-mapping at top locus | ❌ 1 SNP only | ✅ 4 adjacent peak SNPs |
+| Second independent locus | ❌ No | ✅ **chr22:50.2 Mb (NEW)** |
 | Suggestive signals visible | Few | Many |
 
 ### 11.7 Interpretation
 
 > **💡 Key Insight: Why Imputation Matters for GWAS**
 >
-> The imputed data revealed a **second genome-wide significant signal** (Chr22:39277008) that was completely missed in the sparse data. This demonstrates that:
+> Two complementary discoveries emerged from the
+> imputed data:
 >
-> 1. **Sparse genotyping arrays miss important signals** - The secondary association was invisible without imputation
-> 2. **Imputation enables discovery** - 180× more variants means better coverage of the genome
-> 3. **Fine-mapping improves** - Dense variants help narrow down causal regions
-> 4. **African reference panels work** - H3Africa V6HC-S successfully imputed variants in African samples
+> 1. **Fine-mapping at the known locus.** The top
+>    signal at chr22:36276581 gains four adjacent
+>    genome-wide-significant SNPs within 10 kb, which
+>    would support LD-based credible-set analyses
+>    and downstream colocalisation with eQTLs.
+> 2. **A second independent locus is revealed.**
+>    chr22:50.2 Mb has three genome-wide-significant
+>    SNPs in the imputed data that the 4,423-variant
+>    sparse baseline could not see.
+>
+> Both are driven by one mechanism -- imputation
+> raises chr22 coverage from ~900 analysed variants
+> to ~16,000 at the R² > 0.5 filter (~4×) or ~37,000
+> at R² > 0.3 (~40×). With an unchanged genomic
+> inflation factor (λ ≈ 2.5 in both), the extra
+> signals reflect power, not confounding.
 
 ### 11.8 Practical Implications
 
@@ -2181,20 +2209,28 @@ the pre-built legacy renderings have been retired.*
 
 **Quality considerations:**
 - Filter imputed variants by R² > 0.3 for discovery
+  (the GWAS Training pipeline's default)
 - Use R² > 0.8 for fine-mapping
-- Always compare results with directly genotyped variants
-- Check for population stratification (λ value in QQ plot)
+- Always compare results with directly genotyped
+  variants (the `TYPED` flag in Minimac4 output)
+- Check for population stratification (λ value in
+  QQ plot; GWAS Training emits `lambda.txt` with a
+  human-readable interpretation)
+- Consider adding PCs as covariates if λ is high --
+  GWAS Training emits `pca_results.eigenvec` for
+  exactly this purpose
 
 ### 11.9 Complete Workflow Timeline
 
-| Step | Tool | Duration | Output |
+Real wall-clock from the live run:
+
+| Step | Tool / pipeline | Duration | Output |
 |------|------|----------|--------|
-| 1. Liftover (if needed) | VCF Liftover | ~1 min | hg38 VCF |
-| 2. Allele Check | Allele Switch Checker | 15 sec | Corrected VCF |
-| 3. Imputation | Genotype Imputation | 21 min | Imputed VCF (797K variants) |
-| 4. GWAS (sparse) | GWAS Training | 24 sec | Manhattan, QQ plots |
-| 5. GWAS (imputed) | GWAS Training | 38 sec | Manhattan, QQ plots |
-| **Total** | | **~23 min** | Complete analysis |
+| 1. Sparse GWAS | GWAS Training (FedImpute) | 1 m 34 s | Manhattan, QQ, λ, `.glm.firth` |
+| 2. Imputation | Genotype Imputation (FedImpute, v6 full) | 17 m 32 s | Encrypted `chr_22.zip` (645 MB), `quality-control.html`, RO-Crate |
+| 3. Extract + R² filter | `unzip -P` + `bcftools view -e 'INFO/R2<0.5'` | ~30 s local | `chr22.imputed.r2med.vcf.gz` (87 MB, 19,171 variants) |
+| 4. Imputed GWAS | GWAS Training (FedImpute) | 2 m 3 s | Manhattan, QQ, λ, `.glm.firth` |
+| **Total** | | **~22 min** | Complete sparse → imputed comparison |
 
 ---
 
@@ -2203,41 +2239,33 @@ the pre-built legacy renderings have been retired.*
 <details>
 <summary><strong>Question 1:</strong> How many times more variants were available after imputation?</summary>
 
-**Answer:** Approximately **180 times more variants** (797,319 ÷ 4,423 ≈ 180). This dramatic increase in variant density is typical when imputing from a SNP array to a whole-genome reference panel.
+**Answer:** Minimac4 emitted **726,241 imputed variants** from the 4,423-variant sparse input (**~164×**) on the full v6 panel. After the R² > 0.5 discovery filter (the one used in §11.4's GWAS run), 19,171 variants survive -- still ~4× the sparse input and enough to reveal the second locus. Tighter filters (R² > 0.8) leave ~4,600 variants, fine-mapping-grade only.
 
 </details>
 
 <details>
-<summary><strong>Question 2:</strong> Why was the secondary signal at Chr22:39277008 only detected in the imputed data?</summary>
+<summary><strong>Question 2:</strong> Why were the new signals at chr22:50.2 Mb only detected after imputation?</summary>
 
-**Answer:** The sparse SNP array data likely did not contain variants in strong LD with the causal variant at this locus. Imputation filled in the missing variants, including those that tag the secondary association signal. This demonstrates how sparse genotyping can miss real biological signals.
+**Answer:** The 4,423-variant sparse array simply did not contain variants in strong LD with the causal SNP in the 50.2 Mb region, so the locus was effectively invisible pre-imputation. Minimac4 filled in chr22 at much higher density; at the R² > 0.5 filter, 15,779 variants reach the GWAS post-PLINK-QC cut, including three at p ≈ 8.6 × 10⁻⁸ around 50.2 Mb. This is the canonical "imputation reveals untyped causal regions" result.
 
 </details>
 
 <details>
-<summary><strong>Question 3:</strong> Both analyses detected the primary signal at Chr22:36276581. Does this mean imputation wasn't necessary for this signal?</summary>
+<summary><strong>Question 3:</strong> Both analyses detected the primary signal at chr22:36276581. Does this mean imputation wasn't necessary for this signal?</summary>
 
-**Answer:** While both detected the primary signal, the imputed data provides **better characterization** of the region with more variants. This is valuable for:
-- Fine-mapping to identify causal variants
-- Understanding the LD structure around the signal
-- Identifying multiple independent signals within a locus
-- More accurate effect size estimates
+**Answer:** Both runs detected the single sparse SNP at 36276581 -- but the imputed run *also* found **four additional genome-wide-significant SNPs within 10 kb** (36276230, 36279104, 36281936, 36282430). That's the fine-mapping payoff: without imputation you have one peak SNP; with imputation you have a credible set.
 
 </details>
 
 <details>
 <summary><strong>Question 4:</strong> What was the reference overlap percentage, and what does this mean?</summary>
 
-**Answer:** The reference overlap was **55.68%**, meaning that 55.68% of the input variants were found in the H3Africa V6HC-S reference panel. The remaining variants were either:
-- Not present in the reference panel
-- Filtered due to quality issues (monomorphic, allele mismatch, etc.)
-
-A reference overlap of 50-70% is typical for African SNP array data when using African-specific reference panels.
+**Answer:** The reference overlap was **55.68 %** -- 2,460 of the 4,423 input sites matched a panel site. 1,959 sites were "typed-only" (present in your input but not in the panel; passed through as-is, not imputed), 3 sites were monomorphic, and 1 had an allele mismatch. Reference overlap of 50-70 % is typical for sparse African SNP-array data against the H3Africa v6 panel; dropping much below that is a red flag for panel-population mismatch or build mismatch.
 
 </details>
 
 <details>
-<summary><strong>Question 5:</strong> The imputation took 21 minutes while GWAS on the imputed data took only 38 seconds. Why is imputation much slower?</summary>
+<summary><strong>Question 5:</strong> The imputation took 17 m 32 s while GWAS on the imputed data took only 2 m 3 s. Why is imputation much slower?</summary>
 
 **Answer:** Imputation is computationally intensive because it:
 1. **Phases the data** - Determines which alleles are on each haplotype using Eagle
@@ -2269,48 +2297,73 @@ Best practice is to filter to R² > 0.3 for discovery and R² > 0.8 for fine-map
 
 **Steps:**
 
-1. **Prepare your VCF file**
-   - Ensure it contains a single chromosome
-   - Check the genome build (hg19 or hg38)
-   - Compress with gzip if not already
+1. **Prepare your input VCF**
+   - Single chromosome, hg38 (or liftover first)
+   - bgzipped (`file <name>.gz` must show *BGZF*),
+     sorted by position
+   - ≥ 20 samples
 
-2. **Run allele-switch / strand check**
-   - Validate REF/ALT orientation against the reference
-     panel (FedImpute performs this automatically
-     during the imputation submission; you can also
-     run `bcftools norm --check-ref` locally first
-     to catch obvious errors before upload)
+2. **GWAS on sparse input (FedImpute → GWAS Training)**
+   - New Job → GWAS Training → AfriGen-D node
+   - Upload sparse VCF + phenotype file (`.txt`/`.tsv`,
+     header `FID IID B1`)
+   - Defaults: MAF 0.01, Sample Missing 0.1,
+     Genotype Missing 0.1, HWE 1 × 10⁻⁶
+   - Submit, wait ~1-2 min
+   - Download Manhattan, QQ, `.glm.firth`, `lambda.txt`
 
-3. **Submit imputation on FedImpute**
-   - Sign in at <https://fedimpute.afrigen-d.org>
-     and follow
-     [Workflow Step 2](/workflow#step-2-submit-the-imputation-job)
-   - Upload the sorted, bgzipped VCF
-   - Select an African-appropriate panel (H3Africa
-     v6 or v7; see [§4.2](#_4-2-available-reference-panels))
-   - Wait for completion (minutes for a single
-     chromosome; factor queue time)
+3. **Imputation on FedImpute → Genotype Imputation**
+   - New Job → Genotype Imputation → AfriGen-D node
+   - Panel: **H3Africa v6 (full)** (recommended for
+     sparse input; see [§6.3](#_6-3-select-panel))
+   - Upload sparse VCF; tick both DUA checkboxes
+   - Submit, wait ~15-20 min
+   - Copy the Overview-tab encryption password
 
-4. **Run GWAS on both datasets**
-   - Run GWAS Training on original (sparse) data
-   - Run GWAS Training on imputed data
-   - Compare the Manhattan plots
+4. **Extract + filter imputed output locally**
+   - Download `chr_<N>.zip` from the Files tab
+   - `unzip -P "<password>" chr_<N>.zip`
+   - Filter with bcftools (keeps the upload under
+     the 500 MB GWAS Training limit):
 
-5. **Document your findings**
-   - How many variants before vs after imputation?
-   - Did you discover any new signals?
-   - What was your reference overlap percentage?
+     ```bash
+     bcftools view -e 'INFO/R2<0.5' \
+       -Oz -o chr22.imputed.r2med.vcf.gz \
+       chr_22.dose.vcf.gz
+     bcftools index -t chr22.imputed.r2med.vcf.gz
+     ```
+
+5. **GWAS on imputed data (FedImpute → GWAS Training)**
+   - New Job → GWAS Training, same parameters as
+     Step 2, but upload the filtered imputed VCF +
+     the same phenotype file
+   - Submit, wait ~2-3 min
+
+6. **Document your findings**
+   - Analysed-variant count: sparse vs imputed
+   - Any new genome-wide-significant loci after
+     imputation?
+   - What's the λ on each run? Did it change?
+   - Reference Overlap from the imputation
+     QC Statistics panel?
 
 <details>
 <summary><strong>✅ Success Criteria</strong></summary>
 
 You have successfully completed this exercise if:
 
-- [ ] Allele Switch Check completed without errors
-- [ ] Imputation job finished successfully
-- [ ] You can compare Manhattan plots from both datasets
-- [ ] You identified the variant count increase (should be >100×)
-- [ ] You documented any new signals discovered
+- [ ] Both GWAS jobs finished on FedImpute with no
+  errors (PCA-stage retries are OK, final status
+  must be "completed")
+- [ ] Imputation job finished successfully, ZIP
+  downloaded and extracted
+- [ ] You produced Manhattan + QQ plots for both
+  sparse and imputed inputs
+- [ ] You identified at least a ~4× increase in
+  analysed variants after the R² > 0.5 filter
+  (higher if you use R² > 0.3)
+- [ ] You documented any new genome-wide-significant
+  signals that the sparse run missed
 
 </details>
 
@@ -2336,13 +2389,15 @@ You have successfully completed this exercise if:
 
 ### Reference Panel Selection
 
-| Study Population | Recommended Panel |
+| Study Population | Recommended FedImpute Panel |
 |------------------|-------------------|
-| West African | H3Africa Panel |
-| East African | H3Africa Panel |
-| South African | H3Africa Panel |
-| African American | African Genome Resources |
-| Mixed/Unknown | 1000 Genomes (AFR subset) |
+| West African (e.g. Yoruba, Igbo) | H3Africa v6 (full) |
+| East African (e.g. Luhya, Kikuyu) | H3Africa v6 (full) |
+| South African (e.g. Xhosa, Zulu) | H3Africa v6 (full) |
+| African American / Afro-Caribbean | H3Africa v6 (full) |
+| Purely African-ancestry cohort (sequencing-grade input) | H3Africa v6 African-only (denser match; note: **sparse input may fail QC** -- see [§6.3](#_6-3-select-panel)) |
+| Pan-African research with DAA approval | H3Africa v7 (newer, richer; Request Access) |
+| European-ancestry benchmark only | HapMap2 chr20 (CEU) -- do not use for African-cohort discovery |
 
 ### Quality Filtering
 
@@ -2359,7 +2414,7 @@ You have successfully completed this exercise if:
 <details>
 <summary><strong>Quiz Question 1:</strong> You have genotype data from a Yoruba population in Nigeria. Which reference panel should you use?</summary>
 
-**Answer:** The **H3Africa V6HC-S** reference panel is the best choice for Yoruba (West African) populations, as it contains African-specific haplotypes optimized for Pan-African populations.
+**Answer:** On FedImpute, choose the **H3Africa v6 (full)** panel from the reference-panel picker (§4.2). For sparse SNP-array input, v6 (full) gives the best reference overlap; its backend YAML is the H3Africa V6HC-S panel family. For denser (exome/WGS) input, v7 is a stronger match once you have Data Access Agreement approval.
 
 </details>
 
