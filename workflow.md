@@ -96,7 +96,7 @@ walks the full sparse → impute → compare loop end-to-end.
 
 FedImpute's **GWAS Training** wizard runs on the
 federated node with a dedicated phenotype upload
-widget (added 20 April 2026):
+widget:
 
 - [ ] Sign in to FedImpute + click **New Job**
 - [ ] Select **GWAS Training** pipeline → Continue

@@ -17,15 +17,11 @@ Centre and Spa, Milnerton, Cape Town, South Africa
 ::: tip Captured against the live FedImpute platform
 All sections below have been validated against the
 current production platform at
-<https://fedimpute.afrigen-d.org>. Screenshots were
-captured during a live walkthrough (April 2026)
-using the actual `mamanambiya` test account on
-Kibali, running a real imputation job on the
-AfriGen-D Genotype Imputation Server at ILIFU UCT
-and live queries against AGMP and AGVD. A handful
-of section-level notes call out workshop-day
-caveats (panel choice for sparse input, AGVD beta
-activation window).
+<https://fedimpute.afrigen-d.org>. Screenshots show
+the real UI you will see on the day: the
+dashboard, New Job wizard, reference-panel
+catalogue, Files and Logs tabs, and AGMP / AGVD
+portals.
 :::
 
 ::: info Checklist for each hands-on step
@@ -457,23 +453,6 @@ verification email to the address you supplied --
 open it and click the confirmation link before
 continuing to the next step.
 
-::: warning "Failed to update user" -- known error for existing users
-If you see this error after hitting Continue:
-
-> Request has been denied.  
-> Failed to update user. Please try again later.
-
-it usually means the chosen **username or email is
-already registered** on Kibali (for example because
-you enrolled through a dev environment or a previous
-workshop). Choose a different username, or jump
-straight to **Sign in** and use
-[Forgot password](https://kibali.afrigen-d.org/if/flow/afrigend-password-recovery/)
-to recover the existing account.
-
-![Kibali enrollment denial banner: "Failed to update user"](/images/fedimpute/02-enroll-error.png)
-:::
-
 ### 2.2 Logging in to FedImpute
 
 Once your email is verified, return to
@@ -630,17 +609,9 @@ UCT):
 | **GWAS Training** | Training | Nextflow (PLINK2) | Full GWAS workflow: VCF-to-PLINK conversion, QC, HWE filtering, association analysis. Designed for training. |
 | **Imputation QC** | QC | Nextflow | Post-imputation quality assessment. Upload an imputed VCF (with INFO/R2) and get an interactive report with R² distribution, MAF-stratified R², and filtered VCFs at standard quality cutoffs (R² > 0.3, > 0.5, > 0.8). Removes the need to run `bcftools view -e 'INFO/R2<...'` locally. |
 
-::: tip /workflows vs /jobs/new count mismatch
-The `/workflows` page currently shows **4**
-pipelines (missing GWAS Training); the **New Job**
-wizard at `/jobs/new` correctly lists all **5**.
-The discrepancy is a known UI bug -- trust
-`/jobs/new`.
-:::
-
 ::: tip You can run the whole workshop on FedImpute
-The **GWAS Training** pipeline means participants
-can produce both the "before" and "after" Manhattan
+The **GWAS Training** pipeline means you can
+produce both the "before" and "after" Manhattan
 plots for the imputation payoff entirely on
 FedImpute -- no local PLINK install required. The
 Step 4 wizard accepts:
@@ -659,16 +630,6 @@ end-to-end. Outputs include the PLINK2 `.glm.firth`
 summary stats, Manhattan + QQ + PCA plots, lambda,
 and a Nextflow timeline -- see
 [§10](#_10-basic-gwas-visualization).
-
-::: info Early-April 2026 platform history
-When this tutorial was first written, the GWAS
-Training wizard accepted only VCF uploads and the
-phenotype had to be pre-staged by an admin. The
-dedicated `.txt`/`.tsv` phenotype drop-zone + a
-separate "Phenotype column name" text field were
-added by the AfriGen-D team on 20 April 2026 and
-verified in the live walkthrough captured here.
-:::
 :::
 
 Click any pipeline card to see the right-hand
@@ -1053,12 +1014,11 @@ panel from the four described in
   variants per chromosome)** because the larger
   panel increases overlap.
 - **H3Africa v6 African-only** -- smaller (42.3M
-  variants, 1,895 samples, 100% African). Better
-  population match but lower overlap; requires
-  denser input to work well. In the live test run
-  for this tutorial, the sparse 4,423-variant chr22
-  VCF **failed QC** against this panel because the
-  chunked windows had too few matched sites.
+  variants, 1,895 samples, 100% African). Tighter
+  population match; best for denser input data
+  (exome/WGS). For the sparse 4,423-variant tutorial
+  VCF, prefer v6 (full) -- the larger panel gives
+  enough per-chunk overlap to run cleanly.
 - **H3Africa v7** -- newest panel (78.6M variants,
   6,213 samples). Recommended once you have Data
   Access Agreement approval (click
@@ -1296,14 +1256,13 @@ input -- fall back to H3Africa v6 (full).
 ### 7.4 Expected wall-clock
 
 **For the tutorial input (661 samples, chr22,
-~4,400 variants), plan on 15-30 minutes.** The
-platform shows its own **Estimated duration** near
-the top of the job page (computed from previous
-runs) -- this can be wildly off for panels with few
-priors. The live test showed a 9h 47m estimate on
-H3Africa v6 African-only that actually completed
-(as a QC failure) in 22m 29s. Take the estimate as
-a ceiling, not a target.
+~4,400 variants) on H3Africa v6 (full), plan on
+15-30 minutes.** The platform shows its own
+**Estimated duration** near the top of the job
+page (computed from previous runs) -- treat it as
+a rough ceiling rather than an exact target;
+estimates can swing widely for panels with few
+prior runs.
 
 ### 7.5 Managing a running job
 
@@ -2006,17 +1965,13 @@ workflow from raw genotype data to GWAS results,
 comparing outcomes between sparse (original) and
 imputed data.
 
-::: tip Validated end-to-end on FedImpute
-Every number below is from a live run on FedImpute
-on 20 April 2026 with the `mamanambiya` test
-account: imputation on **H3Africa v6 (full)** +
-sparse GWAS + R²-filtered imputed GWAS, all three
-jobs submitted through the New Job wizard
-(§§6, 10). The FedImpute UI label "H3Africa v6
-(full)" maps to the `h3africa/v6hc-s/...` panel
-files on the ILIFU backend; the "V6HC-S" naming
-you may see in Nextflow logs refers to the same
-panel family.
+::: tip Reproduce this on FedImpute
+Every number in this case study came out of the
+same **New Job** wizard you used in §§6 and 10:
+one imputation on **H3Africa v6 (full)** plus two
+GWAS runs (sparse baseline, then R²-filtered
+imputed). You can reproduce the entire flow on
+your own account.
 :::
 
 ### 11.1 Study Overview
@@ -2078,7 +2033,7 @@ Impute missing genotypes using the H3Africa v6 (full) panel:
 
 | Parameter | Value |
 |-----------|-------|
-| Duration (live run) | 17 m 32 s |
+| Duration (reference run) | 17 m 32 s |
 | Reference Panel | H3Africa v6 (full) (GRCh38, 4,447 samples, 58.7 M variants) |
 | Population | Mixed / Unknown (works for African cohorts) |
 | Phasing | Eagle v2.4 |
@@ -2086,8 +2041,7 @@ Impute missing genotypes using the H3Africa v6 (full) panel:
 
 ### 11.3 Imputation Quality Summary
 
-Real values from the live v6 (full) run (Nextflow
-work dir: `/mnt/impute-storage/workspace/wes-data/output/fedimpute-00b9bab0-.../outputs`):
+Values from the reference v6 (full) run:
 
 | Metric | Value |
 |--------|-------|
@@ -2249,7 +2203,7 @@ more bins of tested variants, same λ.
 
 ### 11.9 Complete Workflow Timeline
 
-Real wall-clock from the live run:
+Wall-clock from the reference run:
 
 | Step | Tool / pipeline | Duration | Output |
 |------|------|----------|--------|
@@ -2504,11 +2458,9 @@ regardless of which imputation service you run on.
 | **Low R² on rare variants only** | Expected -- imputation is statistical | Filter by R² (e.g. R² > 0.8) before rare-variant analysis |
 | **Missing variants in output** | Variant absent from the panel | Expected; fold in a second panel if you need them |
 | **Can't download: "password expired"** | The one-time password email is >7 days old | Re-submit; results are deleted after 7 days |
-| **Kibali enrollment: "Failed to update user"** | Username or email already exists on Kibali | Pick a different username, or go to **Sign in** and use **Forgot password** to recover |
-| **Job fails: "QC step failed" on H3Africa v6 African-only** | Sparse input × smaller panel = not enough matched sites per chunk | Click **Retry** and switch to **H3Africa v6 (full)** -- the larger panel typically has enough overlap to produce valid chunks |
 | **Submit button stays disabled** | Data Use Agreement checkboxes not ticked | Scroll to the bottom of Review & Submit and check **both** DUA boxes |
-| **AGVD "Login Required" on variant detail** | Per-population frequency breakdowns require a signed-in nyame account | Sign in at <https://nyame.afrigen-d.org/accounts/login/>; new accounts require manual activation (plan ahead) |
-| **Imputed `chr_<N>.zip` missing from "Browse my files" on a follow-up job** | The picker filters to My Upload VCFs only; imputation Results aren't exposed as reusable inputs yet | Download the ZIP from the imputation job's Files tab (§8), extract it locally (`unzip -P <password>`), filter by R² with `bcftools` (§9.3), and upload the filtered dose VCF as a new input to GWAS Training. |
+| **AGVD "Login Required" on variant detail** | Per-population frequency breakdowns require a signed-in AGVD account | Sign in at <https://nyame.afrigen-d.org/accounts/login/> (register in advance if possible) |
+| **Feeding an imputed VCF back in as input** | The job's `chr_<N>.zip` output isn't available as a direct input to a follow-up job yet | Download the ZIP from the imputation job's Files tab (§8), extract it locally (`unzip -P <password>`), filter by R² with the hosted **Imputation QC** pipeline (§4.1) or with `bcftools` (§9.3), and upload the filtered dose VCF as a new input. |
 
 <!-- markdownlint-enable MD013 -->
 
