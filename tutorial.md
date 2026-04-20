@@ -629,30 +629,52 @@ UCT):
 | **Allele Switch Checker** | Data Preparation | Nextflow | QC tool: detects allele switches between a target VCF and a reference-panel legend file, optionally fixes mismatches. |
 | **GWAS Training** | Training | Nextflow (PLINK2) | Full GWAS workflow: VCF-to-PLINK conversion, QC, HWE filtering, association analysis. Designed for training. |
 
-::: warning GWAS Training -- phenotype-upload gap
-The GWAS Training pipeline is live but has a
-**known workshop-day limitation** (confirmed by
-live test on 20 April 2026): the submission wizard
-only accepts **VCF** uploads via the drop-zone. The
-**Phenotype File** field on Step 4 is a plain text
-input that the pipeline then looks up in the same
-input directory -- if the file isn't pre-staged on
-the backend, the job fails at the `UPDATE_PHENOTYPE`
-step after ~1-2 minutes with:
+::: warning GWAS Training -- two file-staging gaps
+The GWAS Training pipeline is live, but running the
+full workshop "sparse → impute → re-GWAS" loop on
+FedImpute alone currently hits **two UI gaps**
+(confirmed by live tests on 20 April 2026):
+
+**1. Phenotype file cannot be uploaded.** The Step 4
+drop-zone accepts only `.vcf` / `.vcf.gz` -- the
+React component silently drops any other file type
+even if you paste the HTML `accept` attribute. The
+**Phenotype File** parameter is just a text input
+that the pipeline then looks up in the same input
+directory. If the file isn't pre-staged on the
+backend, the job fails at `UPDATE_PHENOTYPE` after
+~1-2 minutes with:
 
 > `tail: cannot open '<pheno>.txt' for reading: No such file or directory`
 
-Earlier QC stages (VCF_TO_PLINK, PLINK_QC,
-PLINK_HWE, PCA_ANALYSIS) do run successfully, so you
-get PCA eigenvalues / eigenvectors back even on a
-failed run.
+Earlier stages (VCF_TO_PLINK, PLINK_QC, PLINK_HWE,
+PCA_ANALYSIS) do run successfully, so even a failed
+run produces `pca_results.eigenval`,
+`pca_results.eigenvec`, and a Nextflow
+`timeline.html`.
 
-**Workaround until the wizard supports phenotype
-upload:** run the before / after GWAS locally with
-PLINK (see [§10.2](#_10-2-using-the-gwas-visualization-notebook-hands-on))
-against the imputed dose VCF you download from
-[§8](#_8-downloading-results). The workshop notebooks
-already cover this path.
+**2. Imputation outputs aren't visible in the input
+picker.** The **Previous upload → Browse my files**
+modal filters to **"My Upload"** files (i.e. your
+VCF uploads). Imputation **Results** (the
+`chr_<N>.zip` bundle containing the imputed dose
+VCF) are stored on the same ILIFU backend but do
+**not** appear in that picker. So you can't pick the
+imputation output from your previous Imputation job
+as the input for a follow-up GWAS job from within
+the wizard today.
+
+**Workaround for the live workshop:** run the
+before / after GWAS locally with PLINK against the
+sparse VCF and the imputed dose VCF (you extract
+the latter from the `chr_<N>.zip` you downloaded in
+[§8](#_8-downloading-results) using its
+Overview-tab encryption password). The workshop
+notebooks in [§10.2](#_10-2-using-the-gwas-visualization-notebook-hands-on)
+already cover this path. Until the wizard grows (a)
+a phenotype-upload widget and (b) an "Imputation
+Result" filter in Browse my files, the FedImpute-
+native GWAS loop needs admin pre-staging.
 :::
 
 Click any pipeline card to see the right-hand
@@ -2358,6 +2380,7 @@ regardless of which imputation service you run on.
 | **Submit button stays disabled** | Data Use Agreement checkboxes not ticked | Scroll to the bottom of Review & Submit and check **both** DUA boxes |
 | **AGVD "Login Required" on variant detail** | Per-population frequency breakdowns require a signed-in nyame account | Sign in at <https://nyame.afrigen-d.org/accounts/login/>; new accounts require manual activation (plan ahead) |
 | **GWAS Training fails: `UPDATE_PHENOTYPE` cannot open `<pheno>.txt`** | Phenotype file not pre-staged on the backend; the wizard only uploads VCFs | Until the wizard accepts phenotype uploads, run GWAS locally with PLINK on the imputed dose VCF from §8. See [§10.2](#_10-2-using-the-gwas-visualization-notebook-hands-on). |
+| **Imputed `chr_<N>.zip` missing from "Browse my files" on a follow-up job** | The picker filters to My Upload VCFs only; imputation Results aren't exposed as reusable inputs yet | Download the ZIP from the imputation job's Files tab (§8), extract it locally, and either upload the dose VCF as a new input or run downstream analysis locally. |
 
 <!-- markdownlint-enable MD013 -->
 
